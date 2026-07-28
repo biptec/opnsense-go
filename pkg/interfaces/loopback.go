@@ -22,7 +22,7 @@ var LoopbackOpts = api.ReqOpts{
 
 type Loopback struct {
 	UUID        string `json:"uuid,omitempty"`
-	DeviceID    string `json:"deviceId"`
+	DeviceID    string `json:"deviceId,omitempty"`
 	Description string `json:"description"`
 }
 

@@ -188,3 +188,56 @@ func TestAddAssignmentResolved(t *testing.T) {
 		t.Fatalf("identifier = %q, want opt1", identifier)
 	}
 }
+
+func TestGeneratedWritePayloadOmitsServerManagedFields(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name      string
+		resource  any
+		forbidden []string
+	}{
+		{"vxlan", &Vxlan{VNI: "100", LocalAddress: "192.0.2.1"}, []string{"deviceId"}},
+		{"loopback", &Loopback{Description: "routing"}, []string{"deviceId"}},
+		{"gre", &Gre{LocalAddress: "lan", RemoteAddress: "198.51.100.10"}, []string{"if", "ipaddr", "greif"}},
+		{"gif", &Gif{LocalAddress: "lan", RemoteAddress: "198.51.100.11"}, []string{"if", "ipaddr", "gifif"}},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			payload, err := json.Marshal(test.resource)
+			if err != nil {
+				t.Fatalf("Marshal() error = %v", err)
+			}
+			var decoded map[string]any
+			if err := json.Unmarshal(payload, &decoded); err != nil {
+				t.Fatalf("Unmarshal() error = %v", err)
+			}
+			for _, key := range test.forbidden {
+				if _, exists := decoded[key]; exists {
+					t.Fatalf("payload %s contains server-managed key %q", payload, key)
+				}
+			}
+		})
+	}
+}
+
+func TestOverviewGetInterfaceAcceptsFailureVariant(t *testing.T) {
+	t.Parallel()
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"message":"failed"}`))
+	}))
+	defer server.Close()
+
+	controller := Controller{Api: api.NewClient(api.Options{Uri: server.URL})}
+	result, err := controller.OverviewGetInterface(context.Background(), "missing")
+	if err != nil {
+		t.Fatalf("OverviewGetInterface() error = %v", err)
+	}
+	if result.Message != "failed" {
+		t.Fatalf("message = %#v, want failed", result.Message)
+	}
+}

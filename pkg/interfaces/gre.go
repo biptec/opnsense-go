@@ -23,9 +23,9 @@ var GreOpts = api.ReqOpts{
 type Gre struct {
 	UUID                string `json:"uuid,omitempty"`
 	LocalAddress        string `json:"local-addr"`
-	Interface           string `json:"if"`
-	IPAddress           string `json:"ipaddr"`
-	Device              string `json:"greif"`
+	Interface           string `json:"if,omitempty"`
+	IPAddress           string `json:"ipaddr,omitempty"`
+	Device              string `json:"greif,omitempty"`
 	RemoteAddress       string `json:"remote-addr"`
 	TunnelLocalAddress  string `json:"tunnel-local-addr"`
 	TunnelRemoteAddress string `json:"tunnel-remote-addr"`

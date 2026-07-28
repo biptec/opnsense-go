@@ -22,7 +22,7 @@ var VxlanOpts = api.ReqOpts{
 
 type Vxlan struct {
 	UUID              string          `json:"uuid,omitempty"`
-	DeviceID          string          `json:"deviceId"`
+	DeviceID          string          `json:"deviceId,omitempty"`
 	VNI               string          `json:"vxlanid"`
 	LocalAddress      string          `json:"vxlanlocal"`
 	LocalPort         string          `json:"vxlanlocalport"`

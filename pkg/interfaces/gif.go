@@ -23,9 +23,9 @@ var GifOpts = api.ReqOpts{
 type Gif struct {
 	UUID                string `json:"uuid,omitempty"`
 	LocalAddress        string `json:"local-addr"`
-	Interface           string `json:"if"`
-	IPAddress           string `json:"ipaddr"`
-	Device              string `json:"gifif"`
+	Interface           string `json:"if,omitempty"`
+	IPAddress           string `json:"ipaddr,omitempty"`
+	Device              string `json:"gifif,omitempty"`
 	RemoteAddress       string `json:"remote-addr"`
 	TunnelLocalAddress  string `json:"tunnel-local-addr"`
 	TunnelRemoteAddress string `json:"tunnel-remote-addr"`

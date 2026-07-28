@@ -114,7 +114,7 @@ type InterfaceDetailValue struct {
 }
 
 type InterfaceDetailsResult struct {
-	Message map[string]InterfaceDetailValue `json:"message"`
+	Message interface{} `json:"message"`
 }
 
 type InterfaceIPv4 struct {

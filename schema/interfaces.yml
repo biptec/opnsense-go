@@ -173,6 +173,7 @@ resources:
   - name: DeviceID
     type: string
     key: deviceId
+    omitEmpty: true
   - name: VNI
     type: string
     key: vxlanid
@@ -332,12 +333,15 @@ resources:
   - name: Interface
     type: string
     key: if
+    omitEmpty: true
   - name: IPAddress
     type: string
     key: ipaddr
+    omitEmpty: true
   - name: Device
     type: string
     key: greif
+    omitEmpty: true
   - name: RemoteAddress
     type: string
     key: remote-addr
@@ -374,12 +378,15 @@ resources:
   - name: Interface
     type: string
     key: if
+    omitEmpty: true
   - name: IPAddress
     type: string
     key: ipaddr
+    omitEmpty: true
   - name: Device
     type: string
     key: gifif
+    omitEmpty: true
   - name: RemoteAddress
     type: string
     key: remote-addr
@@ -419,6 +426,7 @@ resources:
   - name: DeviceID
     type: string
     key: deviceId
+    omitEmpty: true
   - name: Description
     type: string
     key: description
@@ -1362,7 +1370,7 @@ rpc:
           key: translation
       InterfaceDetailsResult:
         - name: Message
-          type: map[string]InterfaceDetailValue
+          type: interface{}
           key: message
       InterfaceReloadResult:
         - name: Message
