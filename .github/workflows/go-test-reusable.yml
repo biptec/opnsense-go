@@ -59,7 +59,7 @@ jobs:
               "firewall": ["firewall"],
               "other":    ["api", "auth", "bind", "core", "cron", "diagnostics",
                            "dyndns", "interfaces", "kea", "openvpn", "quagga",
-                           "routes", "trust", "unbound", "wireguard"],
+                           "routes", "routing", "trust", "unbound", "wireguard"],
           }
           # pkg/ directories that are infrastructure/generated — excluded from
           # the must-be-assigned check because they are not OPNsense services.

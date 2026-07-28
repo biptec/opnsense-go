@@ -1,0 +1,178 @@
+---
+name: routing
+reconfigureEndpoint: "/routing/settings/reconfigure"
+resources:
+  - name: Gateway
+    filename: gateway
+    monad: gateway_item
+    endpoints:
+      add: "/routing/settings/addGateway"
+      get: "/routing/settings/getGateway"
+      update: "/routing/settings/setGateway"
+      delete: "/routing/settings/delGateway"
+      search: "/routing/settings/searchGateway"
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
+      - name: Disabled
+        type: string
+        key: disabled
+      - name: Name
+        type: string
+        key: name
+      - name: Description
+        type: string
+        key: descr
+      - name: Interface
+        type: SelectedMap
+        key: interface
+      - name: IPProtocol
+        type: SelectedMap
+        key: ipprotocol
+      - name: Gateway
+        type: string
+        key: gateway
+      - name: DefaultGateway
+        type: string
+        key: defaultgw
+      - name: FarGateway
+        type: string
+        key: fargw
+      - name: MonitorDisable
+        type: string
+        key: monitor_disable
+      - name: MonitorNoRoute
+        type: string
+        key: monitor_noroute
+      - name: MonitorKillStates
+        type: string
+        key: monitor_killstates
+      - name: MonitorKillStatesPriority
+        type: string
+        key: monitor_killstates_priority
+      - name: Monitor
+        type: string
+        key: monitor
+      - name: ForceDown
+        type: string
+        key: force_down
+      - name: NoSync
+        type: string
+        key: nosync
+      - name: Priority
+        type: string
+        key: priority
+      - name: Weight
+        type: string
+        key: weight
+      - name: LatencyLow
+        type: string
+        key: latencylow
+      - name: LatencyHigh
+        type: string
+        key: latencyhigh
+      - name: LossLow
+        type: string
+        key: losslow
+      - name: LossHigh
+        type: string
+        key: losshigh
+      - name: Interval
+        type: string
+        key: interval
+      - name: TimePeriod
+        type: string
+        key: time_period
+      - name: LossInterval
+        type: string
+        key: loss_interval
+      - name: DataLength
+        type: string
+        key: data_length
+
+  - name: GatewayGroup
+    filename: gateway_group
+    monad: gateway_group
+    endpoints:
+      add: "/routing/group_settings/add"
+      get: "/routing/group_settings/get"
+      update: "/routing/group_settings/set"
+      delete: "/routing/group_settings/del"
+      search: "/routing/group_settings/search"
+      reconfigure: "/routing/group_settings/reconfigure"
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
+      - name: Name
+        type: string
+        key: name
+      - name: Tier1
+        type: SelectedMapList
+        key: item
+      - name: Tier2
+        type: SelectedMapList
+        key: item2
+      - name: Tier3
+        type: SelectedMapList
+        key: item3
+      - name: Tier4
+        type: SelectedMapList
+        key: item4
+      - name: Tier5
+        type: SelectedMapList
+        key: item5
+      - name: Trigger
+        type: SelectedMap
+        key: trigger
+      - name: PoolOptions
+        type: SelectedMap
+        key: poolopts
+      - name: Description
+        type: string
+        key: descr
+
+rpc:
+  - name: GatewayStatus
+    filename: gateway_status
+    customTypes:
+      GatewayStatusItem:
+        - name: Name
+          type: string
+          key: name
+        - name: Address
+          type: string
+          key: address
+        - name: Monitor
+          type: string
+          key: monitor
+        - name: Delay
+          type: string
+          key: delay
+        - name: StandardDeviation
+          type: string
+          key: stddev
+        - name: Loss
+          type: string
+          key: loss
+        - name: Status
+          type: string
+          key: status
+        - name: StatusTranslated
+          type: string
+          key: status_translated
+      GatewayStatusResponse:
+        - name: Items
+          type: "[]GatewayStatusItem"
+          key: items
+        - name: Status
+          type: string
+          key: status
+    rpc_calls:
+      - name: Get
+        endpoint: "/routes/gateway/status"
+        method: "GET"
+        result_type: GatewayStatusResponse

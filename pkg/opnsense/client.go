@@ -18,6 +18,7 @@ import (
 	"github.com/biptec/opnsense-go/pkg/openvpn"
 	"github.com/biptec/opnsense-go/pkg/quagga"
 	"github.com/biptec/opnsense-go/pkg/routes"
+	"github.com/biptec/opnsense-go/pkg/routing"
 	"github.com/biptec/opnsense-go/pkg/trust"
 	"github.com/biptec/opnsense-go/pkg/unbound"
 	"github.com/biptec/opnsense-go/pkg/wireguard"
@@ -39,6 +40,7 @@ type Client interface {
 	Openvpn() *openvpn.Controller
 	Quagga() *quagga.Controller
 	Routes() *routes.Controller
+	Routing() *routing.Controller
 	Trust() *trust.Controller
 	Unbound() *unbound.Controller
 	Wireguard() *wireguard.Controller
@@ -107,6 +109,10 @@ func (c *client) Quagga() *quagga.Controller {
 
 func (c *client) Routes() *routes.Controller {
 	return &routes.Controller{Api: c.a}
+}
+
+func (c *client) Routing() *routing.Controller {
+	return &routing.Controller{Api: c.a}
 }
 
 func (c *client) Trust() *trust.Controller {
