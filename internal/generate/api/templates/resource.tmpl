@@ -13,6 +13,9 @@ var {{ .Resource.Name }}Opts = api.ReqOpts{
 	GetEndpoint:         "{{ .Resource.Endpoints.Get }}",
 	UpdateEndpoint:      "{{ .Resource.Endpoints.Update }}",
 	DeleteEndpoint:      "{{ .Resource.Endpoints.Delete }}",
+{{ if not (eq .Resource.Endpoints.Search "") -}}
+	SearchEndpoint:      "{{ .Resource.Endpoints.Search }}",
+{{ end -}}
 	ReconfigureEndpoint:
 	{{- if or (eq .Resource.Endpoints.Reconfigure "null") .Resource.ReadOnly -}}
     "",
@@ -65,6 +68,12 @@ func (c *Controller) Get{{ .Resource.Name }}(ctx context.Context, id string) (*{
 	{{- end -}}
 	(c.Client(), ctx, {{ .Resource.Name }}Opts, &{{ .Resource.Name }}{}, id)
 }
+
+{{ if not (eq .Resource.Endpoints.Search "") }}
+func (c *Controller) Search{{ .Resource.Name }}(ctx context.Context) (*api.SearchResponse[{{ .Resource.Name }}], error) {
+	return api.Search[{{ .Resource.Name }}](c.Client(), ctx, {{ .Resource.Name }}Opts.SearchEndpoint)
+}
+{{ end }}
 
 {{ if .Resource.GetAll }}
 func (c *Controller) Get{{ .Resource.Name }}All(ctx context.Context) ([]{{ .Resource.Name }}, error) {

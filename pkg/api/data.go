@@ -13,6 +13,7 @@ type ReqOpts struct {
 	GetEndpoint         string
 	UpdateEndpoint      string
 	DeleteEndpoint      string
+	SearchEndpoint      string
 	ReconfigureEndpoint string
 
 	Monad string

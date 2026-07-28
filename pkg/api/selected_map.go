@@ -25,6 +25,11 @@ import (
 type SelectedMap string
 
 func (s *SelectedMap) UnmarshalJSON(data []byte) error {
+	var direct string
+	if err := json.Unmarshal(data, &direct); err == nil {
+		*s = SelectedMap(direct)
+		return nil
+	}
 	var dataMap map[string]struct {
 		Value    string `json:"value"`
 		Selected any    `json:"selected"`

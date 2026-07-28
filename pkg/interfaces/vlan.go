@@ -9,10 +9,11 @@ import (
 )
 
 var VlanOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/vlan_settings/addItem",
-	GetEndpoint:         "/interfaces/vlan_settings/getItem",
-	UpdateEndpoint:      "/interfaces/vlan_settings/setItem",
-	DeleteEndpoint:      "/interfaces/vlan_settings/delItem",
+	AddEndpoint:         "/interfaces/vlan_settings/add_item",
+	GetEndpoint:         "/interfaces/vlan_settings/get_item",
+	UpdateEndpoint:      "/interfaces/vlan_settings/set_item",
+	DeleteEndpoint:      "/interfaces/vlan_settings/del_item",
+	SearchEndpoint:      "/interfaces/vlan_settings/search_item",
 	ReconfigureEndpoint: "/interfaces/vlan_settings/reconfigure",
 	Monad:               "vlan",
 }
@@ -20,9 +21,11 @@ var VlanOpts = api.ReqOpts{
 // Data structs
 
 type Vlan struct {
+	UUID        string          `json:"uuid,omitempty"`
 	Description string          `json:"descr"`
 	Tag         string          `json:"tag"`
 	Priority    api.SelectedMap `json:"pcp"`
+	Protocol    api.SelectedMap `json:"proto"`
 	Parent      api.SelectedMap `json:"if"`
 	Device      string          `json:"vlanif"`
 }
@@ -35,6 +38,10 @@ func (c *Controller) AddVlan(ctx context.Context, resource *Vlan) (string, error
 
 func (c *Controller) GetVlan(ctx context.Context, id string) (*Vlan, error) {
 	return api.Get(c.Client(), ctx, VlanOpts, &Vlan{}, id)
+}
+
+func (c *Controller) SearchVlan(ctx context.Context) (*api.SearchResponse[Vlan], error) {
+	return api.Search[Vlan](c.Client(), ctx, VlanOpts.SearchEndpoint)
 }
 
 func (c *Controller) UpdateVlan(ctx context.Context, id string, resource *Vlan) error {

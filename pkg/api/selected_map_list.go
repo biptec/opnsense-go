@@ -84,6 +84,18 @@ func (s *SelectedMapListNL) String() string {
 // Helpers
 
 func unmarshalJSON(data []byte) ([]string, error) {
+	var direct string
+	if err := json.Unmarshal(data, &direct); err == nil {
+		if direct == "" {
+			return []string{}, nil
+		}
+		values := strings.FieldsFunc(direct, func(r rune) bool { return r == ',' || r == '\n' })
+		for i := range values {
+			values[i] = strings.TrimSpace(values[i])
+		}
+		sort.Strings(values)
+		return values, nil
+	}
 	var dataMap map[string]struct {
 		Value    string `json:"value"`
 		Selected any    `json:"selected"`

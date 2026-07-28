@@ -208,3 +208,14 @@ func TestSelectedMap_RoundTrip(t *testing.T) {
 		t.Errorf("Round trip failed: got %s, want %s", result, original)
 	}
 }
+
+func TestSelectedMapUnmarshalDirectString(t *testing.T) {
+	t.Parallel()
+	var value SelectedMap
+	if err := json.Unmarshal([]byte(`"vtnet1"`), &value); err != nil {
+		t.Fatalf("Unmarshal() error = %v", err)
+	}
+	if value.String() != "vtnet1" {
+		t.Fatalf("value = %q", value.String())
+	}
+}

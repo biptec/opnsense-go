@@ -54,6 +54,7 @@ type ResourceData struct {
 		Get         string `yaml:"get"`
 		Update      string `yaml:"update"`
 		Delete      string `yaml:"delete"`
+		Search      string `yaml:"search,omitempty"`
 		Reconfigure string `yaml:"reconfigure,omitempty"`
 	}
 	ReadOnly    bool `yaml:"readOnly"`
