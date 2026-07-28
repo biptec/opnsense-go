@@ -5,7 +5,7 @@ A Go client library for the OPNsense API.
 ## Installation
 
 ```sh
-go get github.com/browningluke/opnsense-go
+go get github.com/biptec/opnsense-go
 ```
 
 Requires Go 1.23 or later.
@@ -20,8 +20,8 @@ controllers for each OPNsense service.
 
 ```go
 import (
-    "github.com/browningluke/opnsense-go/pkg/api"
-    "github.com/browningluke/opnsense-go/pkg/opnsense"
+    "github.com/biptec/opnsense-go/pkg/api"
+    "github.com/biptec/opnsense-go/pkg/opnsense"
 )
 
 apiClient := api.NewClient(api.Options{
@@ -51,7 +51,7 @@ etc.) follow the same Add/Get/Update/Delete pattern.
 ```go
 import (
     "context"
-    "github.com/browningluke/opnsense-go/pkg/unbound"
+    "github.com/biptec/opnsense-go/pkg/unbound"
 )
 
 ctx := context.Background()
@@ -111,7 +111,7 @@ unmarshal those responses transparently:
 When constructing a resource to send to the API, assign the key directly:
 
 ```go
-import "github.com/browningluke/opnsense-go/pkg/api"
+import "github.com/biptec/opnsense-go/pkg/api"
 
 alias := &firewall.Alias{
     Type: api.SelectedMap("host"),
@@ -128,7 +128,7 @@ When a GET request targets a resource that does not exist, the library returns
 an `*errs.NotFoundError`:
 
 ```go
-import "github.com/browningluke/opnsense-go/pkg/errs"
+import "github.com/biptec/opnsense-go/pkg/errs"
 
 override, err := client.Unbound().GetDomainOverride(ctx, id)
 if err != nil {
@@ -170,14 +170,22 @@ There are two categories of generated output:
 
 ### Running tests
 
-Tests require a live OPNsense instance. Set the following environment variables
-before running:
+Run unit tests locally without a firewall:
+
+```sh
+make test
+make lint
+```
+
+Integration tests skip automatically when connection settings are absent. To
+run them against a live OPNsense instance, set:
 
 ```sh
 export OPNSENSE_URI="https://<opnsense-host>"
 export OPNSENSE_API_KEY="<key>"
 export OPNSENSE_API_SECRET="<secret>"
 export OPNSENSE_ALLOW_INSECURE="true"  # if using a self-signed certificate
+make testacc
 ```
 
 Run tests for a specific package:

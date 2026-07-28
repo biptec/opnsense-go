@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -48,7 +48,7 @@ func (c *Controller) ServiceSearch(ctx context.Context) (*SearchServicesResponse
 	resultData := &SearchServicesResponse{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Search call failed: %w", err)
+		return nil, fmt.Errorf("rpc Search failed: %w", err)
 	}
 	return result, nil
 }
@@ -73,7 +73,7 @@ func (c *Controller) ServiceStart(ctx context.Context, id string) (*ServiceActio
 	resultData := &ServiceActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Start call failed: %w", err)
+		return nil, fmt.Errorf("rpc Start failed: %w", err)
 	}
 	return result, nil
 }
@@ -98,7 +98,7 @@ func (c *Controller) ServiceStop(ctx context.Context, id string) (*ServiceAction
 	resultData := &ServiceActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Stop call failed: %w", err)
+		return nil, fmt.Errorf("rpc Stop failed: %w", err)
 	}
 	return result, nil
 }
@@ -123,7 +123,7 @@ func (c *Controller) ServiceRestart(ctx context.Context, id string) (*ServiceAct
 	resultData := &ServiceActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Restart call failed: %w", err)
+		return nil, fmt.Errorf("rpc Restart failed: %w", err)
 	}
 	return result, nil
 }

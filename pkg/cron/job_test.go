@@ -5,10 +5,13 @@ import (
 	"os"
 	"testing"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/internal/testutil"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 func TestJob(t *testing.T) {
+	testutil.RequireOPNsense(t)
+
 	controller := Controller{
 		Api: api.NewClient(api.Options{
 			Uri:           os.Getenv("OPNSENSE_URI"),

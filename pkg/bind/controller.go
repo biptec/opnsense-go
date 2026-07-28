@@ -2,7 +2,7 @@
 
 package bind
 
-import "github.com/browningluke/opnsense-go/pkg/api"
+import "github.com/biptec/opnsense-go/pkg/api"
 
 const bindReconfigureEndpoint = "/bind/service/reconfigure"
 

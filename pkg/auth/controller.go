@@ -2,7 +2,7 @@
 
 package auth
 
-import "github.com/browningluke/opnsense-go/pkg/api"
+import "github.com/biptec/opnsense-go/pkg/api"
 
 // Controller for auth
 type Controller struct {

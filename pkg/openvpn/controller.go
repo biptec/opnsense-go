@@ -2,7 +2,7 @@
 
 package openvpn
 
-import "github.com/browningluke/opnsense-go/pkg/api"
+import "github.com/biptec/opnsense-go/pkg/api"
 
 const openvpnReconfigureEndpoint = "/openvpn/service/reconfigure"
 

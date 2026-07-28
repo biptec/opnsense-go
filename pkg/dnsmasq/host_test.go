@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 func TestHost(t *testing.T) {

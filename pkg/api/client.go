@@ -129,7 +129,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, body an
 	reqCopy.Header.Set("Authorization", "****************")
 
 	dReq, _ := httputil.DumpRequest(reqCopy, true)
-	logger.Println(fmt.Sprintf("\n%s\n", string(dReq)))
+	logger.Printf("\n%s\n", string(dReq))
 
 	// Do request
 	res, err := c.client.Do(req)
@@ -140,7 +140,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, body an
 
 	// Log response
 	dRes, _ := httputil.DumpResponse(res, true)
-	logger.Println(ctx, fmt.Sprintf("\n%s\n", string(dRes)))
+	logger.Printf("\n%s\n", string(dRes))
 
 	// Check for 200
 	if res.StatusCode != http.StatusOK {

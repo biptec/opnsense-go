@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -41,7 +41,7 @@ func (c *Controller) GeneralGet(ctx context.Context) (*GeneralGetResult, error) 
 	resultData := &GeneralGetResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Get call failed: %w", err)
+		return nil, fmt.Errorf("rpc Get failed: %w", err)
 	}
 	return result, nil
 }
@@ -66,7 +66,7 @@ func (c *Controller) GeneralSet(ctx context.Context, general *WireguardGeneral) 
 	resultData := &GeneralSetResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Set call failed: %w", err)
+		return nil, fmt.Errorf("rpc Set failed: %w", err)
 	}
 	return result, nil
 }

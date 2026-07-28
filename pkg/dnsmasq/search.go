@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -163,7 +163,7 @@ func (c *Controller) SearchHost(ctx context.Context, rowCount string) (*SearchHo
 	resultData := &SearchHostResponse{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Host call failed: %w", err)
+		return nil, fmt.Errorf("rpc Host failed: %w", err)
 	}
 	return result, nil
 }
@@ -188,7 +188,7 @@ func (c *Controller) SearchDomain(ctx context.Context, rowCount string) (*Search
 	resultData := &SearchDomainResponse{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Domain call failed: %w", err)
+		return nil, fmt.Errorf("rpc Domain failed: %w", err)
 	}
 	return result, nil
 }
@@ -213,7 +213,7 @@ func (c *Controller) SearchRange(ctx context.Context, rowCount string) (*SearchR
 	resultData := &SearchRangeResponse{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Range call failed: %w", err)
+		return nil, fmt.Errorf("rpc Range failed: %w", err)
 	}
 	return result, nil
 }
@@ -238,7 +238,7 @@ func (c *Controller) SearchOption(ctx context.Context, rowCount string) (*Search
 	resultData := &SearchOptionResponse{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Option call failed: %w", err)
+		return nil, fmt.Errorf("rpc Option failed: %w", err)
 	}
 	return result, nil
 }
@@ -263,7 +263,7 @@ func (c *Controller) SearchBoot(ctx context.Context, rowCount string) (*SearchBo
 	resultData := &SearchBootResponse{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Boot call failed: %w", err)
+		return nil, fmt.Errorf("rpc Boot failed: %w", err)
 	}
 	return result, nil
 }
@@ -288,7 +288,7 @@ func (c *Controller) SearchTag(ctx context.Context, rowCount string) (*SearchTag
 	resultData := &SearchTagResponse{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Tag call failed: %w", err)
+		return nil, fmt.Errorf("rpc Tag failed: %w", err)
 	}
 	return result, nil
 }

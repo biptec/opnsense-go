@@ -5,7 +5,7 @@ package {{ .Controller.Name }}
 import (
 	"context"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 var {{ .Resource.Name }}Opts = api.ReqOpts{
@@ -53,7 +53,7 @@ type {{ .Resource.Name }} struct {
 
 // CRUD operations
 
-{{ if not .Resource.ReadOnly }}
+{{ if and (not .Resource.ReadOnly) (not .Resource.ManualAdd) }}
 func (c *Controller) Add{{ .Resource.Name }}(ctx context.Context, resource *{{ .Resource.Name }}) (string, error) {
 	return api.Add(c.Client(), ctx, {{ .Resource.Name }}Opts, resource)
 }

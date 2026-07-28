@@ -8,7 +8,13 @@ A Go client library for the OPNsense API. Requires Go 1.23+.
 # Regenerate all code from schema files (run after any schema change)
 make all
 
-# Run all acceptance tests (requires a live OPNsense instance)
+# Run unit tests and skip integration tests when credentials are absent
+make test
+
+# Run go vet and staticcheck
+make lint
+
+# Run all integration tests (requires a live OPNsense instance)
 make testacc
 
 # Run tests for a specific service package
@@ -69,6 +75,7 @@ CI runs the integration suite as parallel shards — one runner + one OPNsense V
 ### Schema YAML structure
 - `resources` block → CRUD resources. Each resource becomes `Add<Name>`, `Get<Name>`, `Update<Name>`, `Delete<Name>` methods.
   - `readOnly: true` — omits Add/Update/Delete.
+  - `manualAdd: true` — suppresses only the generated Add method so a resource with non-standard create identity can provide a handwritten implementation.
   - `getByFilter: true` — uses `api.GetFilter` (lookup by key in a flat map) instead of `api.Get` (lookup by UUID).
   - `getAll: true` — adds a `Get<Name>All` method.
   - `reconfigure: "null"` on an endpoint — suppresses the post-mutation reconfigure call for that resource.
@@ -85,6 +92,9 @@ When constructing a resource, assign the key directly: `Type: api.SelectedMap("h
 
 ### Error handling
 `api.Get` returns `*errs.NotFoundError` when the resource doesn't exist (OPNsense returns an unmarshalable response for missing UUIDs). Always check with `errors.As(err, &notFound)`.
+
+### Integration-test gating
+Integration tests must call `internal/testutil.RequireOPNsense(t)` instead of exiting from `TestMain`. This keeps package unit tests runnable without credentials while still skipping live-firewall tests cleanly.
 
 ### Monad wrapping
 OPNsense's API wraps request/response bodies in a top-level key (the "monad"). The schema `monad` field sets this key. `api.Add`/`api.Update` wrap outgoing structs; `api.Get` unwraps incoming responses automatically.

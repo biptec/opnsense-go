@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -51,7 +51,7 @@ func (c *Controller) UserAddApiKey(ctx context.Context, username string) (*AddAp
 	resultData := &AddApiKeyResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("AddApiKey call failed: %w", err)
+		return nil, fmt.Errorf("rpc AddApiKey failed: %w", err)
 	}
 	return result, nil
 }
@@ -76,7 +76,7 @@ func (c *Controller) UserDeleteApiKey(ctx context.Context, id string) (*api.Acti
 	resultData := &api.ActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("DeleteApiKey call failed: %w", err)
+		return nil, fmt.Errorf("rpc DeleteApiKey failed: %w", err)
 	}
 	return result, nil
 }
@@ -99,7 +99,7 @@ func (c *Controller) UserGetAllApiKeys(ctx context.Context) (*GetAllApiKeysResul
 	resultData := &GetAllApiKeysResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("GetAllApiKeys call failed: %w", err)
+		return nil, fmt.Errorf("rpc GetAllApiKeys failed: %w", err)
 	}
 	return result, nil
 }

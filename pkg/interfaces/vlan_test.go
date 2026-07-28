@@ -5,10 +5,13 @@ import (
 	"os"
 	"testing"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/internal/testutil"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 func TestVLAN(t *testing.T) {
+	testutil.RequireOPNsense(t)
+
 	opnsense_url := os.Getenv("OPNSENSE_URI")
 	opnsense_key := os.Getenv("OPNSENSE_API_KEY")
 	opnsense_secret := os.Getenv("OPNSENSE_API_SECRET")

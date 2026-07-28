@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -40,7 +40,7 @@ func (c *Controller) ServiceGenKeyPair(ctx context.Context) (*GenKeyPairResult, 
 	resultData := &GenKeyPairResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("GenKeyPair call failed: %w", err)
+		return nil, fmt.Errorf("rpc GenKeyPair failed: %w", err)
 	}
 	return result, nil
 }
@@ -63,7 +63,7 @@ func (c *Controller) ServiceGenPsk(ctx context.Context) (*GenPskResult, error) {
 	resultData := &GenPskResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("GenPsk call failed: %w", err)
+		return nil, fmt.Errorf("rpc GenPsk failed: %w", err)
 	}
 	return result, nil
 }

@@ -4,6 +4,15 @@ generator := $(shell find internal/generate)
 PKG ?=
 TEST ?=
 
+.PHONY: test
+test:
+	go test ./...
+
+.PHONY: lint
+lint:
+	go vet ./...
+	go run honnef.co/go/tools/cmd/staticcheck@v0.7.0 ./...
+
 .PHONY: testacc
 testacc:
 ifdef PKG

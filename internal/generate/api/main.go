@@ -10,8 +10,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/browningluke/opnsense-go/internal/generate/generator"
-	"github.com/browningluke/opnsense-go/internal/generate/schema"
+	"github.com/biptec/opnsense-go/internal/generate/generator"
+	"github.com/biptec/opnsense-go/internal/generate/schema"
 )
 
 var (

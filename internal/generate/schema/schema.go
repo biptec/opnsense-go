@@ -57,6 +57,7 @@ type ResourceData struct {
 		Reconfigure string `yaml:"reconfigure,omitempty"`
 	}
 	ReadOnly    bool `yaml:"readOnly"`
+	ManualAdd   bool `yaml:"manualAdd"`
 	GetByFilter bool `yaml:"getByFilter"`
 	GetAll      bool `yaml:"getAll"`
 

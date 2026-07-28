@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -91,7 +91,7 @@ func (c *Controller) SettingsDHCPv4Get(ctx context.Context) (*DHCPv4Monad, error
 	resultData := &DHCPv4Monad{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("DHCPv4Get call failed: %w", err)
+		return nil, fmt.Errorf("rpc DHCPv4Get failed: %w", err)
 	}
 	return result, nil
 }
@@ -116,7 +116,7 @@ func (c *Controller) SettingsDHCPv4Update(ctx context.Context, dhcpv4 *DHCPv4Set
 	resultData := &Result{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("DHCPv4Update call failed: %w", err)
+		return nil, fmt.Errorf("rpc DHCPv4Update failed: %w", err)
 	}
 	return result, nil
 }
@@ -139,7 +139,7 @@ func (c *Controller) SettingsDHCPv6Get(ctx context.Context) (*DHCPv6Monad, error
 	resultData := &DHCPv6Monad{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("DHCPv6Get call failed: %w", err)
+		return nil, fmt.Errorf("rpc DHCPv6Get failed: %w", err)
 	}
 	return result, nil
 }
@@ -164,7 +164,7 @@ func (c *Controller) SettingsDHCPv6Update(ctx context.Context, dhcpv6 *DHCPv6Set
 	resultData := &Result{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("DHCPv6Update call failed: %w", err)
+		return nil, fmt.Errorf("rpc DHCPv6Update failed: %w", err)
 	}
 	return result, nil
 }
@@ -187,7 +187,7 @@ func (c *Controller) SettingsReconfigure(ctx context.Context) (*ActionResult, er
 	resultData := &ActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Reconfigure call failed: %w", err)
+		return nil, fmt.Errorf("rpc Reconfigure failed: %w", err)
 	}
 	return result, nil
 }

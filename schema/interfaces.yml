@@ -54,42 +54,159 @@ resources:
         type: string
         key: gateway
 
-  - name: Assign
-    filename: assign
-    monad: assign
+  - name: Assignment
+    filename: assignment
+    monad: interface
+    manualAdd: true
     endpoints:
-      add: "/interfaces/assign_settings/addItem"
-      get: "/interfaces/assign_settings/getItem"
-      update: "/interfaces/assign_settings/setItem"
-      delete: "/interfaces/assign_settings/delItem"
-      reconfigure: "/interfaces/assign_settings/reconfigure"
+      add: "/interfaces/assignment/add_item"
+      get: "/interfaces/assignment/get_item"
+      update: "/interfaces/assignment/set_item"
+      delete: "/interfaces/assignment/del_item"
+      reconfigure: "/interfaces/assignment/reconfigure"
     attrs:
-      - name: Interface
-        type: string
-        key: interface
-      - name: Device
-        type: string
-        key: device
-      - name: Ip
-        type: string
-        key: ipaddr
-      - name: Subnet
-        type: string
-        key: subnet
-      - name: Gateway
-        type: string
-        key: gateway
-      - name: GatewayInterface
-        type: string
-        key: gateway_interface
-      - name: Enable
-        type: string
-        key: enable
       - name: Description
         type: string
         key: descr
+      - name: Identifier
+        type: string
+        key: identifier
+        omitEmpty: true
+      - name: Icon
+        type: string
+        key: icon
+        omitEmpty: true
+      - name: OptionGroup
+        type: string
+        key: optgroup
+        omitEmpty: true
+      - name: Device
+        type: SelectedMap
+        key: if
+      - name: Lock
+        type: string
+        key: lock
+      - name: Enabled
+        type: string
+        key: enable
+      - name: BlockPrivateNetworks
+        type: string
+        key: blockpriv
+      - name: BlockBogonNetworks
+        type: string
+        key: blockbogons
+      - name: GatewayInterface
+        type: string
+        key: gateway_interface
+      - name: PromiscuousMode
+        type: string
+        key: promisc
+      - name: SpoofMAC
+        type: string
+        key: spoofmac
+      - name: MTU
+        type: string
+        key: mtu
+      - name: MSS
+        type: string
+        key: mss
+      - name: IPv4Mode
+        type: SelectedMap
+        key: type
+      - name: DHCPHostname
+        type: string
+        key: dhcphostname
+      - name: IPv4AliasAddress
+        type: string
+        key: alias-address
+      - name: IPv4AliasPrefixLength
+        type: string
+        key: alias-subnet
+      - name: DHCPRejectFrom
+        type: string
+        key: dhcprejectfrom
+      - name: IPv6Mode
+        type: SelectedMap
+        key: type6
+      - name: DHCPv6PrefixDelegationLength
+        type: string
+        key: dhcp6-ia-pd-len
+      - name: DHCPv6SendPrefixHint
+        type: string
+        key: dhcp6-ia-pd-send-hint
+      - name: DHCPv6PrefixOnly
+        type: string
+        key: dhcp6prefixonly
+      - name: DHCPv6UseIPv4Connectivity
+        type: string
+        key: dhcp6usev4iface
+      - name: DHCPv6VLANPriority
+        type: string
+        key: dhcp6vlanprio
+      - name: IPv6TrackInterface
+        type: string
+        key: track6-interface
+      - name: IPv6TrackPrefixID
+        type: string
+        key: track6-prefix-id
+      - name: IPv6TrackPrefixAssociation
+        type: string
+        key: track6_assoc_pd
+      - name: IPv4Address
+        type: string
+        key: ipaddr
+      - name: IPv4PrefixLength
+        type: string
+        key: subnet
+      - name: IPv4Gateway
+        type: string
+        key: gateway
+      - name: IPv6Address
+        type: string
+        key: ipaddrv6
+      - name: IPv6PrefixLength
+        type: string
+        key: subnetv6
+      - name: IPv6Gateway
+        type: string
+        key: gatewayv6
 
 rpc:
+  - name: Assignment
+    filename: assignment_search
+    customTypes:
+      AssignmentSearchResponse:
+        - name: Total
+          type: int
+          key: total
+        - name: RowCount
+          type: int
+          key: rowCount
+        - name: Current
+          type: int
+          key: current
+        - name: Rows
+          type: '[]AssignmentSearchRow'
+          key: rows
+      AssignmentSearchRow:
+        - name: Identifier
+          type: string
+          key: identifier
+          omitEmpty: true
+        - name: UUID
+          type: string
+          key: uuid
+          omitEmpty: true
+    rpc_calls:
+      - name: Search
+        method: POST
+        endpoint: "/interfaces/assignment/search_item"
+        params:
+          - name: rowCount
+            optional: false
+            bodyParameter: true
+        result_type: AssignmentSearchResponse
+
   - name: "Overview"
     filename: overview
     customTypes:

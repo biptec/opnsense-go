@@ -5,10 +5,13 @@ import (
 	"os"
 	"testing"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/internal/testutil"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 func TestVip(t *testing.T) {
+	testutil.RequireOPNsense(t)
+
 	opnsenseURL := os.Getenv("OPNSENSE_URI")
 	opnsenseKey := os.Getenv("OPNSENSE_API_KEY")
 	opnsenseSecret := os.Getenv("OPNSENSE_API_SECRET")

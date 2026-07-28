@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -131,7 +131,7 @@ func (c *Controller) SettingsGet(ctx context.Context) (*SettingsMonad, error) {
 	resultData := &SettingsMonad{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Get call failed: %w", err)
+		return nil, fmt.Errorf("rpc Get failed: %w", err)
 	}
 	return result, nil
 }
@@ -156,7 +156,7 @@ func (c *Controller) SettingsUpdate(ctx context.Context, unbound *Settings) (*Re
 	resultData := &Result{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Update call failed: %w", err)
+		return nil, fmt.Errorf("rpc Update failed: %w", err)
 	}
 	return result, nil
 }
@@ -179,7 +179,7 @@ func (c *Controller) SettingsReconfigure(ctx context.Context) (*ActionResult, er
 	resultData := &ActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Reconfigure call failed: %w", err)
+		return nil, fmt.Errorf("rpc Reconfigure failed: %w", err)
 	}
 	return result, nil
 }
@@ -202,7 +202,7 @@ func (c *Controller) SettingsReconfigureGeneral(ctx context.Context) (*ActionRes
 	resultData := &ActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("ReconfigureGeneral call failed: %w", err)
+		return nil, fmt.Errorf("rpc ReconfigureGeneral failed: %w", err)
 	}
 	return result, nil
 }

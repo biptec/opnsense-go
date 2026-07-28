@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -29,7 +29,7 @@ func (c *Controller) ServiceReconfigure(ctx context.Context) (*api.ReconfigureSt
 	resultData := &api.ReconfigureStatusResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Reconfigure call failed: %w", err)
+		return nil, fmt.Errorf("rpc Reconfigure failed: %w", err)
 	}
 	return result, nil
 }
