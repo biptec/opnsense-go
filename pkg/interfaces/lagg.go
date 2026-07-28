@@ -24,7 +24,7 @@ type Lagg struct {
 	UUID            string              `json:"uuid,omitempty"`
 	Device          string              `json:"laggif"`
 	Members         api.SelectedMapList `json:"members"`
-	PrimaryMember   api.SelectedMap     `json:"primary_member"`
+	PrimaryMember   api.SelectedMap     `json:"primary_member,omitempty"`
 	Protocol        api.SelectedMap     `json:"proto"`
 	LACPFastTimeout string              `json:"lacp_fast_timeout"`
 	UseFlowID       api.SelectedMap     `json:"use_flowid"`

@@ -291,6 +291,7 @@ resources:
   - name: PrimaryMember
     type: SelectedMap
     key: primary_member
+    omitEmpty: true
   - name: Protocol
     type: SelectedMap
     key: proto

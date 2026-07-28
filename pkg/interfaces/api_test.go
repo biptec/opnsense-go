@@ -201,6 +201,7 @@ func TestGeneratedWritePayloadOmitsServerManagedFields(t *testing.T) {
 		{"loopback", &Loopback{Description: "routing"}, []string{"deviceId"}},
 		{"gre", &Gre{LocalAddress: "lan", RemoteAddress: "198.51.100.10"}, []string{"if", "ipaddr", "greif"}},
 		{"gif", &Gif{LocalAddress: "lan", RemoteAddress: "198.51.100.11"}, []string{"if", "ipaddr", "gifif"}},
+		{"lagg", &Lagg{Members: api.SelectedMapList{"vtnet2"}, Protocol: api.SelectedMap("lacp"), LACPFastTimeout: "0"}, []string{"primary_member"}},
 	}
 
 	for _, test := range tests {
