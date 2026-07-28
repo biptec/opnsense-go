@@ -84,6 +84,10 @@ func NewClient(options Options) *Client {
 
 // Requests
 
+func (c *Client) endpointURL(endpoint string) string {
+	return fmt.Sprintf("%s/api/%s", strings.TrimRight(c.opts.Uri, "/"), strings.TrimLeft(endpoint, "/"))
+}
+
 func (c *Client) getAuth() string {
 	auth := c.opts.APIKey + ":" + c.opts.APISecret
 	return base64.StdEncoding.EncodeToString([]byte(auth))
@@ -113,7 +117,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, body an
 	}
 
 	// Create request
-	req, err := retryablehttp.NewRequestWithContext(ctx, method, fmt.Sprintf("%s/api%s", c.opts.Uri, endpoint), bodyReader)
+	req, err := retryablehttp.NewRequestWithContext(ctx, method, c.endpointURL(endpoint), bodyReader)
 	if err != nil {
 		return err
 	}
@@ -129,7 +133,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, body an
 	reqCopy.Header.Set("Authorization", "****************")
 
 	dReq, _ := httputil.DumpRequest(reqCopy, true)
-	logger.Println(fmt.Sprintf("\n%s\n", string(dReq)))
+	logger.Printf("\n%s\n", string(dReq))
 
 	// Do request
 	res, err := c.client.Do(req)
@@ -140,7 +144,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, body an
 
 	// Log response
 	dRes, _ := httputil.DumpResponse(res, true)
-	logger.Println(ctx, fmt.Sprintf("\n%s\n", string(dRes)))
+	logger.Printf("\n%s\n", string(dRes))
 
 	// Check for 200
 	if res.StatusCode != http.StatusOK {

@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -34,7 +34,7 @@ func (c *Controller) UserNewOtpSeed(ctx context.Context) (*NewOtpSeedResult, err
 	resultData := &NewOtpSeedResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("NewOtpSeed call failed: %w", err)
+		return nil, fmt.Errorf("newOtpSeed call failed: %w", err)
 	}
 	return result, nil
 }

@@ -1,10 +1,13 @@
 # opnsense-go
 
-A Go client library for the OPNsense API. Requires Go 1.23+.
+A Go client library for the OPNsense API. Requires the Go version declared in `go.mod`.
 
 ## Commands
 
 ```sh
+# Run the deterministic local quality gate
+make check
+
 # Regenerate all code from schema files (run after any schema change)
 make all
 
@@ -23,6 +26,8 @@ export OPNSENSE_API_KEY="<key>"
 export OPNSENSE_API_SECRET="<secret>"
 export OPNSENSE_ALLOW_INSECURE="true"
 ```
+
+Ordinary `go test ./...` must pass without live credentials. Packages containing only integration tests use `TestMain` to skip cleanly when the OPNsense environment variables are absent.
 
 ## Architecture
 

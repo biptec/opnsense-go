@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
-	"github.com/browningluke/opnsense-go/pkg/firewall"
+	"github.com/biptec/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/firewall"
 )
 
 func TestIntegration(t *testing.T) {

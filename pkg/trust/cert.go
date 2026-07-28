@@ -5,7 +5,7 @@ package trust
 import (
 	"context"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 var CertOpts = api.ReqOpts{

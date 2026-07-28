@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -42,7 +42,7 @@ func (c *Controller) ServiceReconfigure(ctx context.Context) (*ActionResult, err
 	resultData := &ActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Reconfigure call failed: %w", err)
+		return nil, fmt.Errorf("reconfigure call failed: %w", err)
 	}
 	return result, nil
 }
@@ -69,7 +69,7 @@ func (c *Controller) ServiceStartService(ctx context.Context, id *string) (*Resu
 	resultData := &Result{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("StartService call failed: %w", err)
+		return nil, fmt.Errorf("startService call failed: %w", err)
 	}
 	return result, nil
 }
@@ -96,7 +96,7 @@ func (c *Controller) ServiceStopService(ctx context.Context, id *string) (*Resul
 	resultData := &Result{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("StopService call failed: %w", err)
+		return nil, fmt.Errorf("stopService call failed: %w", err)
 	}
 	return result, nil
 }
@@ -123,7 +123,7 @@ func (c *Controller) ServiceRestartService(ctx context.Context, id *string) (*Re
 	resultData := &Result{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("RestartService call failed: %w", err)
+		return nil, fmt.Errorf("restartService call failed: %w", err)
 	}
 	return result, nil
 }
@@ -150,7 +150,7 @@ func (c *Controller) ServiceGenKey(ctx context.Context, keyType *string) (*GenKe
 	resultData := &GenKeyResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("GenKey call failed: %w", err)
+		return nil, fmt.Errorf("genKey call failed: %w", err)
 	}
 	return result, nil
 }

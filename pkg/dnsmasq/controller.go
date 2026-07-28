@@ -2,7 +2,7 @@
 
 package dnsmasq
 
-import "github.com/browningluke/opnsense-go/pkg/api"
+import "github.com/biptec/opnsense-go/pkg/api"
 
 const dnsmasqReconfigureEndpoint = "/dnsmasq/service/reconfigure"
 

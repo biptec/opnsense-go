@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -44,7 +44,7 @@ func (c *Controller) PrivilegeGetAll(ctx context.Context) (*PrivilegeGetAllResul
 	resultData := &PrivilegeGetAllResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("GetAll call failed: %w", err)
+		return nil, fmt.Errorf("getAll call failed: %w", err)
 	}
 	return result, nil
 }

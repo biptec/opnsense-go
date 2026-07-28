@@ -1,4 +1,4 @@
-module github.com/browningluke/opnsense-go
+module github.com/biptec/opnsense-go
 
 go 1.23.0
 

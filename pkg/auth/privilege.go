@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -50,7 +50,7 @@ func (c *Controller) PrivilegeGetItem(ctx context.Context, id string) (*Privileg
 	resultData := &PrivilegeGetItemWrapper{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("GetItem call failed: %w", err)
+		return nil, fmt.Errorf("getItem call failed: %w", err)
 	}
 	return result, nil
 }
@@ -77,7 +77,7 @@ func (c *Controller) PrivilegeSetItem(ctx context.Context, id string, priv *Priv
 	resultData := &api.ActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("SetItem call failed: %w", err)
+		return nil, fmt.Errorf("setItem call failed: %w", err)
 	}
 	return result, nil
 }
