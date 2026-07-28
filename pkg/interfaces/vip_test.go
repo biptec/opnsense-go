@@ -29,11 +29,16 @@ func TestVip(t *testing.T) {
 
 	// new vip object
 	vip := &Vip{
-		Interface:   "wan",
-		Mode:        "proxyarp",
-		Network:     "192.168.0.195/32",
-		Description: "Test VIP",
-		Gateway:     "",
+		Interface:         "wan",
+		Mode:              "proxyarp",
+		Network:           "192.168.0.195/32",
+		Description:       "Test VIP",
+		Gateway:           "",
+		NoExpand:          "0",
+		NoBind:            "0",
+		AdvertisementBase: "1",
+		AdvertisementSkew: "0",
+		NoSync:            "0",
 	}
 
 	// CREATE

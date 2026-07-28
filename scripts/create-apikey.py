@@ -61,4 +61,19 @@ output = send_qemu_command(command_status, QEMU_GA_SOCKET).strip()
 outdata = json.loads(output).get("return").get("out-data")  # base64 encoded
 decoded_outdata = base64.b64decode(outdata).decode("utf-8").strip()
 
-print(decoded_outdata, file=sys.stderr)
+credentials = {}
+for line in decoded_outdata.splitlines():
+    key, separator, value = line.partition("=")
+    if separator:
+        credentials[key.strip()] = value.strip()
+
+api_key = credentials.get("key", "")
+api_secret = credentials.get("secret", "")
+if not api_key or not api_secret or "\n" in api_key or "\n" in api_secret:
+    raise RuntimeError("opn-apikey returned invalid credentials")
+
+# Mask credentials before GitHub exposes step outputs as environment values.
+print(f"::add-mask::{api_key}")
+print(f"::add-mask::{api_secret}")
+print(f"key={api_key}", file=sys.stderr)
+print(f"secret={api_secret}", file=sys.stderr)
