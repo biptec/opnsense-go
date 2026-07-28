@@ -108,6 +108,15 @@ type InterfaceConfig struct {
 	Wireless                                        InterfaceWireless `json:"wireless,omitempty"`
 }
 
+type InterfaceDetailValue struct {
+	Value       interface{} `json:"value"`
+	Translation string      `json:"translation"`
+}
+
+type InterfaceDetailsResult struct {
+	Message interface{} `json:"message"`
+}
+
 type InterfaceIPv4 struct {
 	IPAddr     string `json:"ipaddr,omitempty"`
 	Vhid       string `json:"vhid,omitempty"`
@@ -178,6 +187,10 @@ type InterfaceLaggStatistics struct {
 
 type InterfaceND6 struct {
 	Flags []string `json:"flags,omitempty"`
+}
+
+type InterfaceReloadResult struct {
+	Message string `json:"message"`
 }
 
 type InterfaceVlan struct {
@@ -267,6 +280,102 @@ func (c *Controller) OverviewGet(ctx context.Context) (*InterfacesInfoResponse, 
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
 		return nil, fmt.Errorf("get call failed: %w", err)
+	}
+	return result, nil
+}
+
+// OverviewGetDetailed executes the GetDetailed RPC call of the Overview controller
+func (c *Controller) OverviewGetDetailed(ctx context.Context) (*InterfacesInfoResponse, error) {
+
+	callParams := []string{}
+	queryParams := make(map[string]string)
+	bodyParams := make(map[string]interface{})
+
+	callOpts := api.RPCOpts{
+		BaseEndpoint:    "/interfaces/overview/interfaces_info/true",
+		Method:          "GET",
+		PathParameters:  callParams,
+		QueryParameters: queryParams,
+		BodyParameters:  bodyParams,
+	}
+
+	resultData := &InterfacesInfoResponse{}
+	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
+	if err != nil {
+		return nil, fmt.Errorf("getDetailed call failed: %w", err)
+	}
+	return result, nil
+}
+
+// OverviewGetInterface executes the GetInterface RPC call of the Overview controller
+func (c *Controller) OverviewGetInterface(ctx context.Context, ifname string) (*InterfaceDetailsResult, error) {
+
+	callParams := []string{}
+	queryParams := make(map[string]string)
+	bodyParams := make(map[string]interface{})
+
+	callParams = append(callParams, ifname)
+
+	callOpts := api.RPCOpts{
+		BaseEndpoint:    "/interfaces/overview/get_interface",
+		Method:          "GET",
+		PathParameters:  callParams,
+		QueryParameters: queryParams,
+		BodyParameters:  bodyParams,
+	}
+
+	resultData := &InterfaceDetailsResult{}
+	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
+	if err != nil {
+		return nil, fmt.Errorf("getInterface call failed: %w", err)
+	}
+	return result, nil
+}
+
+// OverviewReloadInterface executes the ReloadInterface RPC call of the Overview controller
+func (c *Controller) OverviewReloadInterface(ctx context.Context, identifier string) (*InterfaceReloadResult, error) {
+
+	callParams := []string{}
+	queryParams := make(map[string]string)
+	bodyParams := make(map[string]interface{})
+
+	callParams = append(callParams, identifier)
+
+	callOpts := api.RPCOpts{
+		BaseEndpoint:    "/interfaces/overview/reload_interface",
+		Method:          "POST",
+		PathParameters:  callParams,
+		QueryParameters: queryParams,
+		BodyParameters:  bodyParams,
+	}
+
+	resultData := &InterfaceReloadResult{}
+	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
+	if err != nil {
+		return nil, fmt.Errorf("reloadInterface call failed: %w", err)
+	}
+	return result, nil
+}
+
+// OverviewExport executes the Export RPC call of the Overview controller
+func (c *Controller) OverviewExport(ctx context.Context) (*[]InterfaceInfo, error) {
+
+	callParams := []string{}
+	queryParams := make(map[string]string)
+	bodyParams := make(map[string]interface{})
+
+	callOpts := api.RPCOpts{
+		BaseEndpoint:    "/interfaces/overview/export",
+		Method:          "GET",
+		PathParameters:  callParams,
+		QueryParameters: queryParams,
+		BodyParameters:  bodyParams,
+	}
+
+	resultData := &[]InterfaceInfo{}
+	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
+	if err != nil {
+		return nil, fmt.Errorf("export call failed: %w", err)
 	}
 	return result, nil
 }

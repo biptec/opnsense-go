@@ -1,94 +1,529 @@
 ---
 name: interfaces
-reconfigureEndpoint: "" # Controller-wide reconfigure endpoint (can be overwritten)
+reconfigureEndpoint: ''
 resources:
-  - name: Vlan
-    filename: vlan
-    monad: vlan
-    endpoints:
-      add: "/interfaces/vlan_settings/addItem"
-      get: "/interfaces/vlan_settings/getItem"
-      update: "/interfaces/vlan_settings/setItem"
-      delete: "/interfaces/vlan_settings/delItem"
-      reconfigure: "/interfaces/vlan_settings/reconfigure"
-    attrs:
-      - name: Description
-        type: string
-        key: descr
-      - name: Tag
-        type: string
-        key: tag
-      - name: Priority
-        type: SelectedMap
-        key: pcp
-      - name: Parent
-        type: SelectedMap
-        key: if
-      - name: Device
-        type: string
-        key: vlanif
-
-  - name: Vip
-    filename: vip
-    monad: vip
-    endpoints:
-      add: "/interfaces/vip_settings/addItem"
-      get: "/interfaces/vip_settings/getItem"
-      update: "/interfaces/vip_settings/setItem"
-      delete: "/interfaces/vip_settings/delItem"
-      reconfigure: "/interfaces/vip_settings/reconfigure"
-    attrs:
-      - name: Interface
-        type: SelectedMap
-        key: interface
-      - name: Mode
-        type: SelectedMap
-        key: mode
-      - name: Network
-        type: string
-        key: network
-      - name: Description
-        type: string
-        key: descr
-      - name: Gateway
-        type: string
-        key: gateway
-
-  - name: Assign
-    filename: assign
-    monad: assign
-    endpoints:
-      add: "/interfaces/assign_settings/addItem"
-      get: "/interfaces/assign_settings/getItem"
-      update: "/interfaces/assign_settings/setItem"
-      delete: "/interfaces/assign_settings/delItem"
-      reconfigure: "/interfaces/assign_settings/reconfigure"
-    attrs:
-      - name: Interface
-        type: string
-        key: interface
-      - name: Device
-        type: string
-        key: device
-      - name: Ip
-        type: string
-        key: ipaddr
-      - name: Subnet
-        type: string
-        key: subnet
-      - name: Gateway
-        type: string
-        key: gateway
-      - name: GatewayInterface
-        type: string
-        key: gateway_interface
-      - name: Enable
-        type: string
-        key: enable
-      - name: Description
-        type: string
-        key: descr
-
+- name: Assignment
+  filename: assignment
+  monad: interface
+  endpoints:
+    add: /interfaces/assignment/add_item
+    get: /interfaces/assignment/get_item
+    update: /interfaces/assignment/set_item
+    delete: /interfaces/assignment/del_item
+    search: /interfaces/assignment/search_item
+    reconfigure: /interfaces/assignment/reconfigure
+  attrs:
+  - name: UUID
+    type: string
+    key: uuid
+    omitEmpty: true
+  - name: Description
+    type: string
+    key: descr
+  - name: Identifier
+    type: string
+    key: identifier
+    omitEmpty: true
+  - name: Icon
+    type: string
+    key: icon
+    omitEmpty: true
+  - name: Optgroup
+    type: string
+    key: optgroup
+    omitEmpty: true
+  - name: Device
+    type: SelectedMap
+    key: if
+  - name: Lock
+    type: string
+    key: lock
+  - name: Enabled
+    type: string
+    key: enable
+  - name: BlockPrivate
+    type: string
+    key: blockpriv
+  - name: BlockBogons
+    type: string
+    key: blockbogons
+  - name: GatewayInterface
+    type: string
+    key: gateway_interface
+  - name: Promiscuous
+    type: string
+    key: promisc
+  - name: SpoofMAC
+    type: string
+    key: spoofmac
+  - name: MTU
+    type: string
+    key: mtu
+  - name: MSS
+    type: string
+    key: mss
+  - name: IPv4Mode
+    type: SelectedMap
+    key: type
+  - name: DHCPHostname
+    type: string
+    key: dhcphostname
+  - name: DHCPAliasAddress
+    type: string
+    key: alias-address
+  - name: DHCPAliasPrefix
+    type: string
+    key: alias-subnet
+  - name: DHCPRejectFrom
+    type: string
+    key: dhcprejectfrom
+  - name: IPv6Mode
+    type: SelectedMap
+    key: type6
+  - name: DHCP6IAPDLength
+    type: string
+    key: dhcp6-ia-pd-len
+  - name: DHCP6IAPDSendHint
+    type: string
+    key: dhcp6-ia-pd-send-hint
+  - name: DHCP6PrefixOnly
+    type: string
+    key: dhcp6prefixonly
+  - name: DHCP6UseIPv4Interface
+    type: string
+    key: dhcp6usev4iface
+  - name: DHCP6VLANPriority
+    type: string
+    key: dhcp6vlanprio
+  - name: Track6Interface
+    type: string
+    key: track6-interface
+  - name: Track6PrefixID
+    type: string
+    key: track6-prefix-id
+  - name: Track6AssociatedPD
+    type: string
+    key: track6_assoc_pd
+  - name: IPv4Address
+    type: string
+    key: ipaddr
+  - name: IPv4Prefix
+    type: string
+    key: subnet
+  - name: IPv4Gateway
+    type: string
+    key: gateway
+  - name: IPv6Address
+    type: string
+    key: ipaddrv6
+  - name: IPv6Prefix
+    type: string
+    key: subnetv6
+  - name: IPv6Gateway
+    type: string
+    key: gatewayv6
+- name: Vlan
+  filename: vlan
+  monad: vlan
+  endpoints:
+    add: /interfaces/vlan_settings/add_item
+    get: /interfaces/vlan_settings/get_item
+    update: /interfaces/vlan_settings/set_item
+    delete: /interfaces/vlan_settings/del_item
+    search: /interfaces/vlan_settings/search_item
+    reconfigure: /interfaces/vlan_settings/reconfigure
+  attrs:
+  - name: UUID
+    type: string
+    key: uuid
+    omitEmpty: true
+  - name: Description
+    type: string
+    key: descr
+  - name: Tag
+    type: string
+    key: tag
+  - name: Priority
+    type: SelectedMap
+    key: pcp
+  - name: Protocol
+    type: SelectedMap
+    key: proto
+  - name: Parent
+    type: SelectedMap
+    key: if
+  - name: Device
+    type: string
+    key: vlanif
+- name: Vxlan
+  filename: vxlan
+  monad: vxlan
+  endpoints:
+    add: /interfaces/vxlan_settings/add_item
+    get: /interfaces/vxlan_settings/get_item
+    update: /interfaces/vxlan_settings/set_item
+    delete: /interfaces/vxlan_settings/del_item
+    search: /interfaces/vxlan_settings/search_item
+    reconfigure: /interfaces/vxlan_settings/reconfigure
+  attrs:
+  - name: UUID
+    type: string
+    key: uuid
+    omitEmpty: true
+  - name: DeviceID
+    type: string
+    key: deviceId
+    omitEmpty: true
+  - name: VNI
+    type: string
+    key: vxlanid
+  - name: LocalAddress
+    type: string
+    key: vxlanlocal
+  - name: LocalPort
+    type: string
+    key: vxlanlocalport
+  - name: RemoteAddress
+    type: string
+    key: vxlanremote
+  - name: RemotePort
+    type: string
+    key: vxlanremoteport
+  - name: MulticastGroup
+    type: string
+    key: vxlangroup
+  - name: PhysicalInterface
+    type: SelectedMap
+    key: vxlandev
+- name: Bridge
+  filename: bridge
+  monad: bridge
+  endpoints:
+    add: /interfaces/bridge_settings/add_item
+    get: /interfaces/bridge_settings/get_item
+    update: /interfaces/bridge_settings/set_item
+    delete: /interfaces/bridge_settings/del_item
+    search: /interfaces/bridge_settings/search_item
+    reconfigure: /interfaces/bridge_settings/reconfigure
+  attrs:
+  - name: UUID
+    type: string
+    key: uuid
+    omitEmpty: true
+  - name: Device
+    type: string
+    key: bridgeif
+  - name: Members
+    type: SelectedMapList
+    key: members
+  - name: LinkLocal
+    type: string
+    key: linklocal
+  - name: EnableSTP
+    type: string
+    key: enablestp
+  - name: Protocol
+    type: SelectedMap
+    key: proto
+  - name: STPMembers
+    type: SelectedMapList
+    key: stp
+  - name: MaxAge
+    type: string
+    key: maxage
+  - name: ForwardDelay
+    type: string
+    key: fwdelay
+  - name: HoldCount
+    type: string
+    key: holdcnt
+  - name: MaxAddresses
+    type: string
+    key: maxaddr
+  - name: Timeout
+    type: string
+    key: timeout
+  - name: Span
+    type: SelectedMap
+    key: span
+  - name: Edge
+    type: SelectedMapList
+    key: edge
+  - name: AutoEdge
+    type: SelectedMapList
+    key: autoedge
+  - name: PointToPoint
+    type: SelectedMapList
+    key: ptp
+  - name: AutoPointToPoint
+    type: SelectedMapList
+    key: autoptp
+  - name: Static
+    type: SelectedMapList
+    key: static
+  - name: Private
+    type: SelectedMapList
+    key: private
+  - name: Description
+    type: string
+    key: descr
+- name: Lagg
+  filename: lagg
+  monad: lagg
+  endpoints:
+    add: /interfaces/lagg_settings/add_item
+    get: /interfaces/lagg_settings/get_item
+    update: /interfaces/lagg_settings/set_item
+    delete: /interfaces/lagg_settings/del_item
+    search: /interfaces/lagg_settings/search_item
+    reconfigure: /interfaces/lagg_settings/reconfigure
+  attrs:
+  - name: UUID
+    type: string
+    key: uuid
+    omitEmpty: true
+  - name: Device
+    type: string
+    key: laggif
+  - name: Members
+    type: SelectedMapList
+    key: members
+  - name: PrimaryMember
+    type: SelectedMap
+    key: primary_member
+    omitEmpty: true
+  - name: Protocol
+    type: SelectedMap
+    key: proto
+  - name: LACPFastTimeout
+    type: string
+    key: lacp_fast_timeout
+  - name: UseFlowID
+    type: SelectedMap
+    key: use_flowid
+  - name: HashLayers
+    type: SelectedMapList
+    key: lagghash
+  - name: LACPStrict
+    type: SelectedMap
+    key: lacp_strict
+  - name: MTU
+    type: string
+    key: mtu
+  - name: Description
+    type: string
+    key: descr
+- name: Gre
+  filename: gre
+  monad: gre
+  endpoints:
+    add: /interfaces/gre_settings/add_item
+    get: /interfaces/gre_settings/get_item
+    update: /interfaces/gre_settings/set_item
+    delete: /interfaces/gre_settings/del_item
+    search: /interfaces/gre_settings/search_item
+    reconfigure: /interfaces/gre_settings/reconfigure
+  attrs:
+  - name: UUID
+    type: string
+    key: uuid
+    omitEmpty: true
+  - name: LocalAddress
+    type: string
+    key: local-addr
+  - name: Interface
+    type: string
+    key: if
+    omitEmpty: true
+  - name: IPAddress
+    type: string
+    key: ipaddr
+    omitEmpty: true
+  - name: Device
+    type: string
+    key: greif
+    omitEmpty: true
+  - name: RemoteAddress
+    type: string
+    key: remote-addr
+  - name: TunnelLocalAddress
+    type: string
+    key: tunnel-local-addr
+  - name: TunnelRemoteAddress
+    type: string
+    key: tunnel-remote-addr
+  - name: TunnelRemotePrefix
+    type: string
+    key: tunnel-remote-net
+  - name: Description
+    type: string
+    key: descr
+- name: Gif
+  filename: gif
+  monad: gif
+  endpoints:
+    add: /interfaces/gif_settings/add_item
+    get: /interfaces/gif_settings/get_item
+    update: /interfaces/gif_settings/set_item
+    delete: /interfaces/gif_settings/del_item
+    search: /interfaces/gif_settings/search_item
+    reconfigure: /interfaces/gif_settings/reconfigure
+  attrs:
+  - name: UUID
+    type: string
+    key: uuid
+    omitEmpty: true
+  - name: LocalAddress
+    type: string
+    key: local-addr
+  - name: Interface
+    type: string
+    key: if
+    omitEmpty: true
+  - name: IPAddress
+    type: string
+    key: ipaddr
+    omitEmpty: true
+  - name: Device
+    type: string
+    key: gifif
+    omitEmpty: true
+  - name: RemoteAddress
+    type: string
+    key: remote-addr
+  - name: TunnelLocalAddress
+    type: string
+    key: tunnel-local-addr
+  - name: TunnelRemoteAddress
+    type: string
+    key: tunnel-remote-addr
+  - name: TunnelRemotePrefix
+    type: string
+    key: tunnel-remote-net
+  - name: Description
+    type: string
+    key: descr
+  - name: ECNFriendly
+    type: string
+    key: link1
+  - name: IngressFiltering
+    type: string
+    key: link2
+- name: Loopback
+  filename: loopback
+  monad: loopback
+  endpoints:
+    add: /interfaces/loopback_settings/add_item
+    get: /interfaces/loopback_settings/get_item
+    update: /interfaces/loopback_settings/set_item
+    delete: /interfaces/loopback_settings/del_item
+    search: /interfaces/loopback_settings/search_item
+    reconfigure: /interfaces/loopback_settings/reconfigure
+  attrs:
+  - name: UUID
+    type: string
+    key: uuid
+    omitEmpty: true
+  - name: DeviceID
+    type: string
+    key: deviceId
+    omitEmpty: true
+  - name: Description
+    type: string
+    key: description
+- name: Neighbor
+  filename: neighbor
+  monad: neighbor
+  endpoints:
+    add: /interfaces/neighbor_settings/add_item
+    get: /interfaces/neighbor_settings/get_item
+    update: /interfaces/neighbor_settings/set_item
+    delete: /interfaces/neighbor_settings/del_item
+    search: /interfaces/neighbor_settings/search_item
+    reconfigure: /interfaces/neighbor_settings/reconfigure
+  attrs:
+  - name: UUID
+    type: string
+    key: uuid
+    omitEmpty: true
+  - name: MACAddress
+    type: string
+    key: etheraddr
+  - name: IPAddress
+    type: string
+    key: ipaddress
+  - name: Description
+    type: string
+    key: descr
+  - name: Origin
+    type: string
+    key: origin
+    omitEmpty: true
+- name: Vip
+  filename: vip
+  monad: vip
+  endpoints:
+    add: /interfaces/vip_settings/add_item
+    get: /interfaces/vip_settings/get_item
+    update: /interfaces/vip_settings/set_item
+    delete: /interfaces/vip_settings/del_item
+    search: /interfaces/vip_settings/search_item
+    reconfigure: /interfaces/vip_settings/reconfigure
+  attrs:
+  - name: UUID
+    type: string
+    key: uuid
+    omitEmpty: true
+  - name: Interface
+    type: SelectedMap
+    key: interface
+  - name: Mode
+    type: SelectedMap
+    key: mode
+  - name: Network
+    type: string
+    key: network
+  - name: Gateway
+    type: string
+    key: gateway
+  - name: NoExpand
+    type: string
+    key: noexpand
+  - name: NoBind
+    type: string
+    key: nobind
+  - name: Password
+    type: string
+    key: password
+  - name: VHID
+    type: string
+    key: vhid
+  - name: AdvertisementBase
+    type: string
+    key: advbase
+  - name: AdvertisementSkew
+    type: string
+    key: advskew
+  - name: PeerIPv4
+    type: string
+    key: peer
+  - name: PeerIPv6
+    type: string
+    key: peer6
+  - name: NoSync
+    type: string
+    key: nosync
+  - name: Address
+    type: string
+    key: address
+    omitEmpty: true
+  - name: VHIDText
+    type: string
+    key: vhid_txt
+    omitEmpty: true
+  - name: Description
+    type: string
+    key: descr
 rpc:
   - name: "Overview"
     filename: overview
@@ -927,8 +1362,135 @@ rpc:
           type: string
           key: parent
           omitEmpty: true
+      InterfaceDetailValue:
+        - name: Value
+          type: interface{}
+          key: value
+        - name: Translation
+          type: string
+          key: translation
+      InterfaceDetailsResult:
+        - name: Message
+          type: interface{}
+          key: message
+      InterfaceReloadResult:
+        - name: Message
+          type: string
+          key: message
     rpc_calls:
       - name: "Get"
         method: "GET"
         endpoint: "/interfaces/overview/interfaces_info"
         result_type: "InterfacesInfoResponse"
+      - name: "GetDetailed"
+        method: "GET"
+        endpoint: "/interfaces/overview/interfaces_info/true"
+        result_type: "InterfacesInfoResponse"
+      - name: "GetInterface"
+        method: "GET"
+        endpoint: "/interfaces/overview/get_interface"
+        params:
+          - name: ifname
+            optional: false
+        result_type: "InterfaceDetailsResult"
+      - name: "ReloadInterface"
+        method: "POST"
+        endpoint: "/interfaces/overview/reload_interface"
+        params:
+          - name: identifier
+            optional: false
+        result_type: "InterfaceReloadResult"
+      - name: "Export"
+        method: "GET"
+        endpoint: "/interfaces/overview/export"
+        result_type: "[]InterfaceInfo"
+
+  - name: "Settings"
+    filename: settings
+    customTypes:
+      InterfaceSettings:
+        - name: DisableChecksumOffloading
+          type: string
+          key: disablechecksumoffloading
+        - name: DisableSegmentationOffloading
+          type: string
+          key: disablesegmentationoffloading
+        - name: DisableLargeReceiveOffloading
+          type: string
+          key: disablelargereceiveoffloading
+        - name: VLANHardwareFiltering
+          type: SelectedMap
+          key: disablevlanhwfilter
+        - name: DisableIPv6
+          type: string
+          key: disableipv6
+        - name: DHCP6NoRelease
+          type: string
+          key: dhcp6_norelease
+        - name: DHCP6Debug
+          type: string
+          key: dhcp6_debug
+        - name: DHCP6DUID
+          type: string
+          key: dhcp6_duid
+        - name: DHCP6RATimeout
+          type: string
+          key: dhcp6_ratimeout
+      SettingsGetResult:
+        - name: Settings
+          type: InterfaceSettings
+          key: settings
+        - name: DUIDs
+          type: map[string]string
+          key: duids
+    rpc_calls:
+      - name: "Get"
+        method: "GET"
+        endpoint: "/interfaces/settings/get"
+        result_type: "SettingsGetResult"
+      - name: "Set"
+        method: "POST"
+        endpoint: "/interfaces/settings/set"
+        params:
+          - name: settings
+            optional: false
+            bodyParameter: true
+            customType: InterfaceSettings
+        result_type: "api.ActionResult"
+      - name: "Reconfigure"
+        method: "POST"
+        endpoint: "/interfaces/settings/reconfigure"
+        result_type: "api.ReconfigureStatusResult"
+
+  - name: "GreUtility"
+    filename: gre_utility
+    rpc_calls:
+      - name: "GetIfOptions"
+        method: "GET"
+        endpoint: "/interfaces/gre_settings/get_if_options"
+        result_type: "map[string]interface{}"
+
+  - name: "GifUtility"
+    filename: gif_utility
+    rpc_calls:
+      - name: "GetIfOptions"
+        method: "GET"
+        endpoint: "/interfaces/gif_settings/get_if_options"
+        result_type: "map[string]interface{}"
+
+  - name: "VipUtility"
+    filename: vip_utility
+    customTypes:
+      UnusedVHIDResult:
+        - name: VHID
+          type: int
+          key: vhid
+          omitEmpty: true
+        - name: Status
+          type: string
+          key: status
+    rpc_calls:
+      - name: "GetUnusedVHID"
+        method: "GET"
+        endpoint: "/interfaces/vip_settings/get_unused_vhid"
+        result_type: "UnusedVHIDResult"

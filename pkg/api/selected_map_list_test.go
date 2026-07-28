@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"reflect"
 	"testing"
 )
 
@@ -303,5 +304,16 @@ func TestSelectedMapListNL_String(t *testing.T) {
 				t.Errorf("Got %s, want %s", result, tt.expected)
 			}
 		})
+	}
+}
+
+func TestSelectedMapListUnmarshalDirectString(t *testing.T) {
+	t.Parallel()
+	var value SelectedMapList
+	if err := json.Unmarshal([]byte(`"opt1,lan"`), &value); err != nil {
+		t.Fatalf("Unmarshal() error = %v", err)
+	}
+	if !reflect.DeepEqual([]string(value), []string{"lan", "opt1"}) {
+		t.Fatalf("value = %#v", value)
 	}
 }

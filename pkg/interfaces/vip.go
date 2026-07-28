@@ -9,10 +9,11 @@ import (
 )
 
 var VipOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/vip_settings/addItem",
-	GetEndpoint:         "/interfaces/vip_settings/getItem",
-	UpdateEndpoint:      "/interfaces/vip_settings/setItem",
-	DeleteEndpoint:      "/interfaces/vip_settings/delItem",
+	AddEndpoint:         "/interfaces/vip_settings/add_item",
+	GetEndpoint:         "/interfaces/vip_settings/get_item",
+	UpdateEndpoint:      "/interfaces/vip_settings/set_item",
+	DeleteEndpoint:      "/interfaces/vip_settings/del_item",
+	SearchEndpoint:      "/interfaces/vip_settings/search_item",
 	ReconfigureEndpoint: "/interfaces/vip_settings/reconfigure",
 	Monad:               "vip",
 }
@@ -20,11 +21,23 @@ var VipOpts = api.ReqOpts{
 // Data structs
 
 type Vip struct {
-	Interface   api.SelectedMap `json:"interface"`
-	Mode        api.SelectedMap `json:"mode"`
-	Network     string          `json:"network"`
-	Description string          `json:"descr"`
-	Gateway     string          `json:"gateway"`
+	UUID              string          `json:"uuid,omitempty"`
+	Interface         api.SelectedMap `json:"interface"`
+	Mode              api.SelectedMap `json:"mode"`
+	Network           string          `json:"network"`
+	Gateway           string          `json:"gateway"`
+	NoExpand          string          `json:"noexpand"`
+	NoBind            string          `json:"nobind"`
+	Password          string          `json:"password"`
+	VHID              string          `json:"vhid"`
+	AdvertisementBase string          `json:"advbase"`
+	AdvertisementSkew string          `json:"advskew"`
+	PeerIPv4          string          `json:"peer"`
+	PeerIPv6          string          `json:"peer6"`
+	NoSync            string          `json:"nosync"`
+	Address           string          `json:"address,omitempty"`
+	VHIDText          string          `json:"vhid_txt,omitempty"`
+	Description       string          `json:"descr"`
 }
 
 // CRUD operations
@@ -35,6 +48,10 @@ func (c *Controller) AddVip(ctx context.Context, resource *Vip) (string, error) 
 
 func (c *Controller) GetVip(ctx context.Context, id string) (*Vip, error) {
 	return api.Get(c.Client(), ctx, VipOpts, &Vip{}, id)
+}
+
+func (c *Controller) SearchVip(ctx context.Context) (*api.SearchResponse[Vip], error) {
+	return api.Search[Vip](c.Client(), ctx, VipOpts.SearchEndpoint)
 }
 
 func (c *Controller) UpdateVip(ctx context.Context, id string, resource *Vip) error {
