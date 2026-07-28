@@ -2,7 +2,7 @@
 
 package dyndns
 
-import "github.com/browningluke/opnsense-go/pkg/api"
+import "github.com/biptec/opnsense-go/pkg/api"
 
 const dyndnsReconfigureEndpoint = "/dyndns/service/reconfigure"
 

@@ -2,7 +2,7 @@
 
 package trust
 
-import "github.com/browningluke/opnsense-go/pkg/api"
+import "github.com/biptec/opnsense-go/pkg/api"
 
 // Controller for trust
 type Controller struct {

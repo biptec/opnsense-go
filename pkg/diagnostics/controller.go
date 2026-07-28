@@ -2,7 +2,7 @@
 
 package diagnostics
 
-import "github.com/browningluke/opnsense-go/pkg/api"
+import "github.com/biptec/opnsense-go/pkg/api"
 
 // Controller for diagnostics
 type Controller struct {

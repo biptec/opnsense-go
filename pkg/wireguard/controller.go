@@ -2,7 +2,7 @@
 
 package wireguard
 
-import "github.com/browningluke/opnsense-go/pkg/api"
+import "github.com/biptec/opnsense-go/pkg/api"
 
 const wireguardReconfigureEndpoint = "/wireguard/service/reconfigure"
 

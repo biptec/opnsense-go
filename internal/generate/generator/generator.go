@@ -7,8 +7,16 @@ import (
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"os"
+	"strings"
 	"text/template"
 )
+
+func lowerFirst(value string) string {
+	if value == "" {
+		return value
+	}
+	return strings.ToLower(value[:1]) + value[1:]
+}
 
 type Generator struct {
 	filename string
@@ -26,7 +34,8 @@ func parseTemplate(body string, data any) ([]byte, error) {
 	tmpl, err := template.New("gen").
 		Funcs(
 			template.FuncMap{
-				"ToTitle": cases.Title(language.English).String,
+				"ToTitle":    cases.Title(language.English).String,
+				"LowerFirst": lowerFirst,
 			}).
 		Parse(body)
 	if err != nil {

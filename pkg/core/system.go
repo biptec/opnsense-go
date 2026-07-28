@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/browningluke/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 // Data structs
@@ -43,7 +43,7 @@ func (c *Controller) SystemHalt(ctx context.Context) (*api.ActionResult, error) 
 	resultData := &api.ActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Halt call failed: %w", err)
+		return nil, fmt.Errorf("halt call failed: %w", err)
 	}
 	return result, nil
 }
@@ -66,7 +66,7 @@ func (c *Controller) SystemReboot(ctx context.Context) (*api.ActionResult, error
 	resultData := &api.ActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Reboot call failed: %w", err)
+		return nil, fmt.Errorf("reboot call failed: %w", err)
 	}
 	return result, nil
 }
@@ -89,7 +89,7 @@ func (c *Controller) SystemStatus(ctx context.Context) (*SystemStatus, error) {
 	resultData := &SystemStatus{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("Status call failed: %w", err)
+		return nil, fmt.Errorf("status call failed: %w", err)
 	}
 	return result, nil
 }
@@ -114,7 +114,7 @@ func (c *Controller) SystemDismissStatus(ctx context.Context, subject string) (*
 	resultData := &api.ActionResult{}
 	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
 	if err != nil {
-		return nil, fmt.Errorf("DismissStatus call failed: %w", err)
+		return nil, fmt.Errorf("dismissStatus call failed: %w", err)
 	}
 	return result, nil
 }
