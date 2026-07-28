@@ -338,3 +338,77 @@ resources:
       - name: Color
         type: string
         key: color
+
+  - name: Group
+    filename: group
+    monad: group
+    endpoints:
+      add: "/firewall/group/addItem"
+      get: "/firewall/group/getItem"
+      update: "/firewall/group/setItem"
+      delete: "/firewall/group/delItem"
+      search: "/firewall/group/searchItem"
+      reconfigure: "/firewall/group/reconfigure"
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
+      - name: Name
+        type: string
+        key: ifname
+      - name: Members
+        type: SelectedMapList
+        key: members
+      - name: NoGroup
+        type: string
+        key: nogroup
+      - name: Sequence
+        type: string
+        key: sequence
+      - name: Description
+        type: string
+        key: descr
+
+  - name: Npt
+    filename: npt
+    monad: rule
+    endpoints:
+      add: "/firewall/npt/addRule"
+      get: "/firewall/npt/getRule"
+      update: "/firewall/npt/setRule"
+      delete: "/firewall/npt/delRule"
+      search: "/firewall/npt/searchRule"
+      reconfigure: "/firewall/npt/apply"
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: Log
+        type: string
+        key: log
+      - name: Sequence
+        type: string
+        key: sequence
+      - name: Categories
+        type: SelectedMapList
+        key: categories
+      - name: Description
+        type: string
+        key: description
+      - name: Interface
+        type: SelectedMap
+        key: interface
+      - name: SourceNet
+        type: string
+        key: source_net
+      - name: DestinationNet
+        type: string
+        key: destination_net
+      - name: TrackInterface
+        type: SelectedMap
+        key: trackif
