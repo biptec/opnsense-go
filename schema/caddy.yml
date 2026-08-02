@@ -1,0 +1,390 @@
+---
+name: caddy
+reconfigureEndpoint: "/caddy/service/reconfigure"
+resources:
+  - name: Domain
+    filename: domain
+    monad: reverse
+    endpoints:
+      add: "/caddy/reverse_proxy/add_reverse_proxy"
+      get: "/caddy/reverse_proxy/get_reverse_proxy"
+      update: "/caddy/reverse_proxy/set_reverse_proxy"
+      delete: "/caddy/reverse_proxy/del_reverse_proxy"
+      search: "/caddy/reverse_proxy/search_reverse_proxy"
+    attrs:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: Domain
+        type: string
+        key: FromDomain
+      - name: Port
+        type: string
+        key: FromPort
+      - name: AccessList
+        type: SelectedMap
+        key: accesslist
+      - name: BasicAuth
+        type: SelectedMapList
+        key: basicauth
+      - name: Description
+        type: string
+        key: description
+      - name: DNSChallenge
+        type: string
+        key: DnsChallenge
+      - name: DNSChallengeOverrideDomain
+        type: string
+        key: DnsChallengeOverrideDomain
+      - name: CustomCertificate
+        type: SelectedMap
+        key: CustomCertificate
+      - name: AccessLog
+        type: string
+        key: AccessLog
+      - name: DynamicDNS
+        type: string
+        key: DynDns
+      - name: ACMEPassthrough
+        type: string
+        key: AcmePassthrough
+      - name: DisableTLS
+        type: SelectedMap
+        key: DisableTls
+      - name: ClientAuthMode
+        type: SelectedMap
+        key: ClientAuthMode
+      - name: ClientAuthTrustPool
+        type: SelectedMapList
+        key: ClientAuthTrustPool
+
+  - name: Handler
+    filename: handler
+    monad: handle
+    endpoints:
+      add: "/caddy/reverse_proxy/add_handle"
+      get: "/caddy/reverse_proxy/get_handle"
+      update: "/caddy/reverse_proxy/set_handle"
+      delete: "/caddy/reverse_proxy/del_handle"
+      search: "/caddy/reverse_proxy/search_handle"
+    attrs:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: Domain
+        type: SelectedMap
+        key: reverse
+      - name: Subdomain
+        type: SelectedMap
+        key: subdomain
+      - name: Type
+        type: SelectedMap
+        key: HandleType
+      - name: Path
+        type: string
+        key: HandlePath
+      - name: AccessList
+        type: SelectedMap
+        key: accesslist
+      - name: BasicAuth
+        type: SelectedMapList
+        key: basicauth
+      - name: Headers
+        type: SelectedMapList
+        key: header
+      - name: Directive
+        type: SelectedMap
+        key: HandleDirective
+      - name: UpstreamDomains
+        type: SelectedMapList
+        key: ToDomain
+      - name: UpstreamPort
+        type: string
+        key: ToPort
+      - name: UpstreamPath
+        type: string
+        key: ToPath
+      - name: ForwardAuth
+        type: string
+        key: ForwardAuth
+      - name: UpstreamProtocol
+        type: SelectedMap
+        key: HttpTls
+      - name: HTTPVersion
+        type: SelectedMap
+        key: HttpVersion
+      - name: HTTPKeepalive
+        type: string
+        key: HttpKeepalive
+      - name: TLSSkipVerify
+        type: string
+        key: HttpTlsInsecureSkipVerify
+      - name: TLSTrustPool
+        type: SelectedMap
+        key: HttpTlsTrustedCaCerts
+      - name: TLSServerName
+        type: string
+        key: HttpTlsServerName
+      - name: LoadBalancingPolicy
+        type: SelectedMap
+        key: lb_policy
+      - name: LoadBalancingRetries
+        type: string
+        key: lb_retries
+      - name: LoadBalancingTryDuration
+        type: string
+        key: lb_try_duration
+      - name: LoadBalancingTryInterval
+        type: string
+        key: lb_try_interval
+      - name: PassiveHealthFailDuration
+        type: string
+        key: PassiveHealthFailDuration
+      - name: PassiveHealthMaxFails
+        type: string
+        key: PassiveHealthMaxFails
+      - name: PassiveHealthUnhealthyStatus
+        type: string
+        key: PassiveHealthUnhealthyStatus
+      - name: PassiveHealthUnhealthyLatency
+        type: string
+        key: PassiveHealthUnhealthyLatency
+      - name: PassiveHealthUnhealthyRequestCount
+        type: string
+        key: PassiveHealthUnhealthyRequestCount
+      - name: HealthURI
+        type: string
+        key: health_uri
+      - name: HealthUpstream
+        type: string
+        key: health_upstream
+      - name: HealthPort
+        type: string
+        key: health_port
+      - name: HealthInterval
+        type: string
+        key: health_interval
+      - name: HealthPasses
+        type: string
+        key: health_passes
+      - name: HealthFails
+        type: string
+        key: health_fails
+      - name: HealthTimeout
+        type: string
+        key: health_timeout
+      - name: HealthStatus
+        type: string
+        key: health_status
+      - name: HealthBody
+        type: string
+        key: health_body
+      - name: HealthFollowRedirects
+        type: string
+        key: health_follow_redirects
+      - name: Description
+        type: string
+        key: description
+
+  - name: AccessList
+    filename: access_list
+    monad: accesslist
+    endpoints:
+      add: "/caddy/reverse_proxy/add_access_list"
+      get: "/caddy/reverse_proxy/get_access_list"
+      update: "/caddy/reverse_proxy/set_access_list"
+      delete: "/caddy/reverse_proxy/del_access_list"
+      search: "/caddy/reverse_proxy/search_access_list"
+    attrs:
+      - name: Name
+        type: string
+        key: accesslistName
+      - name: ClientIPs
+        type: SelectedMapList
+        key: clientIps
+      - name: Invert
+        type: string
+        key: accesslistInvert
+      - name: HTTPResponseCode
+        type: string
+        key: HttpResponseCode
+      - name: HTTPResponseMessage
+        type: string
+        key: HttpResponseMessage
+      - name: RequestMatcher
+        type: SelectedMap
+        key: RequestMatcher
+      - name: Description
+        type: string
+        key: description
+
+rpc:
+  - name: Settings
+    filename: settings
+    customTypes:
+      SettingsResponse:
+        - name: Caddy
+          type: Settings
+          key: caddy
+      Settings:
+        - name: General
+          type: GeneralSettings
+          key: general
+      GeneralSettings:
+        - name: Enabled
+          type: string
+          key: enabled
+        - name: EnableLayer4
+          type: string
+          key: EnableLayer4
+        - name: HTTPPort
+          type: string
+          key: HttpPort
+        - name: HTTPSPort
+          type: string
+          key: HttpsPort
+        - name: ACMEEmail
+          type: string
+          key: TlsEmail
+        - name: AutoHTTPS
+          type: SelectedMap
+          key: TlsAutoHttps
+        - name: DNSProvider
+          type: SelectedMap
+          key: TlsDnsProvider
+        - name: DNSAPIKey
+          type: string
+          key: TlsDnsApiKey
+        - name: DNSPropagationTimeoutDisabled
+          type: string
+          key: TlsDnsPropagationTimeout
+        - name: DNSPropagationTimeout
+          type: string
+          key: TlsDnsPropagationTimeoutPeriod
+        - name: DNSPropagationDelay
+          type: string
+          key: TlsDnsPropagationDelay
+        - name: DNSPropagationResolvers
+          type: string
+          key: TlsDnsPropagationResolvers
+        - name: DNSECHDomain
+          type: string
+          key: TlsDnsEchDomain
+        - name: AccessList
+          type: SelectedMap
+          key: accesslist
+        - name: ClientIPHeaders
+          type: SelectedMapList
+          key: ClientIpHeaders
+        - name: RunAsUser
+          type: SelectedMap
+          key: DisableSuperuser
+        - name: GracePeriod
+          type: string
+          key: GracePeriod
+        - name: HTTPVersions
+          type: SelectedMapList
+          key: HttpVersions
+        - name: ReadBodyTimeout
+          type: string
+          key: timeout_read_body
+        - name: ReadHeaderTimeout
+          type: string
+          key: timeout_read_header
+        - name: WriteTimeout
+          type: string
+          key: timeout_write
+        - name: IdleTimeout
+          type: string
+          key: timeout_idle
+        - name: LogCredentials
+          type: string
+          key: LogCredentials
+        - name: PlainAccessLog
+          type: string
+          key: LogAccessPlain
+        - name: PlainAccessLogKeep
+          type: string
+          key: LogAccessPlainKeep
+        - name: LogLevel
+          type: SelectedMap
+          key: LogLevel
+        - name: DynamicDNSSimpleHTTP
+          type: string
+          key: DynDnsSimpleHttp
+        - name: DynamicDNSInterface
+          type: SelectedMap
+          key: DynDnsInterface
+        - name: DynamicDNSInterval
+          type: string
+          key: DynDnsInterval
+        - name: DynamicDNSIPVersions
+          type: SelectedMap
+          key: DynDnsIpVersions
+        - name: DynamicDNSTTL
+          type: string
+          key: DynDnsTtl
+        - name: DynamicDNSUpdateOnly
+          type: string
+          key: DynDnsUpdateOnly
+        - name: AuthProvider
+          type: SelectedMap
+          key: AuthProvider
+        - name: AuthUpstreamDomain
+          type: string
+          key: AuthToDomain
+        - name: AuthUpstreamPort
+          type: string
+          key: AuthToPort
+        - name: AuthUpstreamProtocol
+          type: SelectedMap
+          key: AuthToTls
+        - name: AuthUpstreamURI
+          type: string
+          key: AuthToUri
+        - name: AuthCopyHeaders
+          type: SelectedMapList
+          key: CopyHeaders
+    rpc_calls:
+      - name: Get
+        endpoint: "/caddy/general/get"
+        method: GET
+        result_type: SettingsResponse
+      - name: Set
+        endpoint: "/caddy/general/set"
+        method: POST
+        params:
+          - name: caddy
+            optional: false
+            bodyParameter: true
+            customType: Settings
+        result_type: api.ActionResult
+
+  - name: Service
+    filename: service
+    customTypes:
+      ServiceStatus:
+        - name: Status
+          type: string
+          key: status
+    rpc_calls:
+      - name: Status
+        endpoint: "/caddy/service/status"
+        method: GET
+        result_type: ServiceStatus
+      - name: Reconfigure
+        endpoint: "/caddy/service/reconfigure"
+        method: POST
+        result_type: api.ReconfigureStatusResult
+      - name: Start
+        endpoint: "/caddy/service/start"
+        method: POST
+        result_type: api.ActionResult
+      - name: Stop
+        endpoint: "/caddy/service/stop"
+        method: POST
+        result_type: api.ActionResult
+      - name: Restart
+        endpoint: "/caddy/service/restart"
+        method: POST
+        result_type: api.ActionResult
