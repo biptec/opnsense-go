@@ -10,8 +10,13 @@ resources:
       get: "/trust/ca/get"
       update: "/trust/ca/set"
       delete: "/trust/ca/del"
+      search: "/trust/ca/search"
       reconfigure: "null"
     attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
       - name: RefId
         type: string
         key: refid
@@ -101,8 +106,13 @@ resources:
       get: "/trust/cert/get"
       update: "/trust/cert/set"
       delete: "/trust/cert/del"
+      search: "/trust/cert/search"
       reconfigure: "null"
     attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
       - name: RefId
         type: string
         key: refid

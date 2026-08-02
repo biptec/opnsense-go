@@ -13,6 +13,7 @@ var CertOpts = api.ReqOpts{
 	GetEndpoint:         "/trust/cert/get",
 	UpdateEndpoint:      "/trust/cert/set",
 	DeleteEndpoint:      "/trust/cert/del",
+	SearchEndpoint:      "/trust/cert/search",
 	ReconfigureEndpoint: "",
 	Monad:               "cert",
 }
@@ -20,6 +21,7 @@ var CertOpts = api.ReqOpts{
 // Data structs
 
 type Cert struct {
+	UUID               string          `json:"uuid,omitempty"`
 	RefId              string          `json:"refid,omitempty"`
 	Description        string          `json:"descr"`
 	CaRef              api.SelectedMap `json:"caref"`
@@ -63,6 +65,10 @@ func (c *Controller) AddCert(ctx context.Context, resource *Cert) (string, error
 
 func (c *Controller) GetCert(ctx context.Context, id string) (*Cert, error) {
 	return api.Get(c.Client(), ctx, CertOpts, &Cert{}, id)
+}
+
+func (c *Controller) SearchCert(ctx context.Context) (*api.SearchResponse[Cert], error) {
+	return api.Search[Cert](c.Client(), ctx, CertOpts.SearchEndpoint)
 }
 
 func (c *Controller) UpdateCert(ctx context.Context, id string, resource *Cert) error {

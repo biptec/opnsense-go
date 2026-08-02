@@ -57,6 +57,21 @@ func TestCa(t *testing.T) {
 		t.Fatal("CrtPayload should be populated after creation")
 	}
 
+	search, err := controller.SearchCa(ctx)
+	if err != nil {
+		t.Fatalf("SearchCa failed: %v", err)
+	}
+	found := false
+	for _, item := range search.Rows {
+		if item.UUID == id {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Fatalf("created CA %s not found in SearchCa", id)
+	}
+
 	ca.Description = "test-ca-updated"
 	err = controller.UpdateCa(ctx, id, ca)
 	if err != nil {

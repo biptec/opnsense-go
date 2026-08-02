@@ -12,6 +12,10 @@ resources:
       delete: "/caddy/reverse_proxy/del_reverse_proxy"
       search: "/caddy/reverse_proxy/search_reverse_proxy"
     attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
       - name: Enabled
         type: string
         key: enabled
@@ -68,6 +72,10 @@ resources:
       delete: "/caddy/reverse_proxy/del_handle"
       search: "/caddy/reverse_proxy/search_handle"
     attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
       - name: Enabled
         type: string
         key: enabled
@@ -196,6 +204,10 @@ resources:
       delete: "/caddy/reverse_proxy/del_access_list"
       search: "/caddy/reverse_proxy/search_access_list"
     attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
       - name: Name
         type: string
         key: accesslistName

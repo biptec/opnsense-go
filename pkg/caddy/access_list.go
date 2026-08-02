@@ -21,6 +21,7 @@ var AccessListOpts = api.ReqOpts{
 // Data structs
 
 type AccessList struct {
+	UUID                string              `json:"uuid,omitempty"`
 	Name                string              `json:"accesslistName"`
 	ClientIPs           api.SelectedMapList `json:"clientIps"`
 	Invert              string              `json:"accesslistInvert"`

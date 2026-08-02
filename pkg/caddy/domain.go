@@ -21,6 +21,7 @@ var DomainOpts = api.ReqOpts{
 // Data structs
 
 type Domain struct {
+	UUID                       string              `json:"uuid,omitempty"`
 	Enabled                    string              `json:"enabled"`
 	Domain                     string              `json:"FromDomain"`
 	Port                       string              `json:"FromPort"`

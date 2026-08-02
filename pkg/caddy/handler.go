@@ -21,6 +21,7 @@ var HandlerOpts = api.ReqOpts{
 // Data structs
 
 type Handler struct {
+	UUID                               string              `json:"uuid,omitempty"`
 	Enabled                            string              `json:"enabled"`
 	Domain                             api.SelectedMap     `json:"reverse"`
 	Subdomain                          api.SelectedMap     `json:"subdomain"`
