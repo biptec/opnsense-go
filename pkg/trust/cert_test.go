@@ -71,6 +71,21 @@ func TestCert(t *testing.T) {
 		t.Fatal("CrtPayload should be populated")
 	}
 
+	search, err := controller.SearchCert(ctx)
+	if err != nil {
+		t.Fatalf("SearchCert failed: %v", err)
+	}
+	found := false
+	for _, item := range search.Rows {
+		if item.UUID == certID {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Fatalf("created certificate %s not found in SearchCert", certID)
+	}
+
 	cert.Description = "test-cert-updated"
 	err = controller.UpdateCert(ctx, certID, cert)
 	if err != nil {

@@ -6,6 +6,7 @@ import (
 	"github.com/biptec/opnsense-go/pkg/api"
 	"github.com/biptec/opnsense-go/pkg/auth"
 	"github.com/biptec/opnsense-go/pkg/bind"
+	"github.com/biptec/opnsense-go/pkg/caddy"
 	"github.com/biptec/opnsense-go/pkg/core"
 	"github.com/biptec/opnsense-go/pkg/cron"
 	"github.com/biptec/opnsense-go/pkg/diagnostics"
@@ -28,6 +29,7 @@ import (
 type Client interface {
 	Auth() *auth.Controller
 	Bind() *bind.Controller
+	Caddy() *caddy.Controller
 	Core() *core.Controller
 	Cron() *cron.Controller
 	Diagnostics() *diagnostics.Controller
@@ -61,6 +63,10 @@ func (c *client) Auth() *auth.Controller {
 
 func (c *client) Bind() *bind.Controller {
 	return &bind.Controller{Api: c.a}
+}
+
+func (c *client) Caddy() *caddy.Controller {
+	return &caddy.Controller{Api: c.a}
 }
 
 func (c *client) Core() *core.Controller {

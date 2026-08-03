@@ -57,7 +57,7 @@ jobs:
               "dnsmasq":  ["dnsmasq"],
               "ipsec":    ["ipsec"],
               "firewall": ["firewall"],
-              "other":    ["api", "auth", "bind", "core", "cron", "diagnostics",
+              "other":    ["api", "auth", "bind", "caddy", "core", "cron", "diagnostics",
                            "dyndns", "interfaces", "kea", "openvpn", "quagga",
                            "routes", "routing", "trust", "unbound", "wireguard"],
           }

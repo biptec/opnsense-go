@@ -13,6 +13,7 @@ var CaOpts = api.ReqOpts{
 	GetEndpoint:         "/trust/ca/get",
 	UpdateEndpoint:      "/trust/ca/set",
 	DeleteEndpoint:      "/trust/ca/del",
+	SearchEndpoint:      "/trust/ca/search",
 	ReconfigureEndpoint: "",
 	Monad:               "ca",
 }
@@ -20,6 +21,7 @@ var CaOpts = api.ReqOpts{
 // Data structs
 
 type Ca struct {
+	UUID               string          `json:"uuid,omitempty"`
 	RefId              string          `json:"refid,omitempty"`
 	Description        string          `json:"descr"`
 	Action             api.SelectedMap `json:"action"`
@@ -54,6 +56,10 @@ func (c *Controller) AddCa(ctx context.Context, resource *Ca) (string, error) {
 
 func (c *Controller) GetCa(ctx context.Context, id string) (*Ca, error) {
 	return api.Get(c.Client(), ctx, CaOpts, &Ca{}, id)
+}
+
+func (c *Controller) SearchCa(ctx context.Context) (*api.SearchResponse[Ca], error) {
+	return api.Search[Ca](c.Client(), ctx, CaOpts.SearchEndpoint)
 }
 
 func (c *Controller) UpdateCa(ctx context.Context, id string, resource *Ca) error {
