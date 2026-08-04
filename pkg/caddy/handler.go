@@ -11,6 +11,7 @@ import (
 var HandlerOpts = api.ReqOpts{
 	AddEndpoint:         "/caddy/reverse_proxy/add_handle",
 	GetEndpoint:         "/caddy/reverse_proxy/get_handle",
+	GetMethod:           "POST",
 	UpdateEndpoint:      "/caddy/reverse_proxy/set_handle",
 	DeleteEndpoint:      "/caddy/reverse_proxy/del_handle",
 	SearchEndpoint:      "/caddy/reverse_proxy/search_handle",

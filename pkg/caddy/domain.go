@@ -11,6 +11,7 @@ import (
 var DomainOpts = api.ReqOpts{
 	AddEndpoint:         "/caddy/reverse_proxy/add_reverse_proxy",
 	GetEndpoint:         "/caddy/reverse_proxy/get_reverse_proxy",
+	GetMethod:           "POST",
 	UpdateEndpoint:      "/caddy/reverse_proxy/set_reverse_proxy",
 	DeleteEndpoint:      "/caddy/reverse_proxy/del_reverse_proxy",
 	SearchEndpoint:      "/caddy/reverse_proxy/search_reverse_proxy",

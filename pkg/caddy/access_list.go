@@ -11,6 +11,7 @@ import (
 var AccessListOpts = api.ReqOpts{
 	AddEndpoint:         "/caddy/reverse_proxy/add_access_list",
 	GetEndpoint:         "/caddy/reverse_proxy/get_access_list",
+	GetMethod:           "POST",
 	UpdateEndpoint:      "/caddy/reverse_proxy/set_access_list",
 	DeleteEndpoint:      "/caddy/reverse_proxy/del_access_list",
 	SearchEndpoint:      "/caddy/reverse_proxy/search_access_list",

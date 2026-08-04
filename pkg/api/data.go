@@ -11,6 +11,7 @@ import (
 type ReqOpts struct {
 	AddEndpoint         string
 	GetEndpoint         string
+	GetMethod           string
 	UpdateEndpoint      string
 	DeleteEndpoint      string
 	SearchEndpoint      string

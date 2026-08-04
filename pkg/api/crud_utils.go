@@ -60,12 +60,21 @@ func set[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, endpo
 	return respJson.UUID, nil
 }
 
-func get(c *Client, ctx context.Context, endpoint string) (map[string]json.RawMessage, error) {
+func get(c *Client, ctx context.Context, endpoint, method string) (map[string]json.RawMessage, error) {
 	// Get generic data
 	var reqData map[string]json.RawMessage
+	if method == "" {
+		method = "GET"
+	}
+	var body any
+	if method == "POST" {
+		// Some OPNsense MVC actions require syntactically valid JSON even
+		// when the request has no logical body.
+		body = map[string]any{}
+	}
 
 	// Make request to OPNsense
-	err := c.doRequest(ctx, "GET", endpoint, nil, &reqData)
+	err := c.doRequest(ctx, method, endpoint, body, &reqData)
 
 	// Handle request errors
 	if err != nil {
@@ -91,7 +100,7 @@ func Update[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, id
 
 func Get[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, id string) (*K, error) {
 	// Get resource data
-	reqData, err := get(c, ctx, fmt.Sprintf("%s/%s", opts.GetEndpoint, id))
+	reqData, err := get(c, ctx, fmt.Sprintf("%s/%s", opts.GetEndpoint, id), opts.GetMethod)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +116,7 @@ func Get[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, id st
 
 func GetFilter[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, key string) (*K, error) {
 	// Get resource data
-	reqData, err := get(c, ctx, opts.GetEndpoint)
+	reqData, err := get(c, ctx, opts.GetEndpoint, opts.GetMethod)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +137,7 @@ func GetFilter[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K,
 
 func GetAll[K any](c *Client, ctx context.Context, opts ReqOpts, resources []K) ([]K, error) {
 	// Get resource data
-	reqData, err := get(c, ctx, opts.GetEndpoint)
+	reqData, err := get(c, ctx, opts.GetEndpoint, opts.GetMethod)
 	if err != nil {
 		return nil, err
 	}

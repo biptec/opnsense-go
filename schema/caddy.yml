@@ -8,6 +8,7 @@ resources:
     endpoints:
       add: "/caddy/reverse_proxy/add_reverse_proxy"
       get: "/caddy/reverse_proxy/get_reverse_proxy"
+      getMethod: POST
       update: "/caddy/reverse_proxy/set_reverse_proxy"
       delete: "/caddy/reverse_proxy/del_reverse_proxy"
       search: "/caddy/reverse_proxy/search_reverse_proxy"
@@ -68,6 +69,7 @@ resources:
     endpoints:
       add: "/caddy/reverse_proxy/add_handle"
       get: "/caddy/reverse_proxy/get_handle"
+      getMethod: POST
       update: "/caddy/reverse_proxy/set_handle"
       delete: "/caddy/reverse_proxy/del_handle"
       search: "/caddy/reverse_proxy/search_handle"
@@ -200,6 +202,7 @@ resources:
     endpoints:
       add: "/caddy/reverse_proxy/add_access_list"
       get: "/caddy/reverse_proxy/get_access_list"
+      getMethod: POST
       update: "/caddy/reverse_proxy/set_access_list"
       delete: "/caddy/reverse_proxy/del_access_list"
       search: "/caddy/reverse_proxy/search_access_list"
@@ -226,6 +229,37 @@ resources:
       - name: RequestMatcher
         type: SelectedMap
         key: RequestMatcher
+      - name: Description
+        type: string
+        key: description
+
+  - name: Header
+    filename: header
+    monad: header
+    endpoints:
+      add: "/caddy/reverse_proxy/add_header"
+      get: "/caddy/reverse_proxy/get_header"
+      getMethod: POST
+      update: "/caddy/reverse_proxy/set_header"
+      delete: "/caddy/reverse_proxy/del_header"
+      search: "/caddy/reverse_proxy/search_header"
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
+      - name: Direction
+        type: SelectedMap
+        key: HeaderUpDown
+      - name: Name
+        type: string
+        key: HeaderType
+      - name: Value
+        type: string
+        key: HeaderValue
+      - name: Replace
+        type: string
+        key: HeaderReplace
       - name: Description
         type: string
         key: description

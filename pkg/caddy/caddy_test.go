@@ -103,6 +103,20 @@ func TestCaddyCRUDContracts(t *testing.T) {
 				"accesslistName": "management", "clientIps": selected("10.0.0.0/24"),
 				"RequestMatcher": selected("client_ip"),
 			}})
+		case "/api/caddy/reverse_proxy/add_header":
+			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved", "uuid": "header-id"})
+		case "/api/caddy/reverse_proxy/get_header/header-id":
+			if r.Method != http.MethodPost {
+				t.Fatalf("get header method = %s, want POST", r.Method)
+			}
+			var body map[string]any
+			if err := json.NewDecoder(r.Body).Decode(&body); err != nil || len(body) != 0 {
+				t.Fatalf("get header body = %#v, %v; want empty JSON object", body, err)
+			}
+			_ = json.NewEncoder(w).Encode(map[string]any{"header": map[string]any{
+				"HeaderUpDown": selected("header_up"), "HeaderType": "Host",
+				"HeaderValue": "{host}", "description": "preserve host",
+			}})
 		case "/api/caddy/service/reconfigure":
 			_ = json.NewEncoder(w).Encode(map[string]any{"status": "ok"})
 		default:
@@ -138,5 +152,16 @@ func TestCaddyCRUDContracts(t *testing.T) {
 	access, err := controller.GetAccessList(ctx, accessID)
 	if err != nil || access.ClientIPs.String() != "10.0.0.0/24" || access.RequestMatcher.String() != "client_ip" {
 		t.Fatalf("GetAccessList() = %+v, %v", access, err)
+	}
+
+	headerID, err := controller.AddHeader(ctx, &Header{
+		Direction: api.SelectedMap("header_up"), Name: "Host", Value: "{host}",
+	})
+	if err != nil || headerID != "header-id" {
+		t.Fatalf("AddHeader() = %q, %v", headerID, err)
+	}
+	header, err := controller.GetHeader(ctx, headerID)
+	if err != nil || header.Direction.String() != "header_up" || header.Name != "Host" || header.Value != "{host}" {
+		t.Fatalf("GetHeader() = %+v, %v", header, err)
 	}
 }

@@ -52,6 +52,7 @@ type ResourceData struct {
 	Endpoints struct {
 		Add         string `yaml:"add"`
 		Get         string `yaml:"get"`
+		GetMethod   string `yaml:"getMethod,omitempty"`
 		Update      string `yaml:"update"`
 		Delete      string `yaml:"delete"`
 		Search      string `yaml:"search,omitempty"`

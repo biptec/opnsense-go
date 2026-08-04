@@ -11,6 +11,9 @@ import (
 var {{ .Resource.Name }}Opts = api.ReqOpts{
 	AddEndpoint:         "{{ .Resource.Endpoints.Add }}",
 	GetEndpoint:         "{{ .Resource.Endpoints.Get }}",
+{{ if not (eq .Resource.Endpoints.GetMethod "") -}}
+	GetMethod:           "{{ .Resource.Endpoints.GetMethod }}",
+{{ end -}}
 	UpdateEndpoint:      "{{ .Resource.Endpoints.Update }}",
 	DeleteEndpoint:      "{{ .Resource.Endpoints.Delete }}",
 {{ if not (eq .Resource.Endpoints.Search "") -}}
