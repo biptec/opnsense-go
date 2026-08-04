@@ -9,12 +9,12 @@ import (
 )
 
 var ReservationV6Opts = api.ReqOpts{
-	AddEndpoint:         "/kea/dhcpv6/add_reservation",
-	GetEndpoint:         "/kea/dhcpv6/get_reservation",
-	UpdateEndpoint:      "/kea/dhcpv6/set_reservation",
-	DeleteEndpoint:      "/kea/dhcpv6/del_reservation",
-	ReconfigureEndpoint: keaReconfigureEndpoint,
-	Monad:               "reservation",
+	Create:      api.Endpoint{Path: "/kea/dhcpv6/add_reservation", Method: "POST"},
+	Read:        api.Endpoint{Path: "/kea/dhcpv6/get_reservation", Method: "GET"},
+	Update:      api.Endpoint{Path: "/kea/dhcpv6/set_reservation", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/kea/dhcpv6/del_reservation", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/kea/service/reconfigure", Method: "POST"},
+	Monad:       "reservation",
 }
 
 // Data structs

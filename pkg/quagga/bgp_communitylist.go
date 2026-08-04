@@ -9,12 +9,12 @@ import (
 )
 
 var BGPCommunityListOpts = api.ReqOpts{
-	AddEndpoint:         "/quagga/bgp/addCommunitylist",
-	GetEndpoint:         "/quagga/bgp/getCommunitylist",
-	UpdateEndpoint:      "/quagga/bgp/setCommunitylist",
-	DeleteEndpoint:      "/quagga/bgp/delCommunitylist",
-	ReconfigureEndpoint: quaggaReconfigureEndpoint,
-	Monad:               "communitylist",
+	Create:      api.Endpoint{Path: "/quagga/bgp/addCommunitylist", Method: "POST"},
+	Read:        api.Endpoint{Path: "/quagga/bgp/getCommunitylist", Method: "GET"},
+	Update:      api.Endpoint{Path: "/quagga/bgp/setCommunitylist", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/quagga/bgp/delCommunitylist", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/quagga/service/reconfigure", Method: "POST"},
+	Monad:       "communitylist",
 }
 
 // Data structs

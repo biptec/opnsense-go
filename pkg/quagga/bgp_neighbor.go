@@ -9,12 +9,12 @@ import (
 )
 
 var BGPNeighborOpts = api.ReqOpts{
-	AddEndpoint:         "/quagga/bgp/addNeighbor",
-	GetEndpoint:         "/quagga/bgp/getNeighbor",
-	UpdateEndpoint:      "/quagga/bgp/setNeighbor",
-	DeleteEndpoint:      "/quagga/bgp/delNeighbor",
-	ReconfigureEndpoint: quaggaReconfigureEndpoint,
-	Monad:               "neighbor",
+	Create:      api.Endpoint{Path: "/quagga/bgp/addNeighbor", Method: "POST"},
+	Read:        api.Endpoint{Path: "/quagga/bgp/getNeighbor", Method: "GET"},
+	Update:      api.Endpoint{Path: "/quagga/bgp/setNeighbor", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/quagga/bgp/delNeighbor", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/quagga/service/reconfigure", Method: "POST"},
+	Monad:       "neighbor",
 }
 
 // Data structs

@@ -9,13 +9,13 @@ import (
 )
 
 var VipOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/vip_settings/add_item",
-	GetEndpoint:         "/interfaces/vip_settings/get_item",
-	UpdateEndpoint:      "/interfaces/vip_settings/set_item",
-	DeleteEndpoint:      "/interfaces/vip_settings/del_item",
-	SearchEndpoint:      "/interfaces/vip_settings/search_item",
-	ReconfigureEndpoint: "/interfaces/vip_settings/reconfigure",
-	Monad:               "vip",
+	Create:      api.Endpoint{Path: "/interfaces/vip_settings/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/interfaces/vip_settings/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/interfaces/vip_settings/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/interfaces/vip_settings/del_item", Method: "POST"},
+	Search:      api.Endpoint{Path: "/interfaces/vip_settings/search_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/interfaces/vip_settings/reconfigure", Method: "POST"},
+	Monad:       "vip",
 }
 
 // Data structs
@@ -51,7 +51,7 @@ func (c *Controller) GetVip(ctx context.Context, id string) (*Vip, error) {
 }
 
 func (c *Controller) SearchVip(ctx context.Context) (*api.SearchResponse[Vip], error) {
-	return api.Search[Vip](c.Client(), ctx, VipOpts.SearchEndpoint)
+	return api.Search[Vip](c.Client(), ctx, VipOpts.Search)
 }
 
 func (c *Controller) UpdateVip(ctx context.Context, id string, resource *Vip) error {

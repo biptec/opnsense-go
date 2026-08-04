@@ -160,10 +160,17 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, body an
 	return nil
 }
 
+func (c *Client) doEndpointRequest(ctx context.Context, endpoint Endpoint, body, response any) error {
+	if err := endpoint.Validate(); err != nil {
+		return err
+	}
+	return c.doRequest(ctx, endpoint.Method, endpoint.Path, body, response)
+}
+
 // ReconfigureService defined at the endpoint.
-func (c *Client) ReconfigureService(ctx context.Context, endpoint string) error {
+func (c *Client) ReconfigureService(ctx context.Context, endpoint Endpoint) error {
 	// Handle services without a reconfigure endpoint
-	if endpoint == "" {
+	if endpoint.Path == "" {
 		return nil
 	}
 
@@ -172,7 +179,7 @@ func (c *Client) ReconfigureService(ctx context.Context, endpoint string) error 
 		Status string `json:"status,omitempty"`
 		Result string `json:"result,omitempty"`
 	}{}
-	err := c.doRequest(ctx, "POST", endpoint, nil, respJson)
+	err := c.doEndpointRequest(ctx, endpoint, nil, respJson)
 	if err != nil {
 		return err
 	}

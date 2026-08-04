@@ -9,12 +9,11 @@ import (
 )
 
 var UserOpts = api.ReqOpts{
-	AddEndpoint:         "/auth/user/add",
-	GetEndpoint:         "/auth/user/get",
-	UpdateEndpoint:      "/auth/user/set",
-	DeleteEndpoint:      "/auth/user/del",
-	ReconfigureEndpoint: "",
-	Monad:               "user",
+	Create: api.Endpoint{Path: "/auth/user/add", Method: "POST"},
+	Read:   api.Endpoint{Path: "/auth/user/get", Method: "GET"},
+	Update: api.Endpoint{Path: "/auth/user/set", Method: "POST"},
+	Delete: api.Endpoint{Path: "/auth/user/del", Method: "POST"},
+	Monad:  "user",
 }
 
 // Data structs

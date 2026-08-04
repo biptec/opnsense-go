@@ -38,8 +38,7 @@ func (c *Controller) ServiceSearch(ctx context.Context) (*SearchServicesResponse
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/core/service/search",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/core/service/search", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -63,8 +62,7 @@ func (c *Controller) ServiceStart(ctx context.Context, id string) (*ServiceActio
 	callParams = append(callParams, id)
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/core/service/start",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/core/service/start", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -88,8 +86,7 @@ func (c *Controller) ServiceStop(ctx context.Context, id string) (*ServiceAction
 	callParams = append(callParams, id)
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/core/service/stop",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/core/service/stop", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -113,8 +110,7 @@ func (c *Controller) ServiceRestart(ctx context.Context, id string) (*ServiceAct
 	callParams = append(callParams, id)
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/core/service/restart",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/core/service/restart", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

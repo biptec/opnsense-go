@@ -9,12 +9,12 @@ import (
 )
 
 var NATOpts = api.ReqOpts{
-	AddEndpoint:         "/firewall/source_nat/addRule",
-	GetEndpoint:         "/firewall/source_nat/getRule",
-	UpdateEndpoint:      "/firewall/source_nat/setRule",
-	DeleteEndpoint:      "/firewall/source_nat/delRule",
-	ReconfigureEndpoint: "/firewall/source_nat/apply",
-	Monad:               "rule",
+	Create:      api.Endpoint{Path: "/firewall/source_nat/addRule", Method: "POST"},
+	Read:        api.Endpoint{Path: "/firewall/source_nat/getRule", Method: "GET"},
+	Update:      api.Endpoint{Path: "/firewall/source_nat/setRule", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/firewall/source_nat/delRule", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/firewall/source_nat/apply", Method: "POST"},
+	Monad:       "rule",
 }
 
 // Data structs

@@ -9,13 +9,13 @@ import (
 )
 
 var GatewayGroupOpts = api.ReqOpts{
-	AddEndpoint:         "/routing/group_settings/add",
-	GetEndpoint:         "/routing/group_settings/get",
-	UpdateEndpoint:      "/routing/group_settings/set",
-	DeleteEndpoint:      "/routing/group_settings/del",
-	SearchEndpoint:      "/routing/group_settings/search",
-	ReconfigureEndpoint: "/routing/group_settings/reconfigure",
-	Monad:               "gateway_group",
+	Create:      api.Endpoint{Path: "/routing/group_settings/add", Method: "POST"},
+	Read:        api.Endpoint{Path: "/routing/group_settings/get", Method: "GET"},
+	Update:      api.Endpoint{Path: "/routing/group_settings/set", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/routing/group_settings/del", Method: "POST"},
+	Search:      api.Endpoint{Path: "/routing/group_settings/search", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/routing/group_settings/reconfigure", Method: "POST"},
+	Monad:       "gateway_group",
 }
 
 // Data structs
@@ -44,7 +44,7 @@ func (c *Controller) GetGatewayGroup(ctx context.Context, id string) (*GatewayGr
 }
 
 func (c *Controller) SearchGatewayGroup(ctx context.Context) (*api.SearchResponse[GatewayGroup], error) {
-	return api.Search[GatewayGroup](c.Client(), ctx, GatewayGroupOpts.SearchEndpoint)
+	return api.Search[GatewayGroup](c.Client(), ctx, GatewayGroupOpts.Search)
 }
 
 func (c *Controller) UpdateGatewayGroup(ctx context.Context, id string, resource *GatewayGroup) error {

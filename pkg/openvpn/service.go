@@ -32,8 +32,7 @@ func (c *Controller) ServiceReconfigure(ctx context.Context) (*ActionResult, err
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/openvpn/service/reconfigure",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/openvpn/service/reconfigure", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -59,8 +58,7 @@ func (c *Controller) ServiceStartService(ctx context.Context, id *string) (*Resu
 	}
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/openvpn/service/start_service",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/openvpn/service/start_service", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -86,8 +84,7 @@ func (c *Controller) ServiceStopService(ctx context.Context, id *string) (*Resul
 	}
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/openvpn/service/stop_service",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/openvpn/service/stop_service", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -113,8 +110,7 @@ func (c *Controller) ServiceRestartService(ctx context.Context, id *string) (*Re
 	}
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/openvpn/service/restart_service",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/openvpn/service/restart_service", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -140,8 +136,7 @@ func (c *Controller) ServiceGenKey(ctx context.Context, keyType *string) (*GenKe
 	}
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/openvpn/instances/gen_key",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/openvpn/instances/gen_key", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

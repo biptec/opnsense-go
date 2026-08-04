@@ -28,7 +28,7 @@ func resourceUnwrap[K any](monad string, resource K, reqData map[string]json.Raw
 	return nil
 }
 
-func set[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, endpoint string) (string, error) {
+func set[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, endpoint Endpoint) (string, error) {
 	// Since the OPNsense controller has to be reconfigured after every change, locking the mutex prevents
 	// the API from being written to while it's reconfiguring, which results in data loss.
 	if err := GlobalMutexKV.Lock(clientMutexKey, ctx); err != nil {
@@ -41,7 +41,7 @@ func set[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, endpo
 
 	// Make request to OPNsense
 	respJson := &addResp{}
-	err := c.doRequest(ctx, "POST", endpoint, wrapped, respJson)
+	err := c.doEndpointRequest(ctx, endpoint, wrapped, respJson)
 	if err != nil {
 		return "", err
 	}
@@ -52,7 +52,7 @@ func set[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, endpo
 	}
 
 	// Reconfigure (i.e. restart) the OPNsense service
-	err = c.ReconfigureService(ctx, opts.ReconfigureEndpoint)
+	err = c.ReconfigureService(ctx, opts.Reconfigure)
 	if err != nil {
 		return respJson.UUID, err
 	}
@@ -60,21 +60,18 @@ func set[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, endpo
 	return respJson.UUID, nil
 }
 
-func get(c *Client, ctx context.Context, endpoint, method string) (map[string]json.RawMessage, error) {
+func get(c *Client, ctx context.Context, endpoint Endpoint) (map[string]json.RawMessage, error) {
 	// Get generic data
 	var reqData map[string]json.RawMessage
-	if method == "" {
-		method = "GET"
-	}
 	var body any
-	if method == "POST" {
+	if endpoint.Method == "POST" {
 		// Some OPNsense MVC actions require syntactically valid JSON even
 		// when the request has no logical body.
 		body = map[string]any{}
 	}
 
 	// Make request to OPNsense
-	err := c.doRequest(ctx, method, endpoint, body, &reqData)
+	err := c.doEndpointRequest(ctx, endpoint, body, &reqData)
 
 	// Handle request errors
 	if err != nil {
@@ -90,17 +87,17 @@ func get(c *Client, ctx context.Context, endpoint, method string) (map[string]js
 }
 
 func Add[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K) (string, error) {
-	return set(c, ctx, opts, resource, opts.AddEndpoint)
+	return set(c, ctx, opts, resource, opts.Create)
 }
 
 func Update[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, id string) error {
-	_, err := set(c, ctx, opts, resource, fmt.Sprintf("%s/%s", opts.UpdateEndpoint, id))
+	_, err := set(c, ctx, opts, resource, opts.Update.WithPathSegment(id))
 	return err
 }
 
 func Get[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, id string) (*K, error) {
 	// Get resource data
-	reqData, err := get(c, ctx, fmt.Sprintf("%s/%s", opts.GetEndpoint, id), opts.GetMethod)
+	reqData, err := get(c, ctx, opts.Read.WithPathSegment(id))
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +113,7 @@ func Get[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, id st
 
 func GetFilter[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, key string) (*K, error) {
 	// Get resource data
-	reqData, err := get(c, ctx, opts.GetEndpoint, opts.GetMethod)
+	reqData, err := get(c, ctx, opts.Read)
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +134,7 @@ func GetFilter[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K,
 
 func GetAll[K any](c *Client, ctx context.Context, opts ReqOpts, resources []K) ([]K, error) {
 	// Get resource data
-	reqData, err := get(c, ctx, opts.GetEndpoint, opts.GetMethod)
+	reqData, err := get(c, ctx, opts.Read)
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +166,8 @@ func Delete(c *Client, ctx context.Context, opts ReqOpts, id string) error {
 	defer GlobalMutexKV.Unlock(clientMutexKey, ctx)
 
 	respJson := &deleteResp{}
-	err := c.doRequest(ctx, "POST", fmt.Sprintf("%s/%s", opts.DeleteEndpoint, id), nil, respJson)
+	endpoint := opts.Delete.WithPathSegment(id)
+	err := c.doEndpointRequest(ctx, endpoint, nil, respJson)
 	if err != nil {
 		return err
 	}
@@ -180,7 +178,7 @@ func Delete(c *Client, ctx context.Context, opts ReqOpts, id string) error {
 	}
 
 	// Reconfigure (i.e. restart) the OPNsense service
-	err = c.ReconfigureService(ctx, opts.ReconfigureEndpoint)
+	err = c.ReconfigureService(ctx, opts.Reconfigure)
 	if err != nil {
 		return err
 	}

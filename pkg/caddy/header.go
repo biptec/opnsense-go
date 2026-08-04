@@ -9,14 +9,13 @@ import (
 )
 
 var HeaderOpts = api.ReqOpts{
-	AddEndpoint:         "/caddy/reverse_proxy/add_header",
-	GetEndpoint:         "/caddy/reverse_proxy/get_header",
-	GetMethod:           "POST",
-	UpdateEndpoint:      "/caddy/reverse_proxy/set_header",
-	DeleteEndpoint:      "/caddy/reverse_proxy/del_header",
-	SearchEndpoint:      "/caddy/reverse_proxy/search_header",
-	ReconfigureEndpoint: caddyReconfigureEndpoint,
-	Monad:               "header",
+	Create:      api.Endpoint{Path: "/caddy/reverse_proxy/add_header", Method: "POST"},
+	Read:        api.Endpoint{Path: "/caddy/reverse_proxy/get_header", Method: "POST"},
+	Update:      api.Endpoint{Path: "/caddy/reverse_proxy/set_header", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/caddy/reverse_proxy/del_header", Method: "POST"},
+	Search:      api.Endpoint{Path: "/caddy/reverse_proxy/search_header", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/caddy/service/reconfigure", Method: "POST"},
+	Monad:       "header",
 }
 
 // Data structs
@@ -41,7 +40,7 @@ func (c *Controller) GetHeader(ctx context.Context, id string) (*Header, error) 
 }
 
 func (c *Controller) SearchHeader(ctx context.Context) (*api.SearchResponse[Header], error) {
-	return api.Search[Header](c.Client(), ctx, HeaderOpts.SearchEndpoint)
+	return api.Search[Header](c.Client(), ctx, HeaderOpts.Search)
 }
 
 func (c *Controller) UpdateHeader(ctx context.Context, id string, resource *Header) error {

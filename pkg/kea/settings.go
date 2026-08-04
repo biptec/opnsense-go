@@ -81,8 +81,7 @@ func (c *Controller) SettingsDHCPv4Get(ctx context.Context) (*DHCPv4Monad, error
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/kea/dhcpv4/get",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/kea/dhcpv4/get", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -106,8 +105,7 @@ func (c *Controller) SettingsDHCPv4Update(ctx context.Context, dhcpv4 *DHCPv4Set
 	bodyParams["dhcpv4"] = dhcpv4
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/kea/dhcpv4/set",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/kea/dhcpv4/set", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -129,8 +127,7 @@ func (c *Controller) SettingsDHCPv6Get(ctx context.Context) (*DHCPv6Monad, error
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/kea/dhcpv6/get",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/kea/dhcpv6/get", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -154,8 +151,7 @@ func (c *Controller) SettingsDHCPv6Update(ctx context.Context, dhcpv6 *DHCPv6Set
 	bodyParams["dhcpv6"] = dhcpv6
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/kea/dhcpv6/set",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/kea/dhcpv6/set", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -177,8 +173,7 @@ func (c *Controller) SettingsReconfigure(ctx context.Context) (*ActionResult, er
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/kea/service/reconfigure",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/kea/service/reconfigure", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

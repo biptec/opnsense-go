@@ -4,8 +4,6 @@ package unbound
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-const unboundReconfigureEndpoint = "/unbound/service/reconfigure"
-
 // Controller for unbound
 type Controller struct {
 	Api *api.Client

@@ -1,17 +1,28 @@
 ---
 name: interfaces
-reconfigureEndpoint: ''
 resources:
 - name: Assignment
   filename: assignment
   monad: interface
   endpoints:
-    add: /interfaces/assignment/add_item
-    get: /interfaces/assignment/get_item
-    update: /interfaces/assignment/set_item
-    delete: /interfaces/assignment/del_item
-    search: /interfaces/assignment/search_item
-    reconfigure: /interfaces/assignment/reconfigure
+    create:
+      path: "/interfaces/assignment/add_item"
+      method: POST
+    read:
+      path: "/interfaces/assignment/get_item"
+      method: GET
+    update:
+      path: "/interfaces/assignment/set_item"
+      method: POST
+    delete:
+      path: "/interfaces/assignment/del_item"
+      method: POST
+    search:
+      path: "/interfaces/assignment/search_item"
+      method: POST
+    reconfigure:
+      path: "/interfaces/assignment/reconfigure"
+      method: POST
   attrs:
   - name: UUID
     type: string
@@ -126,12 +137,24 @@ resources:
   filename: vlan
   monad: vlan
   endpoints:
-    add: /interfaces/vlan_settings/add_item
-    get: /interfaces/vlan_settings/get_item
-    update: /interfaces/vlan_settings/set_item
-    delete: /interfaces/vlan_settings/del_item
-    search: /interfaces/vlan_settings/search_item
-    reconfigure: /interfaces/vlan_settings/reconfigure
+    create:
+      path: "/interfaces/vlan_settings/add_item"
+      method: POST
+    read:
+      path: "/interfaces/vlan_settings/get_item"
+      method: GET
+    update:
+      path: "/interfaces/vlan_settings/set_item"
+      method: POST
+    delete:
+      path: "/interfaces/vlan_settings/del_item"
+      method: POST
+    search:
+      path: "/interfaces/vlan_settings/search_item"
+      method: POST
+    reconfigure:
+      path: "/interfaces/vlan_settings/reconfigure"
+      method: POST
   attrs:
   - name: UUID
     type: string
@@ -159,12 +182,24 @@ resources:
   filename: vxlan
   monad: vxlan
   endpoints:
-    add: /interfaces/vxlan_settings/add_item
-    get: /interfaces/vxlan_settings/get_item
-    update: /interfaces/vxlan_settings/set_item
-    delete: /interfaces/vxlan_settings/del_item
-    search: /interfaces/vxlan_settings/search_item
-    reconfigure: /interfaces/vxlan_settings/reconfigure
+    create:
+      path: "/interfaces/vxlan_settings/add_item"
+      method: POST
+    read:
+      path: "/interfaces/vxlan_settings/get_item"
+      method: GET
+    update:
+      path: "/interfaces/vxlan_settings/set_item"
+      method: POST
+    delete:
+      path: "/interfaces/vxlan_settings/del_item"
+      method: POST
+    search:
+      path: "/interfaces/vxlan_settings/search_item"
+      method: POST
+    reconfigure:
+      path: "/interfaces/vxlan_settings/reconfigure"
+      method: POST
   attrs:
   - name: UUID
     type: string
@@ -199,12 +234,24 @@ resources:
   filename: bridge
   monad: bridge
   endpoints:
-    add: /interfaces/bridge_settings/add_item
-    get: /interfaces/bridge_settings/get_item
-    update: /interfaces/bridge_settings/set_item
-    delete: /interfaces/bridge_settings/del_item
-    search: /interfaces/bridge_settings/search_item
-    reconfigure: /interfaces/bridge_settings/reconfigure
+    create:
+      path: "/interfaces/bridge_settings/add_item"
+      method: POST
+    read:
+      path: "/interfaces/bridge_settings/get_item"
+      method: GET
+    update:
+      path: "/interfaces/bridge_settings/set_item"
+      method: POST
+    delete:
+      path: "/interfaces/bridge_settings/del_item"
+      method: POST
+    search:
+      path: "/interfaces/bridge_settings/search_item"
+      method: POST
+    reconfigure:
+      path: "/interfaces/bridge_settings/reconfigure"
+      method: POST
   attrs:
   - name: UUID
     type: string
@@ -271,12 +318,24 @@ resources:
   filename: lagg
   monad: lagg
   endpoints:
-    add: /interfaces/lagg_settings/add_item
-    get: /interfaces/lagg_settings/get_item
-    update: /interfaces/lagg_settings/set_item
-    delete: /interfaces/lagg_settings/del_item
-    search: /interfaces/lagg_settings/search_item
-    reconfigure: /interfaces/lagg_settings/reconfigure
+    create:
+      path: "/interfaces/lagg_settings/add_item"
+      method: POST
+    read:
+      path: "/interfaces/lagg_settings/get_item"
+      method: GET
+    update:
+      path: "/interfaces/lagg_settings/set_item"
+      method: POST
+    delete:
+      path: "/interfaces/lagg_settings/del_item"
+      method: POST
+    search:
+      path: "/interfaces/lagg_settings/search_item"
+      method: POST
+    reconfigure:
+      path: "/interfaces/lagg_settings/reconfigure"
+      method: POST
   attrs:
   - name: UUID
     type: string
@@ -317,12 +376,24 @@ resources:
   filename: gre
   monad: gre
   endpoints:
-    add: /interfaces/gre_settings/add_item
-    get: /interfaces/gre_settings/get_item
-    update: /interfaces/gre_settings/set_item
-    delete: /interfaces/gre_settings/del_item
-    search: /interfaces/gre_settings/search_item
-    reconfigure: /interfaces/gre_settings/reconfigure
+    create:
+      path: "/interfaces/gre_settings/add_item"
+      method: POST
+    read:
+      path: "/interfaces/gre_settings/get_item"
+      method: GET
+    update:
+      path: "/interfaces/gre_settings/set_item"
+      method: POST
+    delete:
+      path: "/interfaces/gre_settings/del_item"
+      method: POST
+    search:
+      path: "/interfaces/gre_settings/search_item"
+      method: POST
+    reconfigure:
+      path: "/interfaces/gre_settings/reconfigure"
+      method: POST
   attrs:
   - name: UUID
     type: string
@@ -362,12 +433,24 @@ resources:
   filename: gif
   monad: gif
   endpoints:
-    add: /interfaces/gif_settings/add_item
-    get: /interfaces/gif_settings/get_item
-    update: /interfaces/gif_settings/set_item
-    delete: /interfaces/gif_settings/del_item
-    search: /interfaces/gif_settings/search_item
-    reconfigure: /interfaces/gif_settings/reconfigure
+    create:
+      path: "/interfaces/gif_settings/add_item"
+      method: POST
+    read:
+      path: "/interfaces/gif_settings/get_item"
+      method: GET
+    update:
+      path: "/interfaces/gif_settings/set_item"
+      method: POST
+    delete:
+      path: "/interfaces/gif_settings/del_item"
+      method: POST
+    search:
+      path: "/interfaces/gif_settings/search_item"
+      method: POST
+    reconfigure:
+      path: "/interfaces/gif_settings/reconfigure"
+      method: POST
   attrs:
   - name: UUID
     type: string
@@ -413,12 +496,24 @@ resources:
   filename: loopback
   monad: loopback
   endpoints:
-    add: /interfaces/loopback_settings/add_item
-    get: /interfaces/loopback_settings/get_item
-    update: /interfaces/loopback_settings/set_item
-    delete: /interfaces/loopback_settings/del_item
-    search: /interfaces/loopback_settings/search_item
-    reconfigure: /interfaces/loopback_settings/reconfigure
+    create:
+      path: "/interfaces/loopback_settings/add_item"
+      method: POST
+    read:
+      path: "/interfaces/loopback_settings/get_item"
+      method: GET
+    update:
+      path: "/interfaces/loopback_settings/set_item"
+      method: POST
+    delete:
+      path: "/interfaces/loopback_settings/del_item"
+      method: POST
+    search:
+      path: "/interfaces/loopback_settings/search_item"
+      method: POST
+    reconfigure:
+      path: "/interfaces/loopback_settings/reconfigure"
+      method: POST
   attrs:
   - name: UUID
     type: string
@@ -435,12 +530,24 @@ resources:
   filename: neighbor
   monad: neighbor
   endpoints:
-    add: /interfaces/neighbor_settings/add_item
-    get: /interfaces/neighbor_settings/get_item
-    update: /interfaces/neighbor_settings/set_item
-    delete: /interfaces/neighbor_settings/del_item
-    search: /interfaces/neighbor_settings/search_item
-    reconfigure: /interfaces/neighbor_settings/reconfigure
+    create:
+      path: "/interfaces/neighbor_settings/add_item"
+      method: POST
+    read:
+      path: "/interfaces/neighbor_settings/get_item"
+      method: GET
+    update:
+      path: "/interfaces/neighbor_settings/set_item"
+      method: POST
+    delete:
+      path: "/interfaces/neighbor_settings/del_item"
+      method: POST
+    search:
+      path: "/interfaces/neighbor_settings/search_item"
+      method: POST
+    reconfigure:
+      path: "/interfaces/neighbor_settings/reconfigure"
+      method: POST
   attrs:
   - name: UUID
     type: string
@@ -463,12 +570,24 @@ resources:
   filename: vip
   monad: vip
   endpoints:
-    add: /interfaces/vip_settings/add_item
-    get: /interfaces/vip_settings/get_item
-    update: /interfaces/vip_settings/set_item
-    delete: /interfaces/vip_settings/del_item
-    search: /interfaces/vip_settings/search_item
-    reconfigure: /interfaces/vip_settings/reconfigure
+    create:
+      path: "/interfaces/vip_settings/add_item"
+      method: POST
+    read:
+      path: "/interfaces/vip_settings/get_item"
+      method: GET
+    update:
+      path: "/interfaces/vip_settings/set_item"
+      method: POST
+    delete:
+      path: "/interfaces/vip_settings/del_item"
+      method: POST
+    search:
+      path: "/interfaces/vip_settings/search_item"
+      method: POST
+    reconfigure:
+      path: "/interfaces/vip_settings/reconfigure"
+      method: POST
   attrs:
   - name: UUID
     type: string
@@ -1379,30 +1498,35 @@ rpc:
           key: message
     rpc_calls:
       - name: "Get"
-        method: "GET"
-        endpoint: "/interfaces/overview/interfaces_info"
+        endpoint:
+          path: "/interfaces/overview/interfaces_info"
+          method: GET
         result_type: "InterfacesInfoResponse"
       - name: "GetDetailed"
-        method: "GET"
-        endpoint: "/interfaces/overview/interfaces_info/true"
+        endpoint:
+          path: "/interfaces/overview/interfaces_info/true"
+          method: GET
         result_type: "InterfacesInfoResponse"
       - name: "GetInterface"
-        method: "GET"
-        endpoint: "/interfaces/overview/get_interface"
+        endpoint:
+          path: "/interfaces/overview/get_interface"
+          method: GET
         params:
           - name: ifname
             optional: false
         result_type: "InterfaceDetailsResult"
       - name: "ReloadInterface"
-        method: "POST"
-        endpoint: "/interfaces/overview/reload_interface"
+        endpoint:
+          path: "/interfaces/overview/reload_interface"
+          method: POST
         params:
           - name: identifier
             optional: false
         result_type: "InterfaceReloadResult"
       - name: "Export"
-        method: "GET"
-        endpoint: "/interfaces/overview/export"
+        endpoint:
+          path: "/interfaces/overview/export"
+          method: GET
         result_type: "[]InterfaceInfo"
 
   - name: "Settings"
@@ -1445,12 +1569,14 @@ rpc:
           key: duids
     rpc_calls:
       - name: "Get"
-        method: "GET"
-        endpoint: "/interfaces/settings/get"
+        endpoint:
+          path: "/interfaces/settings/get"
+          method: GET
         result_type: "SettingsGetResult"
       - name: "Set"
-        method: "POST"
-        endpoint: "/interfaces/settings/set"
+        endpoint:
+          path: "/interfaces/settings/set"
+          method: POST
         params:
           - name: settings
             optional: false
@@ -1458,24 +1584,27 @@ rpc:
             customType: InterfaceSettings
         result_type: "api.ActionResult"
       - name: "Reconfigure"
-        method: "POST"
-        endpoint: "/interfaces/settings/reconfigure"
+        endpoint:
+          path: "/interfaces/settings/reconfigure"
+          method: POST
         result_type: "api.ReconfigureStatusResult"
 
   - name: "GreUtility"
     filename: gre_utility
     rpc_calls:
       - name: "GetIfOptions"
-        method: "GET"
-        endpoint: "/interfaces/gre_settings/get_if_options"
+        endpoint:
+          path: "/interfaces/gre_settings/get_if_options"
+          method: GET
         result_type: "map[string]interface{}"
 
   - name: "GifUtility"
     filename: gif_utility
     rpc_calls:
       - name: "GetIfOptions"
-        method: "GET"
-        endpoint: "/interfaces/gif_settings/get_if_options"
+        endpoint:
+          path: "/interfaces/gif_settings/get_if_options"
+          method: GET
         result_type: "map[string]interface{}"
 
   - name: "VipUtility"
@@ -1491,6 +1620,7 @@ rpc:
           key: status
     rpc_calls:
       - name: "GetUnusedVHID"
-        method: "GET"
-        endpoint: "/interfaces/vip_settings/get_unused_vhid"
+        endpoint:
+          path: "/interfaces/vip_settings/get_unused_vhid"
+          method: GET
         result_type: "UnusedVHIDResult"

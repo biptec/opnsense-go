@@ -9,13 +9,12 @@ import (
 )
 
 var CertOpts = api.ReqOpts{
-	AddEndpoint:         "/trust/cert/add",
-	GetEndpoint:         "/trust/cert/get",
-	UpdateEndpoint:      "/trust/cert/set",
-	DeleteEndpoint:      "/trust/cert/del",
-	SearchEndpoint:      "/trust/cert/search",
-	ReconfigureEndpoint: "",
-	Monad:               "cert",
+	Create: api.Endpoint{Path: "/trust/cert/add", Method: "POST"},
+	Read:   api.Endpoint{Path: "/trust/cert/get", Method: "GET"},
+	Update: api.Endpoint{Path: "/trust/cert/set", Method: "POST"},
+	Delete: api.Endpoint{Path: "/trust/cert/del", Method: "POST"},
+	Search: api.Endpoint{Path: "/trust/cert/search", Method: "POST"},
+	Monad:  "cert",
 }
 
 // Data structs
@@ -68,7 +67,7 @@ func (c *Controller) GetCert(ctx context.Context, id string) (*Cert, error) {
 }
 
 func (c *Controller) SearchCert(ctx context.Context) (*api.SearchResponse[Cert], error) {
-	return api.Search[Cert](c.Client(), ctx, CertOpts.SearchEndpoint)
+	return api.Search[Cert](c.Client(), ctx, CertOpts.Search)
 }
 
 func (c *Controller) UpdateCert(ctx context.Context, id string, resource *Cert) error {

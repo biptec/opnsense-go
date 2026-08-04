@@ -9,13 +9,13 @@ import (
 )
 
 var GatewayOpts = api.ReqOpts{
-	AddEndpoint:         "/routing/settings/addGateway",
-	GetEndpoint:         "/routing/settings/getGateway",
-	UpdateEndpoint:      "/routing/settings/setGateway",
-	DeleteEndpoint:      "/routing/settings/delGateway",
-	SearchEndpoint:      "/routing/settings/searchGateway",
-	ReconfigureEndpoint: routingReconfigureEndpoint,
-	Monad:               "gateway_item",
+	Create:      api.Endpoint{Path: "/routing/settings/addGateway", Method: "POST"},
+	Read:        api.Endpoint{Path: "/routing/settings/getGateway", Method: "GET"},
+	Update:      api.Endpoint{Path: "/routing/settings/setGateway", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/routing/settings/delGateway", Method: "POST"},
+	Search:      api.Endpoint{Path: "/routing/settings/searchGateway", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/routing/settings/reconfigure", Method: "POST"},
+	Monad:       "gateway_item",
 }
 
 // Data structs
@@ -60,7 +60,7 @@ func (c *Controller) GetGateway(ctx context.Context, id string) (*Gateway, error
 }
 
 func (c *Controller) SearchGateway(ctx context.Context) (*api.SearchResponse[Gateway], error) {
-	return api.Search[Gateway](c.Client(), ctx, GatewayOpts.SearchEndpoint)
+	return api.Search[Gateway](c.Client(), ctx, GatewayOpts.Search)
 }
 
 func (c *Controller) UpdateGateway(ctx context.Context, id string, resource *Gateway) error {

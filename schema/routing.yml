@@ -1,16 +1,28 @@
 ---
 name: routing
-reconfigureEndpoint: "/routing/settings/reconfigure"
 resources:
   - name: Gateway
     filename: gateway
     monad: gateway_item
     endpoints:
-      add: "/routing/settings/addGateway"
-      get: "/routing/settings/getGateway"
-      update: "/routing/settings/setGateway"
-      delete: "/routing/settings/delGateway"
-      search: "/routing/settings/searchGateway"
+      create:
+        path: "/routing/settings/addGateway"
+        method: POST
+      read:
+        path: "/routing/settings/getGateway"
+        method: GET
+      update:
+        path: "/routing/settings/setGateway"
+        method: POST
+      delete:
+        path: "/routing/settings/delGateway"
+        method: POST
+      search:
+        path: "/routing/settings/searchGateway"
+        method: POST
+      reconfigure:
+        path: "/routing/settings/reconfigure"
+        method: POST
     attrs:
       - name: UUID
         type: string
@@ -96,12 +108,24 @@ resources:
     filename: gateway_group
     monad: gateway_group
     endpoints:
-      add: "/routing/group_settings/add"
-      get: "/routing/group_settings/get"
-      update: "/routing/group_settings/set"
-      delete: "/routing/group_settings/del"
-      search: "/routing/group_settings/search"
-      reconfigure: "/routing/group_settings/reconfigure"
+      create:
+        path: "/routing/group_settings/add"
+        method: POST
+      read:
+        path: "/routing/group_settings/get"
+        method: GET
+      update:
+        path: "/routing/group_settings/set"
+        method: POST
+      delete:
+        path: "/routing/group_settings/del"
+        method: POST
+      search:
+        path: "/routing/group_settings/search"
+        method: POST
+      reconfigure:
+        path: "/routing/group_settings/reconfigure"
+        method: POST
     attrs:
       - name: UUID
         type: string
@@ -173,6 +197,7 @@ rpc:
           key: status
     rpc_calls:
       - name: Get
-        endpoint: "/routes/gateway/status"
-        method: "GET"
+        endpoint:
+          path: "/routes/gateway/status"
+          method: GET
         result_type: GatewayStatusResponse

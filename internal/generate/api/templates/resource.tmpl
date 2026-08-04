@@ -9,27 +9,25 @@ import (
 )
 
 var {{ .Resource.Name }}Opts = api.ReqOpts{
-	AddEndpoint:         "{{ .Resource.Endpoints.Add }}",
-	GetEndpoint:         "{{ .Resource.Endpoints.Get }}",
-{{ if not (eq .Resource.Endpoints.GetMethod "") -}}
-	GetMethod:           "{{ .Resource.Endpoints.GetMethod }}",
-{{ end -}}
-	UpdateEndpoint:      "{{ .Resource.Endpoints.Update }}",
-	DeleteEndpoint:      "{{ .Resource.Endpoints.Delete }}",
-{{ if not (eq .Resource.Endpoints.Search "") -}}
-	SearchEndpoint:      "{{ .Resource.Endpoints.Search }}",
-{{ end -}}
-	ReconfigureEndpoint:
-	{{- if or (eq .Resource.Endpoints.Reconfigure "null") .Resource.ReadOnly -}}
-    "",
-    {{- else if not (eq .Resource.Endpoints.Reconfigure "") -}}
-    "{{ .Resource.Endpoints.Reconfigure }}",
-    {{- else if not (eq .Controller.ReconfigureEndpoint "") -}}
-    {{ .Controller.Name }}ReconfigureEndpoint,
-    {{- else -}}
-    "",
-    {{- end }}
-	Monad:               "{{ .Resource.Monad }}",
+{{- with .Resource.Endpoints.Create }}
+	Create: api.Endpoint{Path: "{{ .Path }}", Method: "{{ .Method }}"},
+{{- end }}
+{{- with .Resource.Endpoints.Read }}
+	Read: api.Endpoint{Path: "{{ .Path }}", Method: "{{ .Method }}"},
+{{- end }}
+{{- with .Resource.Endpoints.Update }}
+	Update: api.Endpoint{Path: "{{ .Path }}", Method: "{{ .Method }}"},
+{{- end }}
+{{- with .Resource.Endpoints.Delete }}
+	Delete: api.Endpoint{Path: "{{ .Path }}", Method: "{{ .Method }}"},
+{{- end }}
+{{- with .Resource.Endpoints.Search }}
+	Search: api.Endpoint{Path: "{{ .Path }}", Method: "{{ .Method }}"},
+{{- end }}
+{{- with .Resource.Endpoints.Reconfigure }}
+	Reconfigure: api.Endpoint{Path: "{{ .Path }}", Method: "{{ .Method }}"},
+{{- end }}
+	Monad: "{{ .Resource.Monad }}",
 }
 
 // Data structs
@@ -72,9 +70,9 @@ func (c *Controller) Get{{ .Resource.Name }}(ctx context.Context, id string) (*{
 	(c.Client(), ctx, {{ .Resource.Name }}Opts, &{{ .Resource.Name }}{}, id)
 }
 
-{{ if not (eq .Resource.Endpoints.Search "") }}
+{{ if .Resource.Endpoints.Search }}
 func (c *Controller) Search{{ .Resource.Name }}(ctx context.Context) (*api.SearchResponse[{{ .Resource.Name }}], error) {
-	return api.Search[{{ .Resource.Name }}](c.Client(), ctx, {{ .Resource.Name }}Opts.SearchEndpoint)
+	return api.Search[{{ .Resource.Name }}](c.Client(), ctx, {{ .Resource.Name }}Opts.Search)
 }
 {{ end }}
 

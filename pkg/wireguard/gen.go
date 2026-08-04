@@ -30,8 +30,7 @@ func (c *Controller) ServiceGenKeyPair(ctx context.Context) (*GenKeyPairResult, 
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/wireguard/server/keyPair",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/wireguard/server/keyPair", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -53,8 +52,7 @@ func (c *Controller) ServiceGenPsk(ctx context.Context) (*GenPskResult, error) {
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/wireguard/client/psk",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/wireguard/client/psk", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

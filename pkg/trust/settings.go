@@ -36,8 +36,7 @@ func (c *Controller) SettingsGet(ctx context.Context) (*TrustSettingsMonad, erro
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/trust/settings/get",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/trust/settings/get", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -61,8 +60,7 @@ func (c *Controller) SettingsSet(ctx context.Context, trust *TrustSettings) (*Ac
 	bodyParams["trust"] = trust
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/trust/settings/set",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/trust/settings/set", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -84,8 +82,7 @@ func (c *Controller) SettingsReconfigure(ctx context.Context) (*ActionResult, er
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/trust/settings/reconfigure",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/trust/settings/reconfigure", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

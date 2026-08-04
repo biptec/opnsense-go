@@ -9,12 +9,12 @@ import (
 )
 
 var IPsecAuthRemoteOpts = api.ReqOpts{
-	AddEndpoint:         "/ipsec/connections/add_remote",
-	GetEndpoint:         "/ipsec/connections/get_remote",
-	UpdateEndpoint:      "/ipsec/connections/set_remote",
-	DeleteEndpoint:      "/ipsec/connections/del_remote",
-	ReconfigureEndpoint: ipsecReconfigureEndpoint,
-	Monad:               "remote",
+	Create:      api.Endpoint{Path: "/ipsec/connections/add_remote", Method: "POST"},
+	Read:        api.Endpoint{Path: "/ipsec/connections/get_remote", Method: "GET"},
+	Update:      api.Endpoint{Path: "/ipsec/connections/set_remote", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/ipsec/connections/del_remote", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/ipsec/service/reconfigure", Method: "POST"},
+	Monad:       "remote",
 }
 
 // Data structs

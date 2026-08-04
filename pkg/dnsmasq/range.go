@@ -9,12 +9,12 @@ import (
 )
 
 var RangeOpts = api.ReqOpts{
-	AddEndpoint:         "/dnsmasq/settings/add_range",
-	GetEndpoint:         "/dnsmasq/settings/get_range",
-	UpdateEndpoint:      "/dnsmasq/settings/set_range",
-	DeleteEndpoint:      "/dnsmasq/settings/del_range",
-	ReconfigureEndpoint: dnsmasqReconfigureEndpoint,
-	Monad:               "range",
+	Create:      api.Endpoint{Path: "/dnsmasq/settings/add_range", Method: "POST"},
+	Read:        api.Endpoint{Path: "/dnsmasq/settings/get_range", Method: "GET"},
+	Update:      api.Endpoint{Path: "/dnsmasq/settings/set_range", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/dnsmasq/settings/del_range", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/dnsmasq/service/reconfigure", Method: "POST"},
+	Monad:       "range",
 }
 
 // Data structs

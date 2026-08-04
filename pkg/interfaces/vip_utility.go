@@ -24,8 +24,7 @@ func (c *Controller) VipUtilityGetUnusedVHID(ctx context.Context) (*UnusedVHIDRe
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/interfaces/vip_settings/get_unused_vhid",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/interfaces/vip_settings/get_unused_vhid", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

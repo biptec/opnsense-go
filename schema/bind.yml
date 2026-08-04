@@ -1,16 +1,26 @@
 ---
 # see https://docs.opnsense.org/development/api/plugins/bind.html
 name: bind
-reconfigureEndpoint: "/bind/service/reconfigure"
 resources:
   - name: Acl
     filename: acl
     monad: acl
     endpoints:
-      add: "/bind/acl/add_acl"
-      get: "/bind/acl/get_acl"
-      update: "/bind/acl/set_acl"
-      delete: "/bind/acl/del_acl"
+      create:
+        path: "/bind/acl/add_acl"
+        method: POST
+      read:
+        path: "/bind/acl/get_acl"
+        method: GET
+      update:
+        path: "/bind/acl/set_acl"
+        method: POST
+      delete:
+        path: "/bind/acl/del_acl"
+        method: POST
+      reconfigure:
+        path: "/bind/service/reconfigure"
+        method: POST
     attrs:
       - name: Name
         type: string
@@ -26,10 +36,21 @@ resources:
     filename: primary_domain
     monad: domain
     endpoints:
-      add: "/bind/domain/add_primary_domain"
-      get: "/bind/domain/get_domain"
-      update: "/bind/domain/set_domain"
-      delete: "/bind/domain/del_domain"
+      create:
+        path: "/bind/domain/add_primary_domain"
+        method: POST
+      read:
+        path: "/bind/domain/get_domain"
+        method: GET
+      update:
+        path: "/bind/domain/set_domain"
+        method: POST
+      delete:
+        path: "/bind/domain/del_domain"
+        method: POST
+      reconfigure:
+        path: "/bind/service/reconfigure"
+        method: POST
     attrs:
       - name: DomainName
         type: string
@@ -69,10 +90,21 @@ resources:
     filename: record
     monad: record
     endpoints:
-      add: "/bind/record/add_record"
-      get: "/bind/record/get_record"
-      update: "/bind/record/set_record"
-      delete: "/bind/record/del_record"
+      create:
+        path: "/bind/record/add_record"
+        method: POST
+      read:
+        path: "/bind/record/get_record"
+        method: GET
+      update:
+        path: "/bind/record/set_record"
+        method: POST
+      delete:
+        path: "/bind/record/del_record"
+        method: POST
+      reconfigure:
+        path: "/bind/service/reconfigure"
+        method: POST
     attrs:
       - name: Domain
         type: SelectedMap

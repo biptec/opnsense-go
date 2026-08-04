@@ -9,13 +9,13 @@ import (
 )
 
 var VlanOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/vlan_settings/add_item",
-	GetEndpoint:         "/interfaces/vlan_settings/get_item",
-	UpdateEndpoint:      "/interfaces/vlan_settings/set_item",
-	DeleteEndpoint:      "/interfaces/vlan_settings/del_item",
-	SearchEndpoint:      "/interfaces/vlan_settings/search_item",
-	ReconfigureEndpoint: "/interfaces/vlan_settings/reconfigure",
-	Monad:               "vlan",
+	Create:      api.Endpoint{Path: "/interfaces/vlan_settings/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/interfaces/vlan_settings/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/interfaces/vlan_settings/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/interfaces/vlan_settings/del_item", Method: "POST"},
+	Search:      api.Endpoint{Path: "/interfaces/vlan_settings/search_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/interfaces/vlan_settings/reconfigure", Method: "POST"},
+	Monad:       "vlan",
 }
 
 // Data structs
@@ -41,7 +41,7 @@ func (c *Controller) GetVlan(ctx context.Context, id string) (*Vlan, error) {
 }
 
 func (c *Controller) SearchVlan(ctx context.Context) (*api.SearchResponse[Vlan], error) {
-	return api.Search[Vlan](c.Client(), ctx, VlanOpts.SearchEndpoint)
+	return api.Search[Vlan](c.Client(), ctx, VlanOpts.Search)
 }
 
 func (c *Controller) UpdateVlan(ctx context.Context, id string, resource *Vlan) error {

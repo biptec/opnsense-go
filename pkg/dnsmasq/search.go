@@ -153,8 +153,7 @@ func (c *Controller) SearchHost(ctx context.Context, rowCount string) (*SearchHo
 	bodyParams["rowCount"] = rowCount
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/dnsmasq/settings/search_host",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/dnsmasq/settings/search_host", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -178,8 +177,7 @@ func (c *Controller) SearchDomain(ctx context.Context, rowCount string) (*Search
 	bodyParams["rowCount"] = rowCount
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/dnsmasq/settings/search_domain",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/dnsmasq/settings/search_domain", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -203,8 +201,7 @@ func (c *Controller) SearchRange(ctx context.Context, rowCount string) (*SearchR
 	bodyParams["rowCount"] = rowCount
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/dnsmasq/settings/search_range",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/dnsmasq/settings/search_range", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -228,8 +225,7 @@ func (c *Controller) SearchOption(ctx context.Context, rowCount string) (*Search
 	bodyParams["rowCount"] = rowCount
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/dnsmasq/settings/search_option",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/dnsmasq/settings/search_option", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -253,8 +249,7 @@ func (c *Controller) SearchBoot(ctx context.Context, rowCount string) (*SearchBo
 	bodyParams["rowCount"] = rowCount
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/dnsmasq/settings/search_boot",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/dnsmasq/settings/search_boot", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -278,8 +273,7 @@ func (c *Controller) SearchTag(ctx context.Context, rowCount string) (*SearchTag
 	bodyParams["rowCount"] = rowCount
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/dnsmasq/settings/search_tag",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/dnsmasq/settings/search_tag", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

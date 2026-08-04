@@ -9,13 +9,13 @@ import (
 )
 
 var GreOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/gre_settings/add_item",
-	GetEndpoint:         "/interfaces/gre_settings/get_item",
-	UpdateEndpoint:      "/interfaces/gre_settings/set_item",
-	DeleteEndpoint:      "/interfaces/gre_settings/del_item",
-	SearchEndpoint:      "/interfaces/gre_settings/search_item",
-	ReconfigureEndpoint: "/interfaces/gre_settings/reconfigure",
-	Monad:               "gre",
+	Create:      api.Endpoint{Path: "/interfaces/gre_settings/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/interfaces/gre_settings/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/interfaces/gre_settings/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/interfaces/gre_settings/del_item", Method: "POST"},
+	Search:      api.Endpoint{Path: "/interfaces/gre_settings/search_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/interfaces/gre_settings/reconfigure", Method: "POST"},
+	Monad:       "gre",
 }
 
 // Data structs
@@ -44,7 +44,7 @@ func (c *Controller) GetGre(ctx context.Context, id string) (*Gre, error) {
 }
 
 func (c *Controller) SearchGre(ctx context.Context) (*api.SearchResponse[Gre], error) {
-	return api.Search[Gre](c.Client(), ctx, GreOpts.SearchEndpoint)
+	return api.Search[Gre](c.Client(), ctx, GreOpts.Search)
 }
 
 func (c *Controller) UpdateGre(ctx context.Context, id string, resource *Gre) error {

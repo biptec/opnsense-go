@@ -9,12 +9,12 @@ import (
 )
 
 var InstanceOpts = api.ReqOpts{
-	AddEndpoint:         "/openvpn/instances/add",
-	GetEndpoint:         "/openvpn/instances/get",
-	UpdateEndpoint:      "/openvpn/instances/set",
-	DeleteEndpoint:      "/openvpn/instances/del",
-	ReconfigureEndpoint: openvpnReconfigureEndpoint,
-	Monad:               "instance",
+	Create:      api.Endpoint{Path: "/openvpn/instances/add", Method: "POST"},
+	Read:        api.Endpoint{Path: "/openvpn/instances/get", Method: "GET"},
+	Update:      api.Endpoint{Path: "/openvpn/instances/set", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/openvpn/instances/del", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/openvpn/service/reconfigure", Method: "POST"},
+	Monad:       "instance",
 }
 
 // Data structs

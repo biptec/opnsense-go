@@ -9,12 +9,12 @@ import (
 )
 
 var PeerV4Opts = api.ReqOpts{
-	AddEndpoint:         "/kea/dhcpv4/add_peer",
-	GetEndpoint:         "/kea/dhcpv4/get_peer",
-	UpdateEndpoint:      "/kea/dhcpv4/set_peer",
-	DeleteEndpoint:      "/kea/dhcpv4/del_peer",
-	ReconfigureEndpoint: keaReconfigureEndpoint,
-	Monad:               "peer",
+	Create:      api.Endpoint{Path: "/kea/dhcpv4/add_peer", Method: "POST"},
+	Read:        api.Endpoint{Path: "/kea/dhcpv4/get_peer", Method: "GET"},
+	Update:      api.Endpoint{Path: "/kea/dhcpv4/set_peer", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/kea/dhcpv4/del_peer", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/kea/service/reconfigure", Method: "POST"},
+	Monad:       "peer",
 }
 
 // Data structs

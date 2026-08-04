@@ -1,15 +1,25 @@
 ---
 name: dyndns
-reconfigureEndpoint: "/dyndns/service/reconfigure"
 resources:
   - name: Account
     filename: account
     monad: account
     endpoints:
-      add: "/dyndns/accounts/add_item"
-      get: "/dyndns/accounts/get_item"
-      update: "/dyndns/accounts/set_item"
-      delete: "/dyndns/accounts/del_item"
+      create:
+        path: "/dyndns/accounts/add_item"
+        method: POST
+      read:
+        path: "/dyndns/accounts/get_item"
+        method: GET
+      update:
+        path: "/dyndns/accounts/set_item"
+        method: POST
+      delete:
+        path: "/dyndns/accounts/del_item"
+        method: POST
+      reconfigure:
+        path: "/dyndns/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -74,6 +84,7 @@ rpc:
     filename: service
     rpc_calls:
       - name: Reconfigure
-        method: POST
-        endpoint: /dyndns/service/reconfigure
+        endpoint:
+          path: "/dyndns/service/reconfigure"
+          method: POST
         result_type: api.ReconfigureStatusResult

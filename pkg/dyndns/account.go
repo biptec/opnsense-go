@@ -9,12 +9,12 @@ import (
 )
 
 var AccountOpts = api.ReqOpts{
-	AddEndpoint:         "/dyndns/accounts/add_item",
-	GetEndpoint:         "/dyndns/accounts/get_item",
-	UpdateEndpoint:      "/dyndns/accounts/set_item",
-	DeleteEndpoint:      "/dyndns/accounts/del_item",
-	ReconfigureEndpoint: dyndnsReconfigureEndpoint,
-	Monad:               "account",
+	Create:      api.Endpoint{Path: "/dyndns/accounts/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/dyndns/accounts/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/dyndns/accounts/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/dyndns/accounts/del_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/dyndns/service/reconfigure", Method: "POST"},
+	Monad:       "account",
 }
 
 // Data structs

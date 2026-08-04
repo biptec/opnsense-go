@@ -1,16 +1,25 @@
 ---
 name: dnsmasq
-filename: dnsmasq
-reconfigureEndpoint: "/dnsmasq/service/reconfigure"
 resources:
   - name: Host
     filename: host
     monad: host
     endpoints:
-      add: "/dnsmasq/settings/add_host"
-      get: "/dnsmasq/settings/get_host"
-      update: "/dnsmasq/settings/set_host"
-      delete: "/dnsmasq/settings/del_host"
+      create:
+        path: "/dnsmasq/settings/add_host"
+        method: POST
+      read:
+        path: "/dnsmasq/settings/get_host"
+        method: GET
+      update:
+        path: "/dnsmasq/settings/set_host"
+        method: POST
+      delete:
+        path: "/dnsmasq/settings/del_host"
+        method: POST
+      reconfigure:
+        path: "/dnsmasq/service/reconfigure"
+        method: POST
       # reconfigure: "null"
     attrs:
       - name: Hostname
@@ -54,10 +63,21 @@ resources:
     filename: domain
     monad: domainoverride
     endpoints:
-      add: "/dnsmasq/settings/add_domain"
-      get: "/dnsmasq/settings/get_domain"
-      update: "/dnsmasq/settings/set_domain"
-      delete: "/dnsmasq/settings/del_domain"
+      create:
+        path: "/dnsmasq/settings/add_domain"
+        method: POST
+      read:
+        path: "/dnsmasq/settings/get_domain"
+        method: GET
+      update:
+        path: "/dnsmasq/settings/set_domain"
+        method: POST
+      delete:
+        path: "/dnsmasq/settings/del_domain"
+        method: POST
+      reconfigure:
+        path: "/dnsmasq/service/reconfigure"
+        method: POST
       # reconfigure: "null"
     attrs:
       - name: Sequence
@@ -86,10 +106,21 @@ resources:
     filename: range
     monad: range
     endpoints:
-      add: "/dnsmasq/settings/add_range"
-      get: "/dnsmasq/settings/get_range"
-      update: "/dnsmasq/settings/set_range"
-      delete: "/dnsmasq/settings/del_range"
+      create:
+        path: "/dnsmasq/settings/add_range"
+        method: POST
+      read:
+        path: "/dnsmasq/settings/get_range"
+        method: GET
+      update:
+        path: "/dnsmasq/settings/set_range"
+        method: POST
+      delete:
+        path: "/dnsmasq/settings/del_range"
+        method: POST
+      reconfigure:
+        path: "/dnsmasq/service/reconfigure"
+        method: POST
       # reconfigure: "null"
     attrs:
       - name: Interface
@@ -151,10 +182,21 @@ resources:
     filename: option
     monad: option
     endpoints:
-      add: "/dnsmasq/settings/add_option"
-      get: "/dnsmasq/settings/get_option"
-      update: "/dnsmasq/settings/set_option"
-      delete: "/dnsmasq/settings/del_option"
+      create:
+        path: "/dnsmasq/settings/add_option"
+        method: POST
+      read:
+        path: "/dnsmasq/settings/get_option"
+        method: GET
+      update:
+        path: "/dnsmasq/settings/set_option"
+        method: POST
+      delete:
+        path: "/dnsmasq/settings/del_option"
+        method: POST
+      reconfigure:
+        path: "/dnsmasq/service/reconfigure"
+        method: POST
       # reconfigure: "null"
     attrs:
       - name: Type
@@ -189,10 +231,21 @@ resources:
     filename: boot
     monad: boot
     endpoints:
-      add: "/dnsmasq/settings/add_boot"
-      get: "/dnsmasq/settings/get_boot"
-      update: "/dnsmasq/settings/set_boot"
-      delete: "/dnsmasq/settings/del_boot"
+      create:
+        path: "/dnsmasq/settings/add_boot"
+        method: POST
+      read:
+        path: "/dnsmasq/settings/get_boot"
+        method: GET
+      update:
+        path: "/dnsmasq/settings/set_boot"
+        method: POST
+      delete:
+        path: "/dnsmasq/settings/del_boot"
+        method: POST
+      reconfigure:
+        path: "/dnsmasq/service/reconfigure"
+        method: POST
       # reconfigure: "null"
     attrs:
       - name: Interface
@@ -218,10 +271,21 @@ resources:
     filename: tag
     monad: tag
     endpoints:
-      add: "/dnsmasq/settings/add_tag"
-      get: "/dnsmasq/settings/get_tag"
-      update: "/dnsmasq/settings/set_tag"
-      delete: "/dnsmasq/settings/del_tag"
+      create:
+        path: "/dnsmasq/settings/add_tag"
+        method: POST
+      read:
+        path: "/dnsmasq/settings/get_tag"
+        method: GET
+      update:
+        path: "/dnsmasq/settings/set_tag"
+        method: POST
+      delete:
+        path: "/dnsmasq/settings/del_tag"
+        method: POST
+      reconfigure:
+        path: "/dnsmasq/service/reconfigure"
+        method: POST
       # reconfigure: "null"
     attrs:     
       - name: Tag
@@ -233,48 +297,54 @@ rpc:
     filename: search
     rpc_calls:
       - name: Host
-        endpoint: /dnsmasq/settings/search_host
-        method: POST
+        endpoint:
+          path: "/dnsmasq/settings/search_host"
+          method: POST
         params:
           - name: rowCount
             optional: false
             bodyParameter: true
         result_type: SearchHostResponse
       - name: Domain
-        endpoint: /dnsmasq/settings/search_domain
-        method: POST
+        endpoint:
+          path: "/dnsmasq/settings/search_domain"
+          method: POST
         params:
           - name: rowCount
             optional: false
             bodyParameter: true
         result_type: SearchDomainResponse
       - name: Range
-        endpoint: /dnsmasq/settings/search_range
-        method: POST
+        endpoint:
+          path: "/dnsmasq/settings/search_range"
+          method: POST
         params:
           - name: rowCount
             optional: false
             bodyParameter: true
         result_type: SearchRangeResponse
       - name: Option
-        endpoint: /dnsmasq/settings/search_option
-        method: POST
+        endpoint:
+          path: "/dnsmasq/settings/search_option"
+          method: POST
         params:
           - name: rowCount
             optional: false
             bodyParameter: true
         result_type: SearchOptionResponse
       - name: Boot
-        endpoint: /dnsmasq/settings/search_boot
-        method: POST
+        endpoint:
+          path: "/dnsmasq/settings/search_boot"
+          method: POST
         params:
           - name: rowCount
             optional: false
             bodyParameter: true
         result_type: SearchBootResponse
       - name: Tag
-        endpoint: /dnsmasq/settings/search_tag
-        method: POST
+        endpoint:
+          path: "/dnsmasq/settings/search_tag"
+          method: POST
         params:
           - name: rowCount
             optional: false
@@ -590,19 +660,22 @@ rpc:
     filename: service
     rpc_calls:      
       - name: "Reconfigure"
-        method: "POST"
-        endpoint: "/dnsmasq/service/reconfigure"
+        endpoint:
+          path: "/dnsmasq/service/reconfigure"
+          method: POST
         result_type: api.ReconfigureStatusResult
   - name: GeneralSettings
     filename: general
     rpc_calls:
       - name: Get
-        endpoint: /dnsmasq/settings/get
-        method: GET
+        endpoint:
+          path: "/dnsmasq/settings/get"
+          method: GET
         result_type: GeneralSettingsWrapper
       - name: Set
-        endpoint: /dnsmasq/settings/set
-        method: POST
+        endpoint:
+          path: "/dnsmasq/settings/set"
+          method: POST
         params:
           - name: dnsmasq
             optional: true

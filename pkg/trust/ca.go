@@ -9,13 +9,12 @@ import (
 )
 
 var CaOpts = api.ReqOpts{
-	AddEndpoint:         "/trust/ca/add",
-	GetEndpoint:         "/trust/ca/get",
-	UpdateEndpoint:      "/trust/ca/set",
-	DeleteEndpoint:      "/trust/ca/del",
-	SearchEndpoint:      "/trust/ca/search",
-	ReconfigureEndpoint: "",
-	Monad:               "ca",
+	Create: api.Endpoint{Path: "/trust/ca/add", Method: "POST"},
+	Read:   api.Endpoint{Path: "/trust/ca/get", Method: "GET"},
+	Update: api.Endpoint{Path: "/trust/ca/set", Method: "POST"},
+	Delete: api.Endpoint{Path: "/trust/ca/del", Method: "POST"},
+	Search: api.Endpoint{Path: "/trust/ca/search", Method: "POST"},
+	Monad:  "ca",
 }
 
 // Data structs
@@ -59,7 +58,7 @@ func (c *Controller) GetCa(ctx context.Context, id string) (*Ca, error) {
 }
 
 func (c *Controller) SearchCa(ctx context.Context) (*api.SearchResponse[Ca], error) {
-	return api.Search[Ca](c.Client(), ctx, CaOpts.SearchEndpoint)
+	return api.Search[Ca](c.Client(), ctx, CaOpts.Search)
 }
 
 func (c *Controller) UpdateCa(ctx context.Context, id string, resource *Ca) error {

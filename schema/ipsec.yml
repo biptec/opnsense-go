@@ -1,15 +1,25 @@
 ---
 name: ipsec
-reconfigureEndpoint: "/ipsec/service/reconfigure" # Controller-wide reconfigure endpoint (can be overwritten)
 resources:
   - name: IPsecPSK
     filename: ipsec_psk
     monad: preSharedKey
     endpoints:
-      add: "/ipsec/pre_shared_keys/add_item"
-      get: "/ipsec/pre_shared_keys/get_item"
-      update: "/ipsec/pre_shared_keys/set_item"
-      delete: "/ipsec/pre_shared_keys/del_item"
+      create:
+        path: "/ipsec/pre_shared_keys/add_item"
+        method: POST
+      read:
+        path: "/ipsec/pre_shared_keys/get_item"
+        method: GET
+      update:
+        path: "/ipsec/pre_shared_keys/set_item"
+        method: POST
+      delete:
+        path: "/ipsec/pre_shared_keys/del_item"
+        method: POST
+      reconfigure:
+        path: "/ipsec/service/reconfigure"
+        method: POST
     attrs:
       - name: IdentityLocal
         type: string
@@ -31,10 +41,21 @@ resources:
     filename: ipsec_connection
     monad: connection
     endpoints:
-      add: "/ipsec/connections/add_connection"
-      get: "/ipsec/connections/get_connection"
-      update: "/ipsec/connections/set_connection"
-      delete: "/ipsec/connections/del_connection"
+      create:
+        path: "/ipsec/connections/add_connection"
+        method: POST
+      read:
+        path: "/ipsec/connections/get_connection"
+        method: GET
+      update:
+        path: "/ipsec/connections/set_connection"
+        method: POST
+      delete:
+        path: "/ipsec/connections/del_connection"
+        method: POST
+      reconfigure:
+        path: "/ipsec/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -104,10 +125,21 @@ resources:
     filename: ipsec_auth_local
     monad: local
     endpoints:
-      add: "/ipsec/connections/add_local"
-      get: "/ipsec/connections/get_local"
-      update: "/ipsec/connections/set_local"
-      delete: "/ipsec/connections/del_local"
+      create:
+        path: "/ipsec/connections/add_local"
+        method: POST
+      read:
+        path: "/ipsec/connections/get_local"
+        method: GET
+      update:
+        path: "/ipsec/connections/set_local"
+        method: POST
+      delete:
+        path: "/ipsec/connections/del_local"
+        method: POST
+      reconfigure:
+        path: "/ipsec/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -142,10 +174,21 @@ resources:
     filename: ipsec_auth_remote
     monad: remote
     endpoints:
-      add: "/ipsec/connections/add_remote"
-      get: "/ipsec/connections/get_remote"
-      update: "/ipsec/connections/set_remote"
-      delete: "/ipsec/connections/del_remote"
+      create:
+        path: "/ipsec/connections/add_remote"
+        method: POST
+      read:
+        path: "/ipsec/connections/get_remote"
+        method: GET
+      update:
+        path: "/ipsec/connections/set_remote"
+        method: POST
+      delete:
+        path: "/ipsec/connections/del_remote"
+        method: POST
+      reconfigure:
+        path: "/ipsec/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -179,10 +222,21 @@ resources:
     filename: ipsec_child
     monad: child
     endpoints:
-      add: "/ipsec/connections/add_child"
-      get: "/ipsec/connections/get_child"
-      update: "/ipsec/connections/set_child"
-      delete: "/ipsec/connections/del_child"
+      create:
+        path: "/ipsec/connections/add_child"
+        method: POST
+      read:
+        path: "/ipsec/connections/get_child"
+        method: GET
+      update:
+        path: "/ipsec/connections/set_child"
+        method: POST
+      delete:
+        path: "/ipsec/connections/del_child"
+        method: POST
+      reconfigure:
+        path: "/ipsec/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -231,10 +285,21 @@ resources:
     filename: ipsec_vti
     monad: vti
     endpoints:
-      add: "/ipsec/vti/add"
-      get: "/ipsec/vti/get"
-      update: "/ipsec/vti/set"
-      delete: "/ipsec/vti/del"
+      create:
+        path: "/ipsec/vti/add"
+        method: POST
+      read:
+        path: "/ipsec/vti/get"
+        method: GET
+      update:
+        path: "/ipsec/vti/set"
+        method: POST
+      delete:
+        path: "/ipsec/vti/del"
+        method: POST
+      reconfigure:
+        path: "/ipsec/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string

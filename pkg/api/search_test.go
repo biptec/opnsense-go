@@ -32,7 +32,7 @@ func TestSearch(t *testing.T) {
 	defer server.Close()
 
 	client := NewClient(Options{Uri: server.URL})
-	result, err := Search[searchTestResource](client, context.Background(), "/interfaces/vxlan_settings/search_item")
+	result, err := Search[searchTestResource](client, context.Background(), Endpoint{Path: "/interfaces/vxlan_settings/search_item", Method: http.MethodPost})
 	if err != nil {
 		t.Fatalf("Search() error = %v", err)
 	}

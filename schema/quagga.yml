@@ -1,6 +1,5 @@
 ---
 name: quagga
-reconfigureEndpoint: "/quagga/service/reconfigure" # Controller-wide reconfigure endpoint (can be overwritten)
 resources:
 
   # quagga resources
@@ -9,10 +8,21 @@ resources:
     filename: bgp_neighbor
     monad: neighbor
     endpoints:
-      add: "/quagga/bgp/addNeighbor"
-      get: "/quagga/bgp/getNeighbor"
-      update: "/quagga/bgp/setNeighbor"
-      delete: "/quagga/bgp/delNeighbor"
+      create:
+        path: "/quagga/bgp/addNeighbor"
+        method: POST
+      read:
+        path: "/quagga/bgp/getNeighbor"
+        method: GET
+      update:
+        path: "/quagga/bgp/setNeighbor"
+        method: POST
+      delete:
+        path: "/quagga/bgp/delNeighbor"
+        method: POST
+      reconfigure:
+        path: "/quagga/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -97,10 +107,21 @@ resources:
     filename: bgp_aspath
     monad: aspath
     endpoints:
-      add: "/quagga/bgp/addAspath"
-      get: "/quagga/bgp/getAspath"
-      update: "/quagga/bgp/setAspath"
-      delete: "/quagga/bgp/delAspath"
+      create:
+        path: "/quagga/bgp/addAspath"
+        method: POST
+      read:
+        path: "/quagga/bgp/getAspath"
+        method: GET
+      update:
+        path: "/quagga/bgp/setAspath"
+        method: POST
+      delete:
+        path: "/quagga/bgp/delAspath"
+        method: POST
+      reconfigure:
+        path: "/quagga/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -122,10 +143,21 @@ resources:
     filename: bgp_prefixlist
     monad: prefixlist
     endpoints:
-      add: "/quagga/bgp/addPrefixlist"
-      get: "/quagga/bgp/getPrefixlist"
-      update: "/quagga/bgp/setPrefixlist"
-      delete: "/quagga/bgp/delPrefixlist"
+      create:
+        path: "/quagga/bgp/addPrefixlist"
+        method: POST
+      read:
+        path: "/quagga/bgp/getPrefixlist"
+        method: GET
+      update:
+        path: "/quagga/bgp/setPrefixlist"
+        method: POST
+      delete:
+        path: "/quagga/bgp/delPrefixlist"
+        method: POST
+      reconfigure:
+        path: "/quagga/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -153,10 +185,21 @@ resources:
     filename: bgp_communitylist
     monad: communitylist
     endpoints:
-      add: "/quagga/bgp/addCommunitylist"
-      get: "/quagga/bgp/getCommunitylist"
-      update: "/quagga/bgp/setCommunitylist"
-      delete: "/quagga/bgp/delCommunitylist"
+      create:
+        path: "/quagga/bgp/addCommunitylist"
+        method: POST
+      read:
+        path: "/quagga/bgp/getCommunitylist"
+        method: GET
+      update:
+        path: "/quagga/bgp/setCommunitylist"
+        method: POST
+      delete:
+        path: "/quagga/bgp/delCommunitylist"
+        method: POST
+      reconfigure:
+        path: "/quagga/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -181,10 +224,21 @@ resources:
     filename: bgp_routemap
     monad: routemap
     endpoints:
-      add: "/quagga/bgp/addRoutemap"
-      get: "/quagga/bgp/getRoutemap"
-      update: "/quagga/bgp/setRoutemap"
-      delete: "/quagga/bgp/delRoutemap"
+      create:
+        path: "/quagga/bgp/addRoutemap"
+        method: POST
+      read:
+        path: "/quagga/bgp/getRoutemap"
+        method: GET
+      update:
+        path: "/quagga/bgp/setRoutemap"
+        method: POST
+      delete:
+        path: "/quagga/bgp/delRoutemap"
+        method: POST
+      reconfigure:
+        path: "/quagga/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string

@@ -9,12 +9,12 @@ import (
 )
 
 var IPsecChildOpts = api.ReqOpts{
-	AddEndpoint:         "/ipsec/connections/add_child",
-	GetEndpoint:         "/ipsec/connections/get_child",
-	UpdateEndpoint:      "/ipsec/connections/set_child",
-	DeleteEndpoint:      "/ipsec/connections/del_child",
-	ReconfigureEndpoint: ipsecReconfigureEndpoint,
-	Monad:               "child",
+	Create:      api.Endpoint{Path: "/ipsec/connections/add_child", Method: "POST"},
+	Read:        api.Endpoint{Path: "/ipsec/connections/get_child", Method: "GET"},
+	Update:      api.Endpoint{Path: "/ipsec/connections/set_child", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/ipsec/connections/del_child", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/ipsec/service/reconfigure", Method: "POST"},
+	Monad:       "child",
 }
 
 // Data structs

@@ -24,7 +24,9 @@ func Call[R any](c *Client, ctx context.Context, rcpOpts RPCOpts, result *R) (*R
 		body = rcpOpts.BodyParameters
 	}
 
-	err := c.doRequest(ctx, rcpOpts.Method, rcpOpts.EndpointURL(), body, &reqData)
+	endpoint := rcpOpts.Endpoint
+	endpoint.Path = rcpOpts.EndpointURL()
+	err := c.doEndpointRequest(ctx, endpoint, body, &reqData)
 
 	// Handle request errors
 	if err != nil {

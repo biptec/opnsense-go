@@ -4,8 +4,6 @@ package dyndns
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-const dyndnsReconfigureEndpoint = "/dyndns/service/reconfigure"
-
 // Controller for dyndns
 type Controller struct {
 	Api *api.Client

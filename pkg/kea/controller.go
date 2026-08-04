@@ -4,8 +4,6 @@ package kea
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-const keaReconfigureEndpoint = "/kea/service/reconfigure"
-
 // Controller for kea
 type Controller struct {
 	Api *api.Client

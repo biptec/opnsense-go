@@ -4,8 +4,6 @@ package caddy
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-const caddyReconfigureEndpoint = "/caddy/service/reconfigure"
-
 // Controller for caddy
 type Controller struct {
 	Api *api.Client

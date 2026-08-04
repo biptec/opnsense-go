@@ -9,12 +9,12 @@ import (
 )
 
 var DomainOpts = api.ReqOpts{
-	AddEndpoint:         "/dnsmasq/settings/add_domain",
-	GetEndpoint:         "/dnsmasq/settings/get_domain",
-	UpdateEndpoint:      "/dnsmasq/settings/set_domain",
-	DeleteEndpoint:      "/dnsmasq/settings/del_domain",
-	ReconfigureEndpoint: dnsmasqReconfigureEndpoint,
-	Monad:               "domainoverride",
+	Create:      api.Endpoint{Path: "/dnsmasq/settings/add_domain", Method: "POST"},
+	Read:        api.Endpoint{Path: "/dnsmasq/settings/get_domain", Method: "GET"},
+	Update:      api.Endpoint{Path: "/dnsmasq/settings/set_domain", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/dnsmasq/settings/del_domain", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/dnsmasq/service/reconfigure", Method: "POST"},
+	Monad:       "domainoverride",
 }
 
 // Data structs

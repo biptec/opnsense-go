@@ -9,12 +9,11 @@ import (
 )
 
 var CategoryOpts = api.ReqOpts{
-	AddEndpoint:         "/firewall/category/addItem",
-	GetEndpoint:         "/firewall/category/getItem",
-	UpdateEndpoint:      "/firewall/category/setItem",
-	DeleteEndpoint:      "/firewall/category/delItem",
-	ReconfigureEndpoint: "",
-	Monad:               "category",
+	Create: api.Endpoint{Path: "/firewall/category/addItem", Method: "POST"},
+	Read:   api.Endpoint{Path: "/firewall/category/getItem", Method: "GET"},
+	Update: api.Endpoint{Path: "/firewall/category/setItem", Method: "POST"},
+	Delete: api.Endpoint{Path: "/firewall/category/delItem", Method: "POST"},
+	Monad:  "category",
 }
 
 // Data structs

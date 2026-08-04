@@ -9,12 +9,11 @@ import (
 )
 
 var GroupOpts = api.ReqOpts{
-	AddEndpoint:         "/auth/group/add",
-	GetEndpoint:         "/auth/group/get",
-	UpdateEndpoint:      "/auth/group/set",
-	DeleteEndpoint:      "/auth/group/del",
-	ReconfigureEndpoint: "",
-	Monad:               "group",
+	Create: api.Endpoint{Path: "/auth/group/add", Method: "POST"},
+	Read:   api.Endpoint{Path: "/auth/group/get", Method: "GET"},
+	Update: api.Endpoint{Path: "/auth/group/set", Method: "POST"},
+	Delete: api.Endpoint{Path: "/auth/group/del", Method: "POST"},
+	Monad:  "group",
 }
 
 // Data structs

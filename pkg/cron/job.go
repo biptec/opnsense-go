@@ -9,12 +9,12 @@ import (
 )
 
 var JobOpts = api.ReqOpts{
-	AddEndpoint:         "/cron/settings/addJob",
-	GetEndpoint:         "/cron/settings/getJob",
-	UpdateEndpoint:      "/cron/settings/setJob",
-	DeleteEndpoint:      "/cron/settings/delJob",
-	ReconfigureEndpoint: cronReconfigureEndpoint,
-	Monad:               "job",
+	Create:      api.Endpoint{Path: "/cron/settings/addJob", Method: "POST"},
+	Read:        api.Endpoint{Path: "/cron/settings/getJob", Method: "GET"},
+	Update:      api.Endpoint{Path: "/cron/settings/setJob", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/cron/settings/delJob", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/cron/service/reconfigure", Method: "POST"},
+	Monad:       "job",
 }
 
 // Data structs

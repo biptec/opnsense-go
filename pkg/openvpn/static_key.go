@@ -9,12 +9,12 @@ import (
 )
 
 var StaticKeyOpts = api.ReqOpts{
-	AddEndpoint:         "/openvpn/instances/add_static_key",
-	GetEndpoint:         "/openvpn/instances/get_static_key",
-	UpdateEndpoint:      "/openvpn/instances/set_static_key",
-	DeleteEndpoint:      "/openvpn/instances/del_static_key",
-	ReconfigureEndpoint: openvpnReconfigureEndpoint,
-	Monad:               "statickey",
+	Create:      api.Endpoint{Path: "/openvpn/instances/add_static_key", Method: "POST"},
+	Read:        api.Endpoint{Path: "/openvpn/instances/get_static_key", Method: "GET"},
+	Update:      api.Endpoint{Path: "/openvpn/instances/set_static_key", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/openvpn/instances/del_static_key", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/openvpn/service/reconfigure", Method: "POST"},
+	Monad:       "statickey",
 }
 
 // Data structs

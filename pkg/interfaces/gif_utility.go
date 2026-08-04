@@ -19,8 +19,7 @@ func (c *Controller) GifUtilityGetIfOptions(ctx context.Context) (*map[string]in
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/interfaces/gif_settings/get_if_options",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/interfaces/gif_settings/get_if_options", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

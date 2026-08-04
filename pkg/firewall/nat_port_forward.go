@@ -7,12 +7,12 @@ import (
 )
 
 var NatPortForwardOpts = api.ReqOpts{
-	AddEndpoint:         "/firewall/d_nat/addRule",
-	GetEndpoint:         "/firewall/d_nat/getRule",
-	UpdateEndpoint:      "/firewall/d_nat/setRule",
-	DeleteEndpoint:      "/firewall/d_nat/delRule",
-	ReconfigureEndpoint: "/firewall/filter/apply",
-	Monad:               "rule",
+	Create:      api.Endpoint{Path: "/firewall/d_nat/addRule", Method: "POST"},
+	Read:        api.Endpoint{Path: "/firewall/d_nat/getRule", Method: "GET"},
+	Update:      api.Endpoint{Path: "/firewall/d_nat/setRule", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/firewall/d_nat/delRule", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/firewall/filter/apply", Method: "POST"},
+	Monad:       "rule",
 }
 
 // Data structs

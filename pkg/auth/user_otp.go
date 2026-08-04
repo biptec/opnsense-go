@@ -24,8 +24,7 @@ func (c *Controller) UserNewOtpSeed(ctx context.Context) (*NewOtpSeedResult, err
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/auth/user/new_otp_seed",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/auth/user/new_otp_seed", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

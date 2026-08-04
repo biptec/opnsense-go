@@ -9,12 +9,12 @@ import (
 )
 
 var BGPASPathOpts = api.ReqOpts{
-	AddEndpoint:         "/quagga/bgp/addAspath",
-	GetEndpoint:         "/quagga/bgp/getAspath",
-	UpdateEndpoint:      "/quagga/bgp/setAspath",
-	DeleteEndpoint:      "/quagga/bgp/delAspath",
-	ReconfigureEndpoint: quaggaReconfigureEndpoint,
-	Monad:               "aspath",
+	Create:      api.Endpoint{Path: "/quagga/bgp/addAspath", Method: "POST"},
+	Read:        api.Endpoint{Path: "/quagga/bgp/getAspath", Method: "GET"},
+	Update:      api.Endpoint{Path: "/quagga/bgp/setAspath", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/quagga/bgp/delAspath", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/quagga/service/reconfigure", Method: "POST"},
+	Monad:       "aspath",
 }
 
 // Data structs

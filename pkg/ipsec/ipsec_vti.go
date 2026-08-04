@@ -9,12 +9,12 @@ import (
 )
 
 var IPsecVTIOpts = api.ReqOpts{
-	AddEndpoint:         "/ipsec/vti/add",
-	GetEndpoint:         "/ipsec/vti/get",
-	UpdateEndpoint:      "/ipsec/vti/set",
-	DeleteEndpoint:      "/ipsec/vti/del",
-	ReconfigureEndpoint: ipsecReconfigureEndpoint,
-	Monad:               "vti",
+	Create:      api.Endpoint{Path: "/ipsec/vti/add", Method: "POST"},
+	Read:        api.Endpoint{Path: "/ipsec/vti/get", Method: "GET"},
+	Update:      api.Endpoint{Path: "/ipsec/vti/set", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/ipsec/vti/del", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/ipsec/service/reconfigure", Method: "POST"},
+	Monad:       "vti",
 }
 
 // Data structs

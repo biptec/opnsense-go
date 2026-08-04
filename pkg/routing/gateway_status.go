@@ -35,8 +35,7 @@ func (c *Controller) GatewayStatusGet(ctx context.Context) (*GatewayStatusRespon
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/routes/gateway/status",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/routes/gateway/status", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

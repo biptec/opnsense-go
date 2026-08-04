@@ -37,10 +37,13 @@ func TestInterfaceResourceEndpoints(t *testing.T) {
 			t.Parallel()
 			base := "/interfaces/" + test.controller
 			want := api.ReqOpts{
-				AddEndpoint: base + "/add_item", GetEndpoint: base + "/get_item",
-				UpdateEndpoint: base + "/set_item", DeleteEndpoint: base + "/del_item",
-				SearchEndpoint: base + "/search_item", ReconfigureEndpoint: base + "/reconfigure",
-				Monad: test.monad,
+				Create:      api.Endpoint{Path: base + "/add_item", Method: "POST"},
+				Read:        api.Endpoint{Path: base + "/get_item", Method: "GET"},
+				Update:      api.Endpoint{Path: base + "/set_item", Method: "POST"},
+				Delete:      api.Endpoint{Path: base + "/del_item", Method: "POST"},
+				Search:      api.Endpoint{Path: base + "/search_item", Method: "POST"},
+				Reconfigure: api.Endpoint{Path: base + "/reconfigure", Method: "POST"},
+				Monad:       test.monad,
 			}
 			if !reflect.DeepEqual(test.opts, want) {
 				t.Fatalf("options = %#v, want %#v", test.opts, want)

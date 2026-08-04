@@ -9,12 +9,12 @@ import (
 )
 
 var BGPPrefixListOpts = api.ReqOpts{
-	AddEndpoint:         "/quagga/bgp/addPrefixlist",
-	GetEndpoint:         "/quagga/bgp/getPrefixlist",
-	UpdateEndpoint:      "/quagga/bgp/setPrefixlist",
-	DeleteEndpoint:      "/quagga/bgp/delPrefixlist",
-	ReconfigureEndpoint: quaggaReconfigureEndpoint,
-	Monad:               "prefixlist",
+	Create:      api.Endpoint{Path: "/quagga/bgp/addPrefixlist", Method: "POST"},
+	Read:        api.Endpoint{Path: "/quagga/bgp/getPrefixlist", Method: "GET"},
+	Update:      api.Endpoint{Path: "/quagga/bgp/setPrefixlist", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/quagga/bgp/delPrefixlist", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/quagga/service/reconfigure", Method: "POST"},
+	Monad:       "prefixlist",
 }
 
 // Data structs

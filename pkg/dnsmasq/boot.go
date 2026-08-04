@@ -9,12 +9,12 @@ import (
 )
 
 var BootOpts = api.ReqOpts{
-	AddEndpoint:         "/dnsmasq/settings/add_boot",
-	GetEndpoint:         "/dnsmasq/settings/get_boot",
-	UpdateEndpoint:      "/dnsmasq/settings/set_boot",
-	DeleteEndpoint:      "/dnsmasq/settings/del_boot",
-	ReconfigureEndpoint: dnsmasqReconfigureEndpoint,
-	Monad:               "boot",
+	Create:      api.Endpoint{Path: "/dnsmasq/settings/add_boot", Method: "POST"},
+	Read:        api.Endpoint{Path: "/dnsmasq/settings/get_boot", Method: "GET"},
+	Update:      api.Endpoint{Path: "/dnsmasq/settings/set_boot", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/dnsmasq/settings/del_boot", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/dnsmasq/service/reconfigure", Method: "POST"},
+	Monad:       "boot",
 }
 
 // Data structs

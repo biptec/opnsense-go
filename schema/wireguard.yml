@@ -1,6 +1,5 @@
 ---
 name: wireguard
-reconfigureEndpoint: "/wireguard/service/reconfigure" # Controller-wide reconfigure endpoint (can be overwritten)
 resources:
 
   # wireguard-go resources
@@ -9,10 +8,21 @@ resources:
     filename: server
     monad: server
     endpoints:
-      add: "/wireguard/server/addServer"
-      get: "/wireguard/server/getServer"
-      update: "/wireguard/server/setServer"
-      delete: "/wireguard/server/delServer"
+      create:
+        path: "/wireguard/server/addServer"
+        method: POST
+      read:
+        path: "/wireguard/server/getServer"
+        method: GET
+      update:
+        path: "/wireguard/server/setServer"
+        method: POST
+      delete:
+        path: "/wireguard/server/delServer"
+        method: POST
+      reconfigure:
+        path: "/wireguard/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -56,10 +66,21 @@ resources:
     filename: client
     monad: client
     endpoints:
-      add: "/wireguard/client/addClient"
-      get: "/wireguard/client/getClient"
-      update: "/wireguard/client/setClient"
-      delete: "/wireguard/client/delClient"
+      create:
+        path: "/wireguard/client/addClient"
+        method: POST
+      read:
+        path: "/wireguard/client/getClient"
+        method: GET
+      update:
+        path: "/wireguard/client/setClient"
+        method: POST
+      delete:
+        path: "/wireguard/client/delClient"
+        method: POST
+      reconfigure:
+        path: "/wireguard/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -104,12 +125,14 @@ rpc:
           key: result
     rpc_calls:
       - name: Get
-        method: GET
-        endpoint: "/wireguard/general/get"
+        endpoint:
+          path: "/wireguard/general/get"
+          method: GET
         result_type: GeneralGetResult
       - name: Set
-        method: POST
-        endpoint: "/wireguard/general/set"
+        endpoint:
+          path: "/wireguard/general/set"
+          method: POST
         params:
           - name: general
             optional: false
@@ -139,11 +162,13 @@ rpc:
           key: status
     rpc_calls:
       - name: GenKeyPair
-        method: GET
-        # Note: path is camelCase (keyPair), NOT snake_case - do not change.
-        endpoint: "/wireguard/server/keyPair"
+        endpoint:
+          # Note: path is camelCase (keyPair), NOT snake_case - do not change.
+          path: "/wireguard/server/keyPair"
+          method: GET
         result_type: GenKeyPairResult
       - name: GenPsk
-        method: GET
-        endpoint: "/wireguard/client/psk"
+        endpoint:
+          path: "/wireguard/client/psk"
+          method: GET
         result_type: GenPskResult

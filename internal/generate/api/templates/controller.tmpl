@@ -4,9 +4,6 @@ package {{ .Name }}
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-{{- if not (eq .ReconfigureEndpoint "") }}
-const {{ .Name }}ReconfigureEndpoint = "{{ .ReconfigureEndpoint }}"
-{{- end }}
 
 // Controller for {{ .Name }}
 type Controller struct {

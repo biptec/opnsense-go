@@ -1,6 +1,5 @@
 ---
 name: firewall
-reconfigureEndpoint: "" # Controller-wide reconfigure endpoint (can be overwritten)
 resources:
 
   # os-firewall resources
@@ -9,11 +8,21 @@ resources:
     filename: filter
     monad: rule
     endpoints:
-      add: "/firewall/filter/addRule"
-      get: "/firewall/filter/getRule"
-      update: "/firewall/filter/setRule"
-      delete: "/firewall/filter/delRule"
-      reconfigure: "/firewall/filter/apply"
+      create:
+        path: "/firewall/filter/addRule"
+        method: POST
+      read:
+        path: "/firewall/filter/getRule"
+        method: GET
+      update:
+        path: "/firewall/filter/setRule"
+        method: POST
+      delete:
+        path: "/firewall/filter/delRule"
+        method: POST
+      reconfigure:
+        path: "/firewall/filter/apply"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -167,11 +176,21 @@ resources:
     filename: nat
     monad: rule
     endpoints:
-      add: "/firewall/source_nat/addRule"
-      get: "/firewall/source_nat/getRule"
-      update: "/firewall/source_nat/setRule"
-      delete: "/firewall/source_nat/delRule"
-      reconfigure: "/firewall/source_nat/apply"
+      create:
+        path: "/firewall/source_nat/addRule"
+        method: POST
+      read:
+        path: "/firewall/source_nat/getRule"
+        method: GET
+      update:
+        path: "/firewall/source_nat/setRule"
+        method: POST
+      delete:
+        path: "/firewall/source_nat/delRule"
+        method: POST
+      reconfigure:
+        path: "/firewall/source_nat/apply"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -226,11 +245,21 @@ resources:
     filename: nat_one_to_one
     monad: rule
     endpoints:
-      add: "/firewall/one_to_one/addRule"
-      get: "/firewall/one_to_one/getRule"
-      update: "/firewall/one_to_one/setRule"
-      delete: "/firewall/one_to_one/delRule"
-      reconfigure: "/firewall/one_to_one/apply"
+      create:
+        path: "/firewall/one_to_one/addRule"
+        method: POST
+      read:
+        path: "/firewall/one_to_one/getRule"
+        method: GET
+      update:
+        path: "/firewall/one_to_one/setRule"
+        method: POST
+      delete:
+        path: "/firewall/one_to_one/delRule"
+        method: POST
+      reconfigure:
+        path: "/firewall/one_to_one/apply"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -279,11 +308,21 @@ resources:
     filename: alias
     monad: alias
     endpoints:
-      add: "/firewall/alias/addItem"
-      get: "/firewall/alias/getItem"
-      update: "/firewall/alias/setItem"
-      delete: "/firewall/alias/delItem"
-      reconfigure: "/firewall/alias/reconfigure"
+      create:
+        path: "/firewall/alias/addItem"
+        method: POST
+      read:
+        path: "/firewall/alias/getItem"
+        method: GET
+      update:
+        path: "/firewall/alias/setItem"
+        method: POST
+      delete:
+        path: "/firewall/alias/delItem"
+        method: POST
+      reconfigure:
+        path: "/firewall/alias/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -323,11 +362,18 @@ resources:
     filename: category
     monad: category
     endpoints:
-      add: "/firewall/category/addItem"
-      get: "/firewall/category/getItem"
-      update: "/firewall/category/setItem"
-      delete: "/firewall/category/delItem"
-      reconfigure: "null"
+      create:
+        path: "/firewall/category/addItem"
+        method: POST
+      read:
+        path: "/firewall/category/getItem"
+        method: GET
+      update:
+        path: "/firewall/category/setItem"
+        method: POST
+      delete:
+        path: "/firewall/category/delItem"
+        method: POST
     attrs:
       - name: Automatic
         type: string
@@ -343,12 +389,24 @@ resources:
     filename: group
     monad: group
     endpoints:
-      add: "/firewall/group/addItem"
-      get: "/firewall/group/getItem"
-      update: "/firewall/group/setItem"
-      delete: "/firewall/group/delItem"
-      search: "/firewall/group/searchItem"
-      reconfigure: "/firewall/group/reconfigure"
+      create:
+        path: "/firewall/group/addItem"
+        method: POST
+      read:
+        path: "/firewall/group/getItem"
+        method: GET
+      update:
+        path: "/firewall/group/setItem"
+        method: POST
+      delete:
+        path: "/firewall/group/delItem"
+        method: POST
+      search:
+        path: "/firewall/group/searchItem"
+        method: POST
+      reconfigure:
+        path: "/firewall/group/reconfigure"
+        method: POST
     attrs:
       - name: UUID
         type: string
@@ -374,12 +432,24 @@ resources:
     filename: npt
     monad: rule
     endpoints:
-      add: "/firewall/npt/addRule"
-      get: "/firewall/npt/getRule"
-      update: "/firewall/npt/setRule"
-      delete: "/firewall/npt/delRule"
-      search: "/firewall/npt/searchRule"
-      reconfigure: "/firewall/npt/apply"
+      create:
+        path: "/firewall/npt/addRule"
+        method: POST
+      read:
+        path: "/firewall/npt/getRule"
+        method: GET
+      update:
+        path: "/firewall/npt/setRule"
+        method: POST
+      delete:
+        path: "/firewall/npt/delRule"
+        method: POST
+      search:
+        path: "/firewall/npt/searchRule"
+        method: POST
+      reconfigure:
+        path: "/firewall/npt/apply"
+        method: POST
     attrs:
       - name: UUID
         type: string

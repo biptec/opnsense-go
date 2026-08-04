@@ -9,14 +9,13 @@ import (
 )
 
 var AccessListOpts = api.ReqOpts{
-	AddEndpoint:         "/caddy/reverse_proxy/add_access_list",
-	GetEndpoint:         "/caddy/reverse_proxy/get_access_list",
-	GetMethod:           "POST",
-	UpdateEndpoint:      "/caddy/reverse_proxy/set_access_list",
-	DeleteEndpoint:      "/caddy/reverse_proxy/del_access_list",
-	SearchEndpoint:      "/caddy/reverse_proxy/search_access_list",
-	ReconfigureEndpoint: caddyReconfigureEndpoint,
-	Monad:               "accesslist",
+	Create:      api.Endpoint{Path: "/caddy/reverse_proxy/add_access_list", Method: "POST"},
+	Read:        api.Endpoint{Path: "/caddy/reverse_proxy/get_access_list", Method: "POST"},
+	Update:      api.Endpoint{Path: "/caddy/reverse_proxy/set_access_list", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/caddy/reverse_proxy/del_access_list", Method: "POST"},
+	Search:      api.Endpoint{Path: "/caddy/reverse_proxy/search_access_list", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/caddy/service/reconfigure", Method: "POST"},
+	Monad:       "accesslist",
 }
 
 // Data structs
@@ -43,7 +42,7 @@ func (c *Controller) GetAccessList(ctx context.Context, id string) (*AccessList,
 }
 
 func (c *Controller) SearchAccessList(ctx context.Context) (*api.SearchResponse[AccessList], error) {
-	return api.Search[AccessList](c.Client(), ctx, AccessListOpts.SearchEndpoint)
+	return api.Search[AccessList](c.Client(), ctx, AccessListOpts.Search)
 }
 
 func (c *Controller) UpdateAccessList(ctx context.Context, id string, resource *AccessList) error {
