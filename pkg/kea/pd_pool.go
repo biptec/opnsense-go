@@ -9,12 +9,12 @@ import (
 )
 
 var PDPoolOpts = api.ReqOpts{
-	AddEndpoint:         "/kea/dhcpv6/add_pd_pool",
-	GetEndpoint:         "/kea/dhcpv6/get_pd_pool",
-	UpdateEndpoint:      "/kea/dhcpv6/set_pd_pool",
-	DeleteEndpoint:      "/kea/dhcpv6/del_pd_pool",
-	ReconfigureEndpoint: keaReconfigureEndpoint,
-	Monad:               "pd_pool",
+	Create:      api.Endpoint{Path: "/kea/dhcpv6/add_pd_pool", Method: "POST"},
+	Read:        api.Endpoint{Path: "/kea/dhcpv6/get_pd_pool", Method: "GET"},
+	Update:      api.Endpoint{Path: "/kea/dhcpv6/set_pd_pool", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/kea/dhcpv6/del_pd_pool", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/kea/service/reconfigure", Method: "POST"},
+	Monad:       "pd_pool",
 }
 
 // Data structs

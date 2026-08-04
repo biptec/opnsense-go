@@ -19,8 +19,7 @@ func (c *Controller) ServiceReconfigure(ctx context.Context) (*api.ReconfigureSt
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/dnsmasq/service/reconfigure",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/dnsmasq/service/reconfigure", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

@@ -34,8 +34,7 @@ func (c *Controller) PrivilegeGetAll(ctx context.Context) (*PrivilegeGetAllResul
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/auth/priv/search",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/auth/priv/search", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

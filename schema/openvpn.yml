@@ -1,16 +1,26 @@
 ---
 name: openvpn
-reconfigureEndpoint: "/openvpn/service/reconfigure" # Controller-wide reconfigure endpoint
 
 resources:
   - name: Instance
     filename: instance
     monad: instance
     endpoints:
-      add: "/openvpn/instances/add"
-      get: "/openvpn/instances/get"
-      update: "/openvpn/instances/set"
-      delete: "/openvpn/instances/del"
+      create:
+        path: "/openvpn/instances/add"
+        method: POST
+      read:
+        path: "/openvpn/instances/get"
+        method: GET
+      update:
+        path: "/openvpn/instances/set"
+        method: POST
+      delete:
+        path: "/openvpn/instances/del"
+        method: POST
+      reconfigure:
+        path: "/openvpn/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -204,10 +214,21 @@ resources:
     filename: static_key
     monad: statickey
     endpoints:
-      add: "/openvpn/instances/add_static_key"
-      get: "/openvpn/instances/get_static_key"
-      update: "/openvpn/instances/set_static_key"
-      delete: "/openvpn/instances/del_static_key"
+      create:
+        path: "/openvpn/instances/add_static_key"
+        method: POST
+      read:
+        path: "/openvpn/instances/get_static_key"
+        method: GET
+      update:
+        path: "/openvpn/instances/set_static_key"
+        method: POST
+      delete:
+        path: "/openvpn/instances/del_static_key"
+        method: POST
+      reconfigure:
+        path: "/openvpn/service/reconfigure"
+        method: POST
     attrs:
       - name: Mode
         type: SelectedMap
@@ -223,10 +244,21 @@ resources:
     filename: client_overwrite
     monad: cso
     endpoints:
-      add: "/openvpn/client_overwrites/add"
-      get: "/openvpn/client_overwrites/get"
-      update: "/openvpn/client_overwrites/set"
-      delete: "/openvpn/client_overwrites/del"
+      create:
+        path: "/openvpn/client_overwrites/add"
+        method: POST
+      read:
+        path: "/openvpn/client_overwrites/get"
+        method: GET
+      update:
+        path: "/openvpn/client_overwrites/set"
+        method: POST
+      delete:
+        path: "/openvpn/client_overwrites/del"
+        method: POST
+      reconfigure:
+        path: "/openvpn/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -304,33 +336,38 @@ rpc:
           key: key
     rpc_calls:
       - name: "Reconfigure"
-        method: "POST"
-        endpoint: "/openvpn/service/reconfigure"
+        endpoint:
+          path: "/openvpn/service/reconfigure"
+          method: POST
         result_type: "ActionResult"
       - name: "StartService"
-        method: "POST"
-        endpoint: "/openvpn/service/start_service"
+        endpoint:
+          path: "/openvpn/service/start_service"
+          method: POST
         params:
           - name: "id"
             optional: true
         result_type: "Result"
       - name: "StopService"
-        method: "POST"
-        endpoint: "/openvpn/service/stop_service"
+        endpoint:
+          path: "/openvpn/service/stop_service"
+          method: POST
         params:
           - name: "id"
             optional: true
         result_type: "Result"
       - name: "RestartService"
-        method: "POST"
-        endpoint: "/openvpn/service/restart_service"
+        endpoint:
+          path: "/openvpn/service/restart_service"
+          method: POST
         params:
           - name: "id"
             optional: true
         result_type: "Result"
       - name: "GenKey"
-        method: "GET"
-        endpoint: "/openvpn/instances/gen_key"
+        endpoint:
+          path: "/openvpn/instances/gen_key"
+          method: GET
         # The PHP route only accepts hyphenated values (tls-auth, tls-crypt,
         # …) via the ?type= query string; the path-parameter form silently
         # fails for anything other than the default "secret".

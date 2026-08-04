@@ -9,12 +9,12 @@ import (
 )
 
 var AclOpts = api.ReqOpts{
-	AddEndpoint:         "/bind/acl/add_acl",
-	GetEndpoint:         "/bind/acl/get_acl",
-	UpdateEndpoint:      "/bind/acl/set_acl",
-	DeleteEndpoint:      "/bind/acl/del_acl",
-	ReconfigureEndpoint: bindReconfigureEndpoint,
-	Monad:               "acl",
+	Create:      api.Endpoint{Path: "/bind/acl/add_acl", Method: "POST"},
+	Read:        api.Endpoint{Path: "/bind/acl/get_acl", Method: "GET"},
+	Update:      api.Endpoint{Path: "/bind/acl/set_acl", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/bind/acl/del_acl", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
+	Monad:       "acl",
 }
 
 // Data structs

@@ -9,13 +9,13 @@ import (
 )
 
 var VxlanOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/vxlan_settings/add_item",
-	GetEndpoint:         "/interfaces/vxlan_settings/get_item",
-	UpdateEndpoint:      "/interfaces/vxlan_settings/set_item",
-	DeleteEndpoint:      "/interfaces/vxlan_settings/del_item",
-	SearchEndpoint:      "/interfaces/vxlan_settings/search_item",
-	ReconfigureEndpoint: "/interfaces/vxlan_settings/reconfigure",
-	Monad:               "vxlan",
+	Create:      api.Endpoint{Path: "/interfaces/vxlan_settings/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/interfaces/vxlan_settings/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/interfaces/vxlan_settings/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/interfaces/vxlan_settings/del_item", Method: "POST"},
+	Search:      api.Endpoint{Path: "/interfaces/vxlan_settings/search_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/interfaces/vxlan_settings/reconfigure", Method: "POST"},
+	Monad:       "vxlan",
 }
 
 // Data structs
@@ -43,7 +43,7 @@ func (c *Controller) GetVxlan(ctx context.Context, id string) (*Vxlan, error) {
 }
 
 func (c *Controller) SearchVxlan(ctx context.Context) (*api.SearchResponse[Vxlan], error) {
-	return api.Search[Vxlan](c.Client(), ctx, VxlanOpts.SearchEndpoint)
+	return api.Search[Vxlan](c.Client(), ctx, VxlanOpts.Search)
 }
 
 func (c *Controller) UpdateVxlan(ctx context.Context, id string, resource *Vxlan) error {

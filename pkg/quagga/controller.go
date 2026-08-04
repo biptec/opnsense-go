@@ -4,8 +4,6 @@ package quagga
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-const quaggaReconfigureEndpoint = "/quagga/service/reconfigure"
-
 // Controller for quagga
 type Controller struct {
 	Api *api.Client

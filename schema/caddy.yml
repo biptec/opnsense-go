@@ -1,16 +1,28 @@
 ---
 name: caddy
-reconfigureEndpoint: "/caddy/service/reconfigure"
 resources:
   - name: Domain
     filename: domain
     monad: reverse
     endpoints:
-      add: "/caddy/reverse_proxy/add_reverse_proxy"
-      get: "/caddy/reverse_proxy/get_reverse_proxy"
-      update: "/caddy/reverse_proxy/set_reverse_proxy"
-      delete: "/caddy/reverse_proxy/del_reverse_proxy"
-      search: "/caddy/reverse_proxy/search_reverse_proxy"
+      create:
+        path: "/caddy/reverse_proxy/add_reverse_proxy"
+        method: POST
+      read:
+        path: "/caddy/reverse_proxy/get_reverse_proxy"
+        method: POST
+      update:
+        path: "/caddy/reverse_proxy/set_reverse_proxy"
+        method: POST
+      delete:
+        path: "/caddy/reverse_proxy/del_reverse_proxy"
+        method: POST
+      search:
+        path: "/caddy/reverse_proxy/search_reverse_proxy"
+        method: POST
+      reconfigure:
+        path: "/caddy/service/reconfigure"
+        method: POST
     attrs:
       - name: UUID
         type: string
@@ -66,11 +78,24 @@ resources:
     filename: handler
     monad: handle
     endpoints:
-      add: "/caddy/reverse_proxy/add_handle"
-      get: "/caddy/reverse_proxy/get_handle"
-      update: "/caddy/reverse_proxy/set_handle"
-      delete: "/caddy/reverse_proxy/del_handle"
-      search: "/caddy/reverse_proxy/search_handle"
+      create:
+        path: "/caddy/reverse_proxy/add_handle"
+        method: POST
+      read:
+        path: "/caddy/reverse_proxy/get_handle"
+        method: POST
+      update:
+        path: "/caddy/reverse_proxy/set_handle"
+        method: POST
+      delete:
+        path: "/caddy/reverse_proxy/del_handle"
+        method: POST
+      search:
+        path: "/caddy/reverse_proxy/search_handle"
+        method: POST
+      reconfigure:
+        path: "/caddy/service/reconfigure"
+        method: POST
     attrs:
       - name: UUID
         type: string
@@ -198,11 +223,24 @@ resources:
     filename: access_list
     monad: accesslist
     endpoints:
-      add: "/caddy/reverse_proxy/add_access_list"
-      get: "/caddy/reverse_proxy/get_access_list"
-      update: "/caddy/reverse_proxy/set_access_list"
-      delete: "/caddy/reverse_proxy/del_access_list"
-      search: "/caddy/reverse_proxy/search_access_list"
+      create:
+        path: "/caddy/reverse_proxy/add_access_list"
+        method: POST
+      read:
+        path: "/caddy/reverse_proxy/get_access_list"
+        method: POST
+      update:
+        path: "/caddy/reverse_proxy/set_access_list"
+        method: POST
+      delete:
+        path: "/caddy/reverse_proxy/del_access_list"
+        method: POST
+      search:
+        path: "/caddy/reverse_proxy/search_access_list"
+        method: POST
+      reconfigure:
+        path: "/caddy/service/reconfigure"
+        method: POST
     attrs:
       - name: UUID
         type: string
@@ -226,6 +264,49 @@ resources:
       - name: RequestMatcher
         type: SelectedMap
         key: RequestMatcher
+      - name: Description
+        type: string
+        key: description
+
+  - name: Header
+    filename: header
+    monad: header
+    endpoints:
+      create:
+        path: "/caddy/reverse_proxy/add_header"
+        method: POST
+      read:
+        path: "/caddy/reverse_proxy/get_header"
+        method: POST
+      update:
+        path: "/caddy/reverse_proxy/set_header"
+        method: POST
+      delete:
+        path: "/caddy/reverse_proxy/del_header"
+        method: POST
+      search:
+        path: "/caddy/reverse_proxy/search_header"
+        method: POST
+      reconfigure:
+        path: "/caddy/service/reconfigure"
+        method: POST
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
+      - name: Direction
+        type: SelectedMap
+        key: HeaderUpDown
+      - name: Name
+        type: string
+        key: HeaderType
+      - name: Value
+        type: string
+        key: HeaderValue
+      - name: Replace
+        type: string
+        key: HeaderReplace
       - name: Description
         type: string
         key: description
@@ -359,12 +440,14 @@ rpc:
           key: CopyHeaders
     rpc_calls:
       - name: Get
-        endpoint: "/caddy/general/get"
-        method: GET
+        endpoint:
+          path: "/caddy/general/get"
+          method: GET
         result_type: SettingsResponse
       - name: Set
-        endpoint: "/caddy/general/set"
-        method: POST
+        endpoint:
+          path: "/caddy/general/set"
+          method: POST
         params:
           - name: caddy
             optional: false
@@ -381,22 +464,27 @@ rpc:
           key: status
     rpc_calls:
       - name: Status
-        endpoint: "/caddy/service/status"
-        method: GET
+        endpoint:
+          path: "/caddy/service/status"
+          method: GET
         result_type: ServiceStatus
       - name: Reconfigure
-        endpoint: "/caddy/service/reconfigure"
-        method: POST
+        endpoint:
+          path: "/caddy/service/reconfigure"
+          method: POST
         result_type: api.ReconfigureStatusResult
       - name: Start
-        endpoint: "/caddy/service/start"
-        method: POST
+        endpoint:
+          path: "/caddy/service/start"
+          method: POST
         result_type: api.ActionResult
       - name: Stop
-        endpoint: "/caddy/service/stop"
-        method: POST
+        endpoint:
+          path: "/caddy/service/stop"
+          method: POST
         result_type: api.ActionResult
       - name: Restart
-        endpoint: "/caddy/service/restart"
-        method: POST
+        endpoint:
+          path: "/caddy/service/restart"
+          method: POST
         result_type: api.ActionResult

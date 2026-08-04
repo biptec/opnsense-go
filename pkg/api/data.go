@@ -8,13 +8,38 @@ import (
 	"strings"
 )
 
+type Endpoint struct {
+	Path   string
+	Method string
+}
+
+func (e Endpoint) Validate() error {
+	if e.Path == "" || !strings.HasPrefix(e.Path, "/") {
+		return fmt.Errorf("endpoint path must start with /: %q", e.Path)
+	}
+	if e.Method == "" || e.Method != strings.ToUpper(e.Method) {
+		return fmt.Errorf("endpoint method must be explicit and uppercase: %q", e.Method)
+	}
+	for _, character := range e.Method {
+		if character < 'A' || character > 'Z' {
+			return fmt.Errorf("endpoint method must contain only A-Z: %q", e.Method)
+		}
+	}
+	return nil
+}
+
+func (e Endpoint) WithPathSegment(segment string) Endpoint {
+	e.Path = strings.TrimRight(e.Path, "/") + "/" + url.PathEscape(segment)
+	return e
+}
+
 type ReqOpts struct {
-	AddEndpoint         string
-	GetEndpoint         string
-	UpdateEndpoint      string
-	DeleteEndpoint      string
-	SearchEndpoint      string
-	ReconfigureEndpoint string
+	Create      Endpoint
+	Read        Endpoint
+	Update      Endpoint
+	Delete      Endpoint
+	Search      Endpoint
+	Reconfigure Endpoint
 
 	Monad string
 }
@@ -32,15 +57,14 @@ type deleteResp struct {
 
 // RCP Options
 type RPCOpts struct {
-	BaseEndpoint    string
-	Method          string
+	Endpoint        Endpoint
 	PathParameters  []string
 	QueryParameters map[string]string
 	BodyParameters  map[string]interface{}
 }
 
 func (p *RPCOpts) EndpointURL() string {
-	currentPath := p.BaseEndpoint
+	currentPath := p.Endpoint.Path
 	for _, param := range p.PathParameters {
 		escapedParam := url.PathEscape(param)
 

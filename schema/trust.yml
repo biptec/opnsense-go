@@ -1,17 +1,25 @@
 ---
 name: trust
-reconfigureEndpoint: ""
 resources:
   - name: Ca
     filename: ca
     monad: ca
     endpoints:
-      add: "/trust/ca/add"
-      get: "/trust/ca/get"
-      update: "/trust/ca/set"
-      delete: "/trust/ca/del"
-      search: "/trust/ca/search"
-      reconfigure: "null"
+      create:
+        path: "/trust/ca/add"
+        method: POST
+      read:
+        path: "/trust/ca/get"
+        method: GET
+      update:
+        path: "/trust/ca/set"
+        method: POST
+      delete:
+        path: "/trust/ca/del"
+        method: POST
+      search:
+        path: "/trust/ca/search"
+        method: POST
     attrs:
       - name: UUID
         type: string
@@ -102,12 +110,21 @@ resources:
     filename: cert
     monad: cert
     endpoints:
-      add: "/trust/cert/add"
-      get: "/trust/cert/get"
-      update: "/trust/cert/set"
-      delete: "/trust/cert/del"
-      search: "/trust/cert/search"
-      reconfigure: "null"
+      create:
+        path: "/trust/cert/add"
+        method: POST
+      read:
+        path: "/trust/cert/get"
+        method: GET
+      update:
+        path: "/trust/cert/set"
+        method: POST
+      delete:
+        path: "/trust/cert/del"
+        method: POST
+      search:
+        path: "/trust/cert/search"
+        method: POST
     attrs:
       - name: UUID
         type: string
@@ -255,12 +272,14 @@ rpc:
           key: status
     rpc_calls:
       - name: Get
-        method: GET
-        endpoint: "/trust/settings/get"
+        endpoint:
+          path: "/trust/settings/get"
+          method: GET
         result_type: TrustSettingsMonad
       - name: Set
-        method: POST
-        endpoint: "/trust/settings/set"
+        endpoint:
+          path: "/trust/settings/set"
+          method: POST
         params:
           - name: trust
             optional: false
@@ -268,6 +287,7 @@ rpc:
             customType: TrustSettings
         result_type: ActionResult
       - name: Reconfigure
-        method: POST
-        endpoint: "/trust/settings/reconfigure"
+        endpoint:
+          path: "/trust/settings/reconfigure"
+          method: POST
         result_type: ActionResult

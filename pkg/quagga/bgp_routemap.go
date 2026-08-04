@@ -9,12 +9,12 @@ import (
 )
 
 var BGPRouteMapOpts = api.ReqOpts{
-	AddEndpoint:         "/quagga/bgp/addRoutemap",
-	GetEndpoint:         "/quagga/bgp/getRoutemap",
-	UpdateEndpoint:      "/quagga/bgp/setRoutemap",
-	DeleteEndpoint:      "/quagga/bgp/delRoutemap",
-	ReconfigureEndpoint: quaggaReconfigureEndpoint,
-	Monad:               "routemap",
+	Create:      api.Endpoint{Path: "/quagga/bgp/addRoutemap", Method: "POST"},
+	Read:        api.Endpoint{Path: "/quagga/bgp/getRoutemap", Method: "GET"},
+	Update:      api.Endpoint{Path: "/quagga/bgp/setRoutemap", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/quagga/bgp/delRoutemap", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/quagga/service/reconfigure", Method: "POST"},
+	Monad:       "routemap",
 }
 
 // Data structs

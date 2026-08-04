@@ -1,18 +1,22 @@
 ---
 name: auth
-filename: auth
-reconfigureEndpoint: ""
 resources:
   - name: Group
     filename: group
     monad: group
-    ReconfigureEndpointVariable: ""
     endpoints:
-      add: "/auth/group/add"
-      get: "/auth/group/get"
-      update: "/auth/group/set"
-      delete: "/auth/group/del"
-      reconfigure: "null"
+      create:
+        path: "/auth/group/add"
+        method: POST
+      read:
+        path: "/auth/group/get"
+        method: GET
+      update:
+        path: "/auth/group/set"
+        method: POST
+      delete:
+        path: "/auth/group/del"
+        method: POST
     attrs:
       - name: GroupId
         type: string
@@ -40,13 +44,19 @@ resources:
   - name: User
     filename: user
     monad: user
-    ReconfigureEndpointVariable: ""
     endpoints:
-      add: "/auth/user/add"
-      get: "/auth/user/get"
-      update: "/auth/user/set"
-      delete: "/auth/user/del"
-      reconfigure: "null"
+      create:
+        path: "/auth/user/add"
+        method: POST
+      read:
+        path: "/auth/user/get"
+        method: GET
+      update:
+        path: "/auth/user/set"
+        method: POST
+      delete:
+        path: "/auth/user/del"
+        method: POST
     attrs:
       - name: UserId
         type: string
@@ -116,24 +126,27 @@ rpc:
     filename: user_api_key
     rpc_calls:
       - name: AddApiKey
-        endpoint: /auth/user/add_api_key
-        method: POST
+        endpoint:
+          path: "/auth/user/add_api_key"
+          method: POST
         params: 
           - name: username
             optional: false
             bodyParameter: false
         result_type: AddApiKeyResult
       - name: DeleteApiKey
-        endpoint: /auth/user/del_api_key
-        method: POST
+        endpoint:
+          path: "/auth/user/del_api_key"
+          method: POST
         params:
           - name: id
             optional: false
             bodyParameter: false
         result_type: api.ActionResult
       - name: GetAllApiKeys
-        endpoint: /auth/user/search_api_key
-        method: GET
+        endpoint:
+          path: "/auth/user/search_api_key"
+          method: GET
         result_type: GetAllApiKeysResult
     customTypes:
       AddApiKeyResult:
@@ -177,8 +190,9 @@ rpc:
     filename: user_otp
     rpc_calls:
       - name: NewOtpSeed
-        endpoint: /auth/user/new_otp_seed
-        method: GET
+        endpoint:
+          path: "/auth/user/new_otp_seed"
+          method: GET
         result_type: NewOtpSeedResult
     customTypes:
       NewOtpSeedResult:
@@ -193,16 +207,18 @@ rpc:
     filename: privilege
     rpc_calls:
       - name: GetItem
-        endpoint: /auth/priv/get_item
-        method: GET
+        endpoint:
+          path: "/auth/priv/get_item"
+          method: GET
         params: 
           - name: id
             optional: false
             bodyParameter: false
         result_type: PrivilegeGetItemWrapper
       - name: SetItem
-        endpoint: /auth/priv/set_item
-        method: POST
+        endpoint:
+          path: "/auth/priv/set_item"
+          method: POST
         params:
           - name: id
             optional: false
@@ -243,8 +259,9 @@ rpc:
     filename: privilege_search
     rpc_calls:
       - name: GetAll
-        endpoint: /auth/priv/search
-        method: GET
+        endpoint:
+          path: "/auth/priv/search"
+          method: GET
         result_type: PrivilegeGetAllResult
     customTypes:
       PrivilegeGetAllItemResult:

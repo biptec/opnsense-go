@@ -9,12 +9,12 @@ import (
 )
 
 var IPsecPSKOpts = api.ReqOpts{
-	AddEndpoint:         "/ipsec/pre_shared_keys/add_item",
-	GetEndpoint:         "/ipsec/pre_shared_keys/get_item",
-	UpdateEndpoint:      "/ipsec/pre_shared_keys/set_item",
-	DeleteEndpoint:      "/ipsec/pre_shared_keys/del_item",
-	ReconfigureEndpoint: ipsecReconfigureEndpoint,
-	Monad:               "preSharedKey",
+	Create:      api.Endpoint{Path: "/ipsec/pre_shared_keys/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/ipsec/pre_shared_keys/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/ipsec/pre_shared_keys/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/ipsec/pre_shared_keys/del_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/ipsec/service/reconfigure", Method: "POST"},
+	Monad:       "preSharedKey",
 }
 
 // Data structs

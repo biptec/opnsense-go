@@ -9,13 +9,13 @@ import (
 )
 
 var NptOpts = api.ReqOpts{
-	AddEndpoint:         "/firewall/npt/addRule",
-	GetEndpoint:         "/firewall/npt/getRule",
-	UpdateEndpoint:      "/firewall/npt/setRule",
-	DeleteEndpoint:      "/firewall/npt/delRule",
-	SearchEndpoint:      "/firewall/npt/searchRule",
-	ReconfigureEndpoint: "/firewall/npt/apply",
-	Monad:               "rule",
+	Create:      api.Endpoint{Path: "/firewall/npt/addRule", Method: "POST"},
+	Read:        api.Endpoint{Path: "/firewall/npt/getRule", Method: "GET"},
+	Update:      api.Endpoint{Path: "/firewall/npt/setRule", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/firewall/npt/delRule", Method: "POST"},
+	Search:      api.Endpoint{Path: "/firewall/npt/searchRule", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/firewall/npt/apply", Method: "POST"},
+	Monad:       "rule",
 }
 
 // Data structs
@@ -44,7 +44,7 @@ func (c *Controller) GetNpt(ctx context.Context, id string) (*Npt, error) {
 }
 
 func (c *Controller) SearchNpt(ctx context.Context) (*api.SearchResponse[Npt], error) {
-	return api.Search[Npt](c.Client(), ctx, NptOpts.SearchEndpoint)
+	return api.Search[Npt](c.Client(), ctx, NptOpts.Search)
 }
 
 func (c *Controller) UpdateNpt(ctx context.Context, id string, resource *Npt) error {

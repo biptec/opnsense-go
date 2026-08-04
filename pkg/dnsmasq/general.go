@@ -61,8 +61,7 @@ func (c *Controller) GeneralSettingsGet(ctx context.Context) (*GeneralSettingsWr
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/dnsmasq/settings/get",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/dnsmasq/settings/get", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -86,8 +85,7 @@ func (c *Controller) GeneralSettingsSet(ctx context.Context, dnsmasq *GeneralSet
 	bodyParams["dnsmasq"] = dnsmasq
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/dnsmasq/settings/set",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/dnsmasq/settings/set", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

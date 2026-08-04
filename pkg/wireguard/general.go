@@ -31,8 +31,7 @@ func (c *Controller) GeneralGet(ctx context.Context) (*GeneralGetResult, error) 
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/wireguard/general/get",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/wireguard/general/get", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -56,8 +55,7 @@ func (c *Controller) GeneralSet(ctx context.Context, general *WireguardGeneral) 
 	bodyParams["general"] = general
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/wireguard/general/set",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/wireguard/general/set", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

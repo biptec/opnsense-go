@@ -1,15 +1,25 @@
 ---
 name: cron
-reconfigureEndpoint: "/cron/service/reconfigure"
 resources:
   - name: Job
     filename: job
     monad: job
     endpoints:
-      add: "/cron/settings/addJob"
-      get: "/cron/settings/getJob"
-      update: "/cron/settings/setJob"
-      delete: "/cron/settings/delJob"
+      create:
+        path: "/cron/settings/addJob"
+        method: POST
+      read:
+        path: "/cron/settings/getJob"
+        method: GET
+      update:
+        path: "/cron/settings/setJob"
+        method: POST
+      delete:
+        path: "/cron/settings/delJob"
+        method: POST
+      reconfigure:
+        path: "/cron/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string

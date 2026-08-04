@@ -9,13 +9,13 @@ import (
 )
 
 var AssignmentOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/assignment/add_item",
-	GetEndpoint:         "/interfaces/assignment/get_item",
-	UpdateEndpoint:      "/interfaces/assignment/set_item",
-	DeleteEndpoint:      "/interfaces/assignment/del_item",
-	SearchEndpoint:      "/interfaces/assignment/search_item",
-	ReconfigureEndpoint: "/interfaces/assignment/reconfigure",
-	Monad:               "interface",
+	Create:      api.Endpoint{Path: "/interfaces/assignment/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/interfaces/assignment/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/interfaces/assignment/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/interfaces/assignment/del_item", Method: "POST"},
+	Search:      api.Endpoint{Path: "/interfaces/assignment/search_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/interfaces/assignment/reconfigure", Method: "POST"},
+	Monad:       "interface",
 }
 
 // Data structs
@@ -69,7 +69,7 @@ func (c *Controller) GetAssignment(ctx context.Context, id string) (*Assignment,
 }
 
 func (c *Controller) SearchAssignment(ctx context.Context) (*api.SearchResponse[Assignment], error) {
-	return api.Search[Assignment](c.Client(), ctx, AssignmentOpts.SearchEndpoint)
+	return api.Search[Assignment](c.Client(), ctx, AssignmentOpts.Search)
 }
 
 func (c *Controller) UpdateAssignment(ctx context.Context, id string, resource *Assignment) error {

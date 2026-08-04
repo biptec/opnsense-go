@@ -9,12 +9,8 @@ import (
 )
 
 var InterfaceOpts = api.ReqOpts{
-	AddEndpoint:         "",
-	GetEndpoint:         "/diagnostics/interface/getInterfaceConfig",
-	UpdateEndpoint:      "",
-	DeleteEndpoint:      "",
-	ReconfigureEndpoint: "",
-	Monad:               "",
+	Read:  api.Endpoint{Path: "/diagnostics/interface/getInterfaceConfig", Method: "GET"},
+	Monad: "",
 }
 
 // Data structs

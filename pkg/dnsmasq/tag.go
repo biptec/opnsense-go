@@ -9,12 +9,12 @@ import (
 )
 
 var TagOpts = api.ReqOpts{
-	AddEndpoint:         "/dnsmasq/settings/add_tag",
-	GetEndpoint:         "/dnsmasq/settings/get_tag",
-	UpdateEndpoint:      "/dnsmasq/settings/set_tag",
-	DeleteEndpoint:      "/dnsmasq/settings/del_tag",
-	ReconfigureEndpoint: dnsmasqReconfigureEndpoint,
-	Monad:               "tag",
+	Create:      api.Endpoint{Path: "/dnsmasq/settings/add_tag", Method: "POST"},
+	Read:        api.Endpoint{Path: "/dnsmasq/settings/get_tag", Method: "GET"},
+	Update:      api.Endpoint{Path: "/dnsmasq/settings/set_tag", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/dnsmasq/settings/del_tag", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/dnsmasq/service/reconfigure", Method: "POST"},
+	Monad:       "tag",
 }
 
 // Data structs

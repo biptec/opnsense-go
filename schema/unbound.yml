@@ -1,15 +1,25 @@
 ---
 name: unbound
-reconfigureEndpoint: "/unbound/service/reconfigure" # Controller-wide reconfigure endpoint (can be overwritten)
 resources:
   - name: DomainOverride
     filename: domain_override
     monad: domain
     endpoints:
-      add: "/unbound/settings/addDomainOverride"
-      get: "/unbound/settings/getDomainOverride"
-      update: "/unbound/settings/setDomainOverride"
-      delete: "/unbound/settings/delDomainOverride"
+      create:
+        path: "/unbound/settings/addDomainOverride"
+        method: POST
+      read:
+        path: "/unbound/settings/getDomainOverride"
+        method: GET
+      update:
+        path: "/unbound/settings/setDomainOverride"
+        method: POST
+      delete:
+        path: "/unbound/settings/delDomainOverride"
+        method: POST
+      reconfigure:
+        path: "/unbound/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -28,10 +38,21 @@ resources:
     filename: host_override
     monad: host
     endpoints:
-      add: "/unbound/settings/addHostOverride"
-      get: "/unbound/settings/getHostOverride"
-      update: "/unbound/settings/setHostOverride"
-      delete: "/unbound/settings/delHostOverride"
+      create:
+        path: "/unbound/settings/addHostOverride"
+        method: POST
+      read:
+        path: "/unbound/settings/getHostOverride"
+        method: GET
+      update:
+        path: "/unbound/settings/setHostOverride"
+        method: POST
+      delete:
+        path: "/unbound/settings/delHostOverride"
+        method: POST
+      reconfigure:
+        path: "/unbound/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -62,10 +83,21 @@ resources:
     filename: host_alias
     monad: alias
     endpoints:
-      add: "/unbound/settings/addHostAlias"
-      get: "/unbound/settings/getHostAlias"
-      update: "/unbound/settings/setHostAlias"
-      delete: "/unbound/settings/delHostAlias"
+      create:
+        path: "/unbound/settings/addHostAlias"
+        method: POST
+      read:
+        path: "/unbound/settings/getHostAlias"
+        method: GET
+      update:
+        path: "/unbound/settings/setHostAlias"
+        method: POST
+      delete:
+        path: "/unbound/settings/delHostAlias"
+        method: POST
+      reconfigure:
+        path: "/unbound/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -87,10 +119,21 @@ resources:
     filename: forward
     monad: dot
     endpoints:
-      add: "/unbound/settings/addDot"
-      get: "/unbound/settings/getDot"
-      update: "/unbound/settings/setDot"
-      delete: "/unbound/settings/delDot"
+      create:
+        path: "/unbound/settings/addDot"
+        method: POST
+      read:
+        path: "/unbound/settings/getDot"
+        method: GET
+      update:
+        path: "/unbound/settings/setDot"
+        method: POST
+      delete:
+        path: "/unbound/settings/delDot"
+        method: POST
+      reconfigure:
+        path: "/unbound/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -115,10 +158,21 @@ resources:
     filename: acl
     monad: acl
     endpoints:
-      add: "/unbound/settings/add_acl"
-      get: "/unbound/settings/get_acl"
-      update: "/unbound/settings/set_acl"
-      delete: "/unbound/settings/del_acl"
+      create:
+        path: "/unbound/settings/add_acl"
+        method: POST
+      read:
+        path: "/unbound/settings/get_acl"
+        method: GET
+      update:
+        path: "/unbound/settings/set_acl"
+        method: POST
+      delete:
+        path: "/unbound/settings/del_acl"
+        method: POST
+      reconfigure:
+        path: "/unbound/service/reconfigure"
+        method: POST
     attrs:
       - name: Enabled
         type: string
@@ -377,12 +431,14 @@ rpc:
           key: status
     rpc_calls:
       - name: "Get"
-        method: "GET"
-        endpoint: "/unbound/settings/get"
+        endpoint:
+          path: "/unbound/settings/get"
+          method: GET
         result_type: "SettingsMonad"
       - name: "Update"
-        method: "POST"
-        endpoint: "/unbound/settings/set"
+        endpoint:
+          path: "/unbound/settings/set"
+          method: POST
         params:
           - name: "unbound"
             optional: false
@@ -390,10 +446,12 @@ rpc:
             customType: "Settings"
         result_type: "Result"
       - name: "Reconfigure"
-        method: "POST"
-        endpoint: "/unbound/service/reconfigure"
+        endpoint:
+          path: "/unbound/service/reconfigure"
+          method: POST
         result_type: "ActionResult"
       - name: "ReconfigureGeneral"
-        method: "POST"
-        endpoint: "/unbound/service/reconfigure_general"
+        endpoint:
+          path: "/unbound/service/reconfigure_general"
+          method: POST
         result_type: "ActionResult"

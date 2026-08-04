@@ -41,8 +41,7 @@ func (c *Controller) UserAddApiKey(ctx context.Context, username string) (*AddAp
 	callParams = append(callParams, username)
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/auth/user/add_api_key",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/auth/user/add_api_key", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -66,8 +65,7 @@ func (c *Controller) UserDeleteApiKey(ctx context.Context, id string) (*api.Acti
 	callParams = append(callParams, id)
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/auth/user/del_api_key",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/auth/user/del_api_key", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -89,8 +87,7 @@ func (c *Controller) UserGetAllApiKeys(ctx context.Context) (*GetAllApiKeysResul
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/auth/user/search_api_key",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/auth/user/search_api_key", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

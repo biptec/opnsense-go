@@ -9,13 +9,13 @@ import (
 )
 
 var GifOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/gif_settings/add_item",
-	GetEndpoint:         "/interfaces/gif_settings/get_item",
-	UpdateEndpoint:      "/interfaces/gif_settings/set_item",
-	DeleteEndpoint:      "/interfaces/gif_settings/del_item",
-	SearchEndpoint:      "/interfaces/gif_settings/search_item",
-	ReconfigureEndpoint: "/interfaces/gif_settings/reconfigure",
-	Monad:               "gif",
+	Create:      api.Endpoint{Path: "/interfaces/gif_settings/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/interfaces/gif_settings/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/interfaces/gif_settings/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/interfaces/gif_settings/del_item", Method: "POST"},
+	Search:      api.Endpoint{Path: "/interfaces/gif_settings/search_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/interfaces/gif_settings/reconfigure", Method: "POST"},
+	Monad:       "gif",
 }
 
 // Data structs
@@ -46,7 +46,7 @@ func (c *Controller) GetGif(ctx context.Context, id string) (*Gif, error) {
 }
 
 func (c *Controller) SearchGif(ctx context.Context) (*api.SearchResponse[Gif], error) {
-	return api.Search[Gif](c.Client(), ctx, GifOpts.SearchEndpoint)
+	return api.Search[Gif](c.Client(), ctx, GifOpts.Search)
 }
 
 func (c *Controller) UpdateGif(ctx context.Context, id string, resource *Gif) error {

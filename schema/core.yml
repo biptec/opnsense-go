@@ -32,25 +32,28 @@ rpc:
           key: status
     rpc_calls:
       - name: "Halt"
-        method: "POST"
-        endpoint: "/core/system/halt"
+        endpoint:
+          path: "/core/system/halt"
+          method: POST
         result_type: "api.ActionResult"
       - name: "Reboot"
-        method: "POST"
-        endpoint: "/core/system/reboot"
+        endpoint:
+          path: "/core/system/reboot"
+          method: POST
         result_type: "api.ActionResult"
       - name: "Status"
-        method: "GET"
-        endpoint: "/core/system/status"
+        endpoint:
+          path: "/core/system/status"
+          method: GET
         result_type: "SystemStatus"
       - name: "DismissStatus"
-        method: "POST"
-        endpoint: "/core/system/dismiss_status"
+        endpoint:
+          path: "/core/system/dismiss_status"
+          method: POST
         params:
           - name: "subject"
             optional: false
             bodyParameter: true
-            type: string
         result_type: "api.ActionResult"  
   - name: "Service"
     filename: service
@@ -90,30 +93,31 @@ rpc:
           key: result
     rpc_calls:
       - name: "Search"
-        method: "POST"
-        endpoint: "/core/service/search"
+        endpoint:
+          path: "/core/service/search"
+          method: POST
         result_type: "SearchServicesResponse"
       - name: "Start"
-        method: "POST"
-        endpoint: "/core/service/start"
+        endpoint:
+          path: "/core/service/start"
+          method: POST
         params:
           - name: "id"
             optional: false
-            type: string
         result_type: "ServiceActionResult"
       - name: "Stop"
-        method: "POST"
-        endpoint: "/core/service/stop"
+        endpoint:
+          path: "/core/service/stop"
+          method: POST
         params:
           - name: "id" # Path parameter
             optional: false
-            type: string
         result_type: "ServiceActionResult"
       - name: "Restart"
-        method: "POST"
-        endpoint: "/core/service/restart"
+        endpoint:
+          path: "/core/service/restart"
+          method: POST
         params:
           - name: "id"
             optional: false
-            type: string
         result_type: "ServiceActionResult"

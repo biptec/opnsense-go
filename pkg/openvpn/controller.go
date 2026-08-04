@@ -4,8 +4,6 @@ package openvpn
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-const openvpnReconfigureEndpoint = "/openvpn/service/reconfigure"
-
 // Controller for openvpn
 type Controller struct {
 	Api *api.Client

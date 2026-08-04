@@ -9,12 +9,12 @@ import (
 )
 
 var ClientOpts = api.ReqOpts{
-	AddEndpoint:         "/wireguard/client/addClient",
-	GetEndpoint:         "/wireguard/client/getClient",
-	UpdateEndpoint:      "/wireguard/client/setClient",
-	DeleteEndpoint:      "/wireguard/client/delClient",
-	ReconfigureEndpoint: wireguardReconfigureEndpoint,
-	Monad:               "client",
+	Create:      api.Endpoint{Path: "/wireguard/client/addClient", Method: "POST"},
+	Read:        api.Endpoint{Path: "/wireguard/client/getClient", Method: "GET"},
+	Update:      api.Endpoint{Path: "/wireguard/client/setClient", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/wireguard/client/delClient", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/wireguard/service/reconfigure", Method: "POST"},
+	Monad:       "client",
 }
 
 // Data structs

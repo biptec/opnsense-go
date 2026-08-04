@@ -9,13 +9,13 @@ import (
 )
 
 var NeighborOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/neighbor_settings/add_item",
-	GetEndpoint:         "/interfaces/neighbor_settings/get_item",
-	UpdateEndpoint:      "/interfaces/neighbor_settings/set_item",
-	DeleteEndpoint:      "/interfaces/neighbor_settings/del_item",
-	SearchEndpoint:      "/interfaces/neighbor_settings/search_item",
-	ReconfigureEndpoint: "/interfaces/neighbor_settings/reconfigure",
-	Monad:               "neighbor",
+	Create:      api.Endpoint{Path: "/interfaces/neighbor_settings/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/interfaces/neighbor_settings/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/interfaces/neighbor_settings/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/interfaces/neighbor_settings/del_item", Method: "POST"},
+	Search:      api.Endpoint{Path: "/interfaces/neighbor_settings/search_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/interfaces/neighbor_settings/reconfigure", Method: "POST"},
+	Monad:       "neighbor",
 }
 
 // Data structs
@@ -39,7 +39,7 @@ func (c *Controller) GetNeighbor(ctx context.Context, id string) (*Neighbor, err
 }
 
 func (c *Controller) SearchNeighbor(ctx context.Context) (*api.SearchResponse[Neighbor], error) {
-	return api.Search[Neighbor](c.Client(), ctx, NeighborOpts.SearchEndpoint)
+	return api.Search[Neighbor](c.Client(), ctx, NeighborOpts.Search)
 }
 
 func (c *Controller) UpdateNeighbor(ctx context.Context, id string, resource *Neighbor) error {

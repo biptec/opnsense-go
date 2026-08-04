@@ -68,8 +68,7 @@ func (c *Controller) SettingsGet(ctx context.Context) (*SettingsResponse, error)
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/caddy/general/get",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/caddy/general/get", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -93,8 +92,7 @@ func (c *Controller) SettingsSet(ctx context.Context, caddy *Settings) (*api.Act
 	bodyParams["caddy"] = caddy
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/caddy/general/set",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/caddy/general/set", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

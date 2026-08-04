@@ -72,13 +72,24 @@ Edit `schema/<service>.yml`, then run `make all`. The `generate.go` in every ser
 CI runs the integration suite as parallel shards — one runner + one OPNsense VM per shard, defined in the `SHARDS` map in the `plan` job of `.github/workflows/go-test-reusable.yml`. **If you add a new `pkg/<service>` package, you must assign it to a shard there** (usually the `other` bucket; give it a dedicated shard if its suite runs long). The `plan` job fails the build if a service package is unassigned.
 
 ### Schema YAML structure
+- Every API operation is an endpoint object with explicit `path` and `method`; scalar endpoints, split `endpoint`/`method` fields, and operation-specific exceptions such as `getMethod` are forbidden.
 - `resources` block → CRUD resources. Each resource becomes `Add<Name>`, `Get<Name>`, `Update<Name>`, `Delete<Name>` methods.
-  - `readOnly: true` — omits Add/Update/Delete.
-  - `getByFilter: true` — uses `api.GetFilter` (lookup by key in a flat map) instead of `api.Get` (lookup by UUID).
-  - `getAll: true` — adds a `Get<Name>All` method.
-  - `reconfigure: "null"` on an endpoint — suppresses the post-mutation reconfigure call for that resource.
-- `rpc` block → non-CRUD calls. Each entry in `rpc_calls` becomes a typed method on the controller.
-- `reconfigureEndpoint` at the top level sets the default for all resources in the controller; individual resources can override it.
+  - operation keys are `create`, `read`, `update`, `delete`, with optional `search` and `reconfigure`;
+  - `readOnly: true` — requires only `read` and omits Add/Update/Delete;
+  - `getByFilter: true` — uses `api.GetFilter` (lookup by key in a flat map) instead of `api.Get` (lookup by UUID);
+  - `getAll: true` — adds a `Get<Name>All` method;
+  - omit `reconfigure` when the resource does not require a post-mutation apply.
+- `rpc` block → non-CRUD calls. Each entry in `rpc_calls` uses the same endpoint object and becomes a typed method on the controller.
+
+```yaml
+endpoints:
+  read:
+    path: "/service/item/get"
+    method: GET
+  update:
+    path: "/service/item/set"
+    method: POST
+```
 
 ### SelectedMap types
 OPNsense returns enumerated fields as a map of `{key: {selected, value}}` objects. Three custom types handle these transparently:

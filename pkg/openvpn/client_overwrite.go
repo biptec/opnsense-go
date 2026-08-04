@@ -9,12 +9,12 @@ import (
 )
 
 var ClientOverwriteOpts = api.ReqOpts{
-	AddEndpoint:         "/openvpn/client_overwrites/add",
-	GetEndpoint:         "/openvpn/client_overwrites/get",
-	UpdateEndpoint:      "/openvpn/client_overwrites/set",
-	DeleteEndpoint:      "/openvpn/client_overwrites/del",
-	ReconfigureEndpoint: openvpnReconfigureEndpoint,
-	Monad:               "cso",
+	Create:      api.Endpoint{Path: "/openvpn/client_overwrites/add", Method: "POST"},
+	Read:        api.Endpoint{Path: "/openvpn/client_overwrites/get", Method: "GET"},
+	Update:      api.Endpoint{Path: "/openvpn/client_overwrites/set", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/openvpn/client_overwrites/del", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/openvpn/service/reconfigure", Method: "POST"},
+	Monad:       "cso",
 }
 
 // Data structs

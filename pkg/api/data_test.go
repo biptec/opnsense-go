@@ -10,13 +10,13 @@ func TestRPCOpts_EndpointURL(t *testing.T) {
 	}{
 		{
 			name: "no params",
-			opts: RPCOpts{BaseEndpoint: "/foo/bar"},
+			opts: RPCOpts{Endpoint: Endpoint{Path: "/foo/bar", Method: "GET"}},
 			want: "/foo/bar",
 		},
 		{
 			name: "path params only",
 			opts: RPCOpts{
-				BaseEndpoint:   "/foo/bar",
+				Endpoint:       Endpoint{Path: "/foo/bar", Method: "GET"},
 				PathParameters: []string{"abc"},
 			},
 			want: "/foo/bar/abc",
@@ -24,7 +24,7 @@ func TestRPCOpts_EndpointURL(t *testing.T) {
 		{
 			name: "query params only",
 			opts: RPCOpts{
-				BaseEndpoint:    "/foo/bar",
+				Endpoint:        Endpoint{Path: "/foo/bar", Method: "GET"},
 				QueryParameters: map[string]string{"type": "tls-auth"},
 			},
 			want: "/foo/bar?type=tls-auth",
@@ -32,7 +32,7 @@ func TestRPCOpts_EndpointURL(t *testing.T) {
 		{
 			name: "path and query params",
 			opts: RPCOpts{
-				BaseEndpoint:    "/foo/bar",
+				Endpoint:        Endpoint{Path: "/foo/bar", Method: "GET"},
 				PathParameters:  []string{"abc"},
 				QueryParameters: map[string]string{"flag": "1"},
 			},
@@ -41,7 +41,7 @@ func TestRPCOpts_EndpointURL(t *testing.T) {
 		{
 			name: "multiple query params are sorted",
 			opts: RPCOpts{
-				BaseEndpoint: "/foo/bar",
+				Endpoint: Endpoint{Path: "/foo/bar", Method: "GET"},
 				QueryParameters: map[string]string{
 					"z": "last",
 					"a": "first",
@@ -52,7 +52,7 @@ func TestRPCOpts_EndpointURL(t *testing.T) {
 		{
 			name: "values are url-escaped",
 			opts: RPCOpts{
-				BaseEndpoint:    "/foo/bar",
+				Endpoint:        Endpoint{Path: "/foo/bar", Method: "GET"},
 				QueryParameters: map[string]string{"q": "a b&c"},
 			},
 			want: "/foo/bar?q=a+b%26c",
@@ -60,7 +60,7 @@ func TestRPCOpts_EndpointURL(t *testing.T) {
 		{
 			name: "existing query string is preserved with &",
 			opts: RPCOpts{
-				BaseEndpoint:    "/foo/bar?existing=1",
+				Endpoint:        Endpoint{Path: "/foo/bar?existing=1", Method: "GET"},
 				QueryParameters: map[string]string{"added": "2"},
 			},
 			want: "/foo/bar?existing=1&added=2",
@@ -68,7 +68,7 @@ func TestRPCOpts_EndpointURL(t *testing.T) {
 		{
 			name: "empty query map adds no separator",
 			opts: RPCOpts{
-				BaseEndpoint:    "/foo/bar",
+				Endpoint:        Endpoint{Path: "/foo/bar", Method: "GET"},
 				QueryParameters: map[string]string{},
 			},
 			want: "/foo/bar",

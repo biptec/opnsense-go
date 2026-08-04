@@ -40,8 +40,7 @@ func (c *Controller) PrivilegeGetItem(ctx context.Context, id string) (*Privileg
 	callParams = append(callParams, id)
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/auth/priv/get_item",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/auth/priv/get_item", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -67,8 +66,7 @@ func (c *Controller) PrivilegeSetItem(ctx context.Context, id string, priv *Priv
 	bodyParams["priv"] = priv
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/auth/priv/set_item",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/auth/priv/set_item", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

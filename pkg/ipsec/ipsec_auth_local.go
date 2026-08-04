@@ -9,12 +9,12 @@ import (
 )
 
 var IPsecAuthLocalOpts = api.ReqOpts{
-	AddEndpoint:         "/ipsec/connections/add_local",
-	GetEndpoint:         "/ipsec/connections/get_local",
-	UpdateEndpoint:      "/ipsec/connections/set_local",
-	DeleteEndpoint:      "/ipsec/connections/del_local",
-	ReconfigureEndpoint: ipsecReconfigureEndpoint,
-	Monad:               "local",
+	Create:      api.Endpoint{Path: "/ipsec/connections/add_local", Method: "POST"},
+	Read:        api.Endpoint{Path: "/ipsec/connections/get_local", Method: "GET"},
+	Update:      api.Endpoint{Path: "/ipsec/connections/set_local", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/ipsec/connections/del_local", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/ipsec/service/reconfigure", Method: "POST"},
+	Monad:       "local",
 }
 
 // Data structs

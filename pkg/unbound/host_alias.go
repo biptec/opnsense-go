@@ -9,12 +9,12 @@ import (
 )
 
 var HostAliasOpts = api.ReqOpts{
-	AddEndpoint:         "/unbound/settings/addHostAlias",
-	GetEndpoint:         "/unbound/settings/getHostAlias",
-	UpdateEndpoint:      "/unbound/settings/setHostAlias",
-	DeleteEndpoint:      "/unbound/settings/delHostAlias",
-	ReconfigureEndpoint: unboundReconfigureEndpoint,
-	Monad:               "alias",
+	Create:      api.Endpoint{Path: "/unbound/settings/addHostAlias", Method: "POST"},
+	Read:        api.Endpoint{Path: "/unbound/settings/getHostAlias", Method: "GET"},
+	Update:      api.Endpoint{Path: "/unbound/settings/setHostAlias", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/unbound/settings/delHostAlias", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/unbound/service/reconfigure", Method: "POST"},
+	Monad:       "alias",
 }
 
 // Data structs

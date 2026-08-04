@@ -9,12 +9,12 @@ import (
 )
 
 var DomainOverrideOpts = api.ReqOpts{
-	AddEndpoint:         "/unbound/settings/addDomainOverride",
-	GetEndpoint:         "/unbound/settings/getDomainOverride",
-	UpdateEndpoint:      "/unbound/settings/setDomainOverride",
-	DeleteEndpoint:      "/unbound/settings/delDomainOverride",
-	ReconfigureEndpoint: unboundReconfigureEndpoint,
-	Monad:               "domain",
+	Create:      api.Endpoint{Path: "/unbound/settings/addDomainOverride", Method: "POST"},
+	Read:        api.Endpoint{Path: "/unbound/settings/getDomainOverride", Method: "GET"},
+	Update:      api.Endpoint{Path: "/unbound/settings/setDomainOverride", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/unbound/settings/delDomainOverride", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/unbound/service/reconfigure", Method: "POST"},
+	Monad:       "domain",
 }
 
 // Data structs

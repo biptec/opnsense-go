@@ -9,12 +9,12 @@ import (
 )
 
 var SubnetV4Opts = api.ReqOpts{
-	AddEndpoint:         "/kea/dhcpv4/add_subnet",
-	GetEndpoint:         "/kea/dhcpv4/get_subnet",
-	UpdateEndpoint:      "/kea/dhcpv4/set_subnet",
-	DeleteEndpoint:      "/kea/dhcpv4/del_subnet",
-	ReconfigureEndpoint: keaReconfigureEndpoint,
-	Monad:               "subnet4",
+	Create:      api.Endpoint{Path: "/kea/dhcpv4/add_subnet", Method: "POST"},
+	Read:        api.Endpoint{Path: "/kea/dhcpv4/get_subnet", Method: "GET"},
+	Update:      api.Endpoint{Path: "/kea/dhcpv4/set_subnet", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/kea/dhcpv4/del_subnet", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/kea/service/reconfigure", Method: "POST"},
+	Monad:       "subnet4",
 }
 
 // Data structs

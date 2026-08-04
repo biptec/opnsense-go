@@ -9,13 +9,13 @@ import (
 )
 
 var LaggOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/lagg_settings/add_item",
-	GetEndpoint:         "/interfaces/lagg_settings/get_item",
-	UpdateEndpoint:      "/interfaces/lagg_settings/set_item",
-	DeleteEndpoint:      "/interfaces/lagg_settings/del_item",
-	SearchEndpoint:      "/interfaces/lagg_settings/search_item",
-	ReconfigureEndpoint: "/interfaces/lagg_settings/reconfigure",
-	Monad:               "lagg",
+	Create:      api.Endpoint{Path: "/interfaces/lagg_settings/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/interfaces/lagg_settings/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/interfaces/lagg_settings/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/interfaces/lagg_settings/del_item", Method: "POST"},
+	Search:      api.Endpoint{Path: "/interfaces/lagg_settings/search_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/interfaces/lagg_settings/reconfigure", Method: "POST"},
+	Monad:       "lagg",
 }
 
 // Data structs
@@ -45,7 +45,7 @@ func (c *Controller) GetLagg(ctx context.Context, id string) (*Lagg, error) {
 }
 
 func (c *Controller) SearchLagg(ctx context.Context) (*api.SearchResponse[Lagg], error) {
-	return api.Search[Lagg](c.Client(), ctx, LaggOpts.SearchEndpoint)
+	return api.Search[Lagg](c.Client(), ctx, LaggOpts.Search)
 }
 
 func (c *Controller) UpdateLagg(ctx context.Context, id string, resource *Lagg) error {

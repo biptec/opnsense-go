@@ -12,9 +12,9 @@ type SearchResponse[T any] struct {
 }
 
 // Search calls an OPNsense searchBase endpoint and decodes its paginated rows.
-func Search[T any](c *Client, ctx context.Context, endpoint string) (*SearchResponse[T], error) {
+func Search[T any](c *Client, ctx context.Context, endpoint Endpoint) (*SearchResponse[T], error) {
 	result := &SearchResponse[T]{}
-	if err := c.doRequest(ctx, "POST", endpoint, nil, result); err != nil {
+	if err := c.doEndpointRequest(ctx, endpoint, nil, result); err != nil {
 		return nil, err
 	}
 	return result, nil

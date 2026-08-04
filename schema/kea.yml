@@ -1,15 +1,25 @@
 ---
 name: kea
-reconfigureEndpoint: "/kea/service/reconfigure"
 resources:
   - name: SubnetV4
     filename: subnetv4
     monad: subnet4
     endpoints:
-      add: "/kea/dhcpv4/add_subnet"
-      get: "/kea/dhcpv4/get_subnet"
-      update: "/kea/dhcpv4/set_subnet"
-      delete: "/kea/dhcpv4/del_subnet"
+      create:
+        path: "/kea/dhcpv4/add_subnet"
+        method: POST
+      read:
+        path: "/kea/dhcpv4/get_subnet"
+        method: GET
+      update:
+        path: "/kea/dhcpv4/set_subnet"
+        method: POST
+      delete:
+        path: "/kea/dhcpv4/del_subnet"
+        method: POST
+      reconfigure:
+        path: "/kea/service/reconfigure"
+        method: POST
     attrs:
       - name: Subnet
         type: string
@@ -65,10 +75,21 @@ resources:
     filename: reservationv4
     monad: reservation
     endpoints:
-      add: "/kea/dhcpv4/add_reservation"
-      get: "/kea/dhcpv4/get_reservation"
-      update: "/kea/dhcpv4/set_reservation"
-      delete: "/kea/dhcpv4/del_reservation"
+      create:
+        path: "/kea/dhcpv4/add_reservation"
+        method: POST
+      read:
+        path: "/kea/dhcpv4/get_reservation"
+        method: GET
+      update:
+        path: "/kea/dhcpv4/set_reservation"
+        method: POST
+      delete:
+        path: "/kea/dhcpv4/del_reservation"
+        method: POST
+      reconfigure:
+        path: "/kea/service/reconfigure"
+        method: POST
     attrs:
       - name: Subnet
         type: SelectedMap
@@ -89,10 +110,21 @@ resources:
     filename: peerv4
     monad: peer
     endpoints:
-      add: "/kea/dhcpv4/add_peer"
-      get: "/kea/dhcpv4/get_peer"
-      update: "/kea/dhcpv4/set_peer"
-      delete: "/kea/dhcpv4/del_peer"
+      create:
+        path: "/kea/dhcpv4/add_peer"
+        method: POST
+      read:
+        path: "/kea/dhcpv4/get_peer"
+        method: GET
+      update:
+        path: "/kea/dhcpv4/set_peer"
+        method: POST
+      delete:
+        path: "/kea/dhcpv4/del_peer"
+        method: POST
+      reconfigure:
+        path: "/kea/service/reconfigure"
+        method: POST
     attrs:
       - name: Name
         type: string
@@ -108,10 +140,21 @@ resources:
     filename: subnetv6
     monad: subnet6
     endpoints:
-      add: "/kea/dhcpv6/add_subnet"
-      get: "/kea/dhcpv6/get_subnet"
-      update: "/kea/dhcpv6/set_subnet"
-      delete: "/kea/dhcpv6/del_subnet"
+      create:
+        path: "/kea/dhcpv6/add_subnet"
+        method: POST
+      read:
+        path: "/kea/dhcpv6/get_subnet"
+        method: GET
+      update:
+        path: "/kea/dhcpv6/set_subnet"
+        method: POST
+      delete:
+        path: "/kea/dhcpv6/del_subnet"
+        method: POST
+      reconfigure:
+        path: "/kea/service/reconfigure"
+        method: POST
     attrs:
       - name: Subnet
         type: string
@@ -146,10 +189,21 @@ resources:
     filename: reservationv6
     monad: reservation
     endpoints:
-      add: "/kea/dhcpv6/add_reservation"
-      get: "/kea/dhcpv6/get_reservation"
-      update: "/kea/dhcpv6/set_reservation"
-      delete: "/kea/dhcpv6/del_reservation"
+      create:
+        path: "/kea/dhcpv6/add_reservation"
+        method: POST
+      read:
+        path: "/kea/dhcpv6/get_reservation"
+        method: GET
+      update:
+        path: "/kea/dhcpv6/set_reservation"
+        method: POST
+      delete:
+        path: "/kea/dhcpv6/del_reservation"
+        method: POST
+      reconfigure:
+        path: "/kea/service/reconfigure"
+        method: POST
     attrs:
       - name: Subnet
         type: SelectedMap
@@ -173,10 +227,21 @@ resources:
     filename: peerv6
     monad: peer
     endpoints:
-      add: "/kea/dhcpv6/add_peer"
-      get: "/kea/dhcpv6/get_peer"
-      update: "/kea/dhcpv6/set_peer"
-      delete: "/kea/dhcpv6/del_peer"
+      create:
+        path: "/kea/dhcpv6/add_peer"
+        method: POST
+      read:
+        path: "/kea/dhcpv6/get_peer"
+        method: GET
+      update:
+        path: "/kea/dhcpv6/set_peer"
+        method: POST
+      delete:
+        path: "/kea/dhcpv6/del_peer"
+        method: POST
+      reconfigure:
+        path: "/kea/service/reconfigure"
+        method: POST
     attrs:
       - name: Name
         type: string
@@ -191,10 +256,21 @@ resources:
     filename: pd_pool
     monad: pd_pool
     endpoints:
-      add: "/kea/dhcpv6/add_pd_pool"
-      get: "/kea/dhcpv6/get_pd_pool"
-      update: "/kea/dhcpv6/set_pd_pool"
-      delete: "/kea/dhcpv6/del_pd_pool"
+      create:
+        path: "/kea/dhcpv6/add_pd_pool"
+        method: POST
+      read:
+        path: "/kea/dhcpv6/get_pd_pool"
+        method: GET
+      update:
+        path: "/kea/dhcpv6/set_pd_pool"
+        method: POST
+      delete:
+        path: "/kea/dhcpv6/del_pd_pool"
+        method: POST
+      reconfigure:
+        path: "/kea/service/reconfigure"
+        method: POST
     attrs:
       - name: Subnet
         type: SelectedMap
@@ -324,12 +400,14 @@ rpc:
           key: status
     rpc_calls:
       - name: "DHCPv4Get"
-        method: "GET"
-        endpoint: "/kea/dhcpv4/get"
+        endpoint:
+          path: "/kea/dhcpv4/get"
+          method: GET
         result_type: "DHCPv4Monad"
       - name: "DHCPv4Update"
-        method: "POST"
-        endpoint: "/kea/dhcpv4/set"
+        endpoint:
+          path: "/kea/dhcpv4/set"
+          method: POST
         params:
           - name: "dhcpv4"
             optional: false
@@ -337,12 +415,14 @@ rpc:
             customType: "DHCPv4Settings"
         result_type: "Result"
       - name: "DHCPv6Get"
-        method: "GET"
-        endpoint: "/kea/dhcpv6/get"
+        endpoint:
+          path: "/kea/dhcpv6/get"
+          method: GET
         result_type: "DHCPv6Monad"
       - name: "DHCPv6Update"
-        method: "POST"
-        endpoint: "/kea/dhcpv6/set"
+        endpoint:
+          path: "/kea/dhcpv6/set"
+          method: POST
         params:
           - name: "dhcpv6"
             optional: false
@@ -350,6 +430,7 @@ rpc:
             customType: "DHCPv6Settings"
         result_type: "Result"
       - name: "Reconfigure"
-        method: "POST"
-        endpoint: "/kea/service/reconfigure"
+        endpoint:
+          path: "/kea/service/reconfigure"
+          method: POST
         result_type: "ActionResult"

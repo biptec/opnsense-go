@@ -4,8 +4,6 @@ package dnsmasq
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-const dnsmasqReconfigureEndpoint = "/dnsmasq/service/reconfigure"
-
 // Controller for dnsmasq
 type Controller struct {
 	Api *api.Client

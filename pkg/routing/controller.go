@@ -4,8 +4,6 @@ package routing
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-const routingReconfigureEndpoint = "/routing/settings/reconfigure"
-
 // Controller for routing
 type Controller struct {
 	Api *api.Client

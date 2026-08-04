@@ -9,12 +9,12 @@ import (
 )
 
 var FilterOpts = api.ReqOpts{
-	AddEndpoint:         "/firewall/filter/addRule",
-	GetEndpoint:         "/firewall/filter/getRule",
-	UpdateEndpoint:      "/firewall/filter/setRule",
-	DeleteEndpoint:      "/firewall/filter/delRule",
-	ReconfigureEndpoint: "/firewall/filter/apply",
-	Monad:               "rule",
+	Create:      api.Endpoint{Path: "/firewall/filter/addRule", Method: "POST"},
+	Read:        api.Endpoint{Path: "/firewall/filter/getRule", Method: "GET"},
+	Update:      api.Endpoint{Path: "/firewall/filter/setRule", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/firewall/filter/delRule", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/firewall/filter/apply", Method: "POST"},
+	Monad:       "rule",
 }
 
 // Data structs

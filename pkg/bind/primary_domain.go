@@ -9,12 +9,12 @@ import (
 )
 
 var PrimaryDomainOpts = api.ReqOpts{
-	AddEndpoint:         "/bind/domain/add_primary_domain",
-	GetEndpoint:         "/bind/domain/get_domain",
-	UpdateEndpoint:      "/bind/domain/set_domain",
-	DeleteEndpoint:      "/bind/domain/del_domain",
-	ReconfigureEndpoint: bindReconfigureEndpoint,
-	Monad:               "domain",
+	Create:      api.Endpoint{Path: "/bind/domain/add_primary_domain", Method: "POST"},
+	Read:        api.Endpoint{Path: "/bind/domain/get_domain", Method: "GET"},
+	Update:      api.Endpoint{Path: "/bind/domain/set_domain", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/bind/domain/del_domain", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
+	Monad:       "domain",
 }
 
 // Data structs

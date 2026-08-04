@@ -4,8 +4,6 @@ package bind
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-const bindReconfigureEndpoint = "/bind/service/reconfigure"
-
 // Controller for bind
 type Controller struct {
 	Api *api.Client

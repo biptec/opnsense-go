@@ -9,13 +9,13 @@ import (
 )
 
 var LoopbackOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/loopback_settings/add_item",
-	GetEndpoint:         "/interfaces/loopback_settings/get_item",
-	UpdateEndpoint:      "/interfaces/loopback_settings/set_item",
-	DeleteEndpoint:      "/interfaces/loopback_settings/del_item",
-	SearchEndpoint:      "/interfaces/loopback_settings/search_item",
-	ReconfigureEndpoint: "/interfaces/loopback_settings/reconfigure",
-	Monad:               "loopback",
+	Create:      api.Endpoint{Path: "/interfaces/loopback_settings/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/interfaces/loopback_settings/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/interfaces/loopback_settings/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/interfaces/loopback_settings/del_item", Method: "POST"},
+	Search:      api.Endpoint{Path: "/interfaces/loopback_settings/search_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/interfaces/loopback_settings/reconfigure", Method: "POST"},
+	Monad:       "loopback",
 }
 
 // Data structs
@@ -37,7 +37,7 @@ func (c *Controller) GetLoopback(ctx context.Context, id string) (*Loopback, err
 }
 
 func (c *Controller) SearchLoopback(ctx context.Context) (*api.SearchResponse[Loopback], error) {
-	return api.Search[Loopback](c.Client(), ctx, LoopbackOpts.SearchEndpoint)
+	return api.Search[Loopback](c.Client(), ctx, LoopbackOpts.Search)
 }
 
 func (c *Controller) UpdateLoopback(ctx context.Context, id string, resource *Loopback) error {

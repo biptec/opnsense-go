@@ -269,8 +269,7 @@ func (c *Controller) OverviewGet(ctx context.Context) (*InterfacesInfoResponse, 
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/interfaces/overview/interfaces_info",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/interfaces/overview/interfaces_info", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -292,8 +291,7 @@ func (c *Controller) OverviewGetDetailed(ctx context.Context) (*InterfacesInfoRe
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/interfaces/overview/interfaces_info/true",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/interfaces/overview/interfaces_info/true", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -317,8 +315,7 @@ func (c *Controller) OverviewGetInterface(ctx context.Context, ifname string) (*
 	callParams = append(callParams, ifname)
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/interfaces/overview/get_interface",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/interfaces/overview/get_interface", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -342,8 +339,7 @@ func (c *Controller) OverviewReloadInterface(ctx context.Context, identifier str
 	callParams = append(callParams, identifier)
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/interfaces/overview/reload_interface",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/interfaces/overview/reload_interface", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -365,8 +361,7 @@ func (c *Controller) OverviewExport(ctx context.Context) (*[]InterfaceInfo, erro
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/interfaces/overview/export",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/interfaces/overview/export", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

@@ -9,13 +9,13 @@ import (
 )
 
 var HandlerOpts = api.ReqOpts{
-	AddEndpoint:         "/caddy/reverse_proxy/add_handle",
-	GetEndpoint:         "/caddy/reverse_proxy/get_handle",
-	UpdateEndpoint:      "/caddy/reverse_proxy/set_handle",
-	DeleteEndpoint:      "/caddy/reverse_proxy/del_handle",
-	SearchEndpoint:      "/caddy/reverse_proxy/search_handle",
-	ReconfigureEndpoint: caddyReconfigureEndpoint,
-	Monad:               "handle",
+	Create:      api.Endpoint{Path: "/caddy/reverse_proxy/add_handle", Method: "POST"},
+	Read:        api.Endpoint{Path: "/caddy/reverse_proxy/get_handle", Method: "POST"},
+	Update:      api.Endpoint{Path: "/caddy/reverse_proxy/set_handle", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/caddy/reverse_proxy/del_handle", Method: "POST"},
+	Search:      api.Endpoint{Path: "/caddy/reverse_proxy/search_handle", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/caddy/service/reconfigure", Method: "POST"},
+	Monad:       "handle",
 }
 
 // Data structs
@@ -74,7 +74,7 @@ func (c *Controller) GetHandler(ctx context.Context, id string) (*Handler, error
 }
 
 func (c *Controller) SearchHandler(ctx context.Context) (*api.SearchResponse[Handler], error) {
-	return api.Search[Handler](c.Client(), ctx, HandlerOpts.SearchEndpoint)
+	return api.Search[Handler](c.Client(), ctx, HandlerOpts.Search)
 }
 
 func (c *Controller) UpdateHandler(ctx context.Context, id string, resource *Handler) error {

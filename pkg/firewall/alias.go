@@ -9,12 +9,12 @@ import (
 )
 
 var AliasOpts = api.ReqOpts{
-	AddEndpoint:         "/firewall/alias/addItem",
-	GetEndpoint:         "/firewall/alias/getItem",
-	UpdateEndpoint:      "/firewall/alias/setItem",
-	DeleteEndpoint:      "/firewall/alias/delItem",
-	ReconfigureEndpoint: "/firewall/alias/reconfigure",
-	Monad:               "alias",
+	Create:      api.Endpoint{Path: "/firewall/alias/addItem", Method: "POST"},
+	Read:        api.Endpoint{Path: "/firewall/alias/getItem", Method: "GET"},
+	Update:      api.Endpoint{Path: "/firewall/alias/setItem", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/firewall/alias/delItem", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/firewall/alias/reconfigure", Method: "POST"},
+	Monad:       "alias",
 }
 
 // Data structs

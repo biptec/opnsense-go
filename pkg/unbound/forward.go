@@ -9,12 +9,12 @@ import (
 )
 
 var ForwardOpts = api.ReqOpts{
-	AddEndpoint:         "/unbound/settings/addDot",
-	GetEndpoint:         "/unbound/settings/getDot",
-	UpdateEndpoint:      "/unbound/settings/setDot",
-	DeleteEndpoint:      "/unbound/settings/delDot",
-	ReconfigureEndpoint: unboundReconfigureEndpoint,
-	Monad:               "dot",
+	Create:      api.Endpoint{Path: "/unbound/settings/addDot", Method: "POST"},
+	Read:        api.Endpoint{Path: "/unbound/settings/getDot", Method: "GET"},
+	Update:      api.Endpoint{Path: "/unbound/settings/setDot", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/unbound/settings/delDot", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/unbound/service/reconfigure", Method: "POST"},
+	Monad:       "dot",
 }
 
 // Data structs

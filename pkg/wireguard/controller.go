@@ -4,8 +4,6 @@ package wireguard
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-const wireguardReconfigureEndpoint = "/wireguard/service/reconfigure"
-
 // Controller for wireguard
 type Controller struct {
 	Api *api.Client

@@ -36,8 +36,7 @@ func (c *Controller) SettingsGet(ctx context.Context) (*SettingsGetResult, error
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/interfaces/settings/get",
-		Method:          "GET",
+		Endpoint:        api.Endpoint{Path: "/interfaces/settings/get", Method: "GET"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -61,8 +60,7 @@ func (c *Controller) SettingsSet(ctx context.Context, settings *InterfaceSetting
 	bodyParams["settings"] = settings
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/interfaces/settings/set",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/interfaces/settings/set", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,
@@ -84,8 +82,7 @@ func (c *Controller) SettingsReconfigure(ctx context.Context) (*api.ReconfigureS
 	bodyParams := make(map[string]interface{})
 
 	callOpts := api.RPCOpts{
-		BaseEndpoint:    "/interfaces/settings/reconfigure",
-		Method:          "POST",
+		Endpoint:        api.Endpoint{Path: "/interfaces/settings/reconfigure", Method: "POST"},
 		PathParameters:  callParams,
 		QueryParameters: queryParams,
 		BodyParameters:  bodyParams,

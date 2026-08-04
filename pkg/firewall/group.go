@@ -9,13 +9,13 @@ import (
 )
 
 var GroupOpts = api.ReqOpts{
-	AddEndpoint:         "/firewall/group/addItem",
-	GetEndpoint:         "/firewall/group/getItem",
-	UpdateEndpoint:      "/firewall/group/setItem",
-	DeleteEndpoint:      "/firewall/group/delItem",
-	SearchEndpoint:      "/firewall/group/searchItem",
-	ReconfigureEndpoint: "/firewall/group/reconfigure",
-	Monad:               "group",
+	Create:      api.Endpoint{Path: "/firewall/group/addItem", Method: "POST"},
+	Read:        api.Endpoint{Path: "/firewall/group/getItem", Method: "GET"},
+	Update:      api.Endpoint{Path: "/firewall/group/setItem", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/firewall/group/delItem", Method: "POST"},
+	Search:      api.Endpoint{Path: "/firewall/group/searchItem", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/firewall/group/reconfigure", Method: "POST"},
+	Monad:       "group",
 }
 
 // Data structs
@@ -40,7 +40,7 @@ func (c *Controller) GetGroup(ctx context.Context, id string) (*Group, error) {
 }
 
 func (c *Controller) SearchGroup(ctx context.Context) (*api.SearchResponse[Group], error) {
-	return api.Search[Group](c.Client(), ctx, GroupOpts.SearchEndpoint)
+	return api.Search[Group](c.Client(), ctx, GroupOpts.Search)
 }
 
 func (c *Controller) UpdateGroup(ctx context.Context, id string, resource *Group) error {

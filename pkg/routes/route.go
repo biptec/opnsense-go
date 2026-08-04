@@ -9,12 +9,12 @@ import (
 )
 
 var RouteOpts = api.ReqOpts{
-	AddEndpoint:         "/routes/routes/addroute",
-	GetEndpoint:         "/routes/routes/getroute",
-	UpdateEndpoint:      "/routes/routes/setroute",
-	DeleteEndpoint:      "/routes/routes/delroute",
-	ReconfigureEndpoint: routesReconfigureEndpoint,
-	Monad:               "route",
+	Create:      api.Endpoint{Path: "/routes/routes/addroute", Method: "POST"},
+	Read:        api.Endpoint{Path: "/routes/routes/getroute", Method: "GET"},
+	Update:      api.Endpoint{Path: "/routes/routes/setroute", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/routes/routes/delroute", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/routes/routes/reconfigure", Method: "POST"},
+	Monad:       "route",
 }
 
 // Data structs

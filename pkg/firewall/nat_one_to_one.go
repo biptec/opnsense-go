@@ -9,12 +9,12 @@ import (
 )
 
 var NatOneToOneOpts = api.ReqOpts{
-	AddEndpoint:         "/firewall/one_to_one/addRule",
-	GetEndpoint:         "/firewall/one_to_one/getRule",
-	UpdateEndpoint:      "/firewall/one_to_one/setRule",
-	DeleteEndpoint:      "/firewall/one_to_one/delRule",
-	ReconfigureEndpoint: "/firewall/one_to_one/apply",
-	Monad:               "rule",
+	Create:      api.Endpoint{Path: "/firewall/one_to_one/addRule", Method: "POST"},
+	Read:        api.Endpoint{Path: "/firewall/one_to_one/getRule", Method: "GET"},
+	Update:      api.Endpoint{Path: "/firewall/one_to_one/setRule", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/firewall/one_to_one/delRule", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/firewall/one_to_one/apply", Method: "POST"},
+	Monad:       "rule",
 }
 
 // Data structs

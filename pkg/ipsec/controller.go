@@ -4,8 +4,6 @@ package ipsec
 
 import "github.com/biptec/opnsense-go/pkg/api"
 
-const ipsecReconfigureEndpoint = "/ipsec/service/reconfigure"
-
 // Controller for ipsec
 type Controller struct {
 	Api *api.Client

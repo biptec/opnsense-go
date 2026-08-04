@@ -9,13 +9,13 @@ import (
 )
 
 var BridgeOpts = api.ReqOpts{
-	AddEndpoint:         "/interfaces/bridge_settings/add_item",
-	GetEndpoint:         "/interfaces/bridge_settings/get_item",
-	UpdateEndpoint:      "/interfaces/bridge_settings/set_item",
-	DeleteEndpoint:      "/interfaces/bridge_settings/del_item",
-	SearchEndpoint:      "/interfaces/bridge_settings/search_item",
-	ReconfigureEndpoint: "/interfaces/bridge_settings/reconfigure",
-	Monad:               "bridge",
+	Create:      api.Endpoint{Path: "/interfaces/bridge_settings/add_item", Method: "POST"},
+	Read:        api.Endpoint{Path: "/interfaces/bridge_settings/get_item", Method: "GET"},
+	Update:      api.Endpoint{Path: "/interfaces/bridge_settings/set_item", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/interfaces/bridge_settings/del_item", Method: "POST"},
+	Search:      api.Endpoint{Path: "/interfaces/bridge_settings/search_item", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/interfaces/bridge_settings/reconfigure", Method: "POST"},
+	Monad:       "bridge",
 }
 
 // Data structs
@@ -54,7 +54,7 @@ func (c *Controller) GetBridge(ctx context.Context, id string) (*Bridge, error) 
 }
 
 func (c *Controller) SearchBridge(ctx context.Context) (*api.SearchResponse[Bridge], error) {
-	return api.Search[Bridge](c.Client(), ctx, BridgeOpts.SearchEndpoint)
+	return api.Search[Bridge](c.Client(), ctx, BridgeOpts.Search)
 }
 
 func (c *Controller) UpdateBridge(ctx context.Context, id string, resource *Bridge) error {

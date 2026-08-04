@@ -36,12 +36,15 @@ func TestCaddyAcceptance(t *testing.T) {
 	}
 
 	suffix := fmt.Sprintf("%d", time.Now().UnixNano())
-	var accessID, domainID, handlerID string
+	var accessID, headerID, domainID, handlerID string
 	t.Cleanup(func() {
 		cleanup, done := context.WithTimeout(context.Background(), time.Minute)
 		defer done()
 		if handlerID != "" {
 			_ = controller.DeleteHandler(cleanup, handlerID)
+		}
+		if headerID != "" {
+			_ = controller.DeleteHeader(cleanup, headerID)
 		}
 		if domainID != "" {
 			_ = controller.DeleteDomain(cleanup, domainID)
@@ -69,6 +72,22 @@ func TestCaddyAcceptance(t *testing.T) {
 		t.Fatalf("UpdateAccessList(): %v", err)
 	}
 
+	headerID, err = controller.AddHeader(ctx, &Header{
+		Direction: api.SelectedMap("header_up"), Name: "Host", Value: "{host}",
+		Description: "opnsense-go acceptance test",
+	})
+	if err != nil {
+		t.Fatalf("AddHeader(): %v", err)
+	}
+	header, err := controller.GetHeader(ctx, headerID)
+	if err != nil || header.Name != "Host" || header.Value != "{host}" {
+		t.Fatalf("GetHeader() = %+v, %v", header, err)
+	}
+	header.Value = "{http.request.host}"
+	if err := controller.UpdateHeader(ctx, headerID, header); err != nil {
+		t.Fatalf("UpdateHeader(): %v", err)
+	}
+
 	domainID, err = controller.AddDomain(ctx, &Domain{
 		Enabled: "1", Domain: "caddy-" + suffix + ".invalid", DisableTLS: api.SelectedMap("1"),
 		DNSChallenge: "0", DynamicDNS: "0", AccessLog: "0",
@@ -85,14 +104,14 @@ func TestCaddyAcceptance(t *testing.T) {
 	handlerID, err = controller.AddHandler(ctx, &Handler{
 		Enabled: "1", Domain: api.SelectedMap(domainID), Type: api.SelectedMap("handle"),
 		Directive: api.SelectedMap("reverse_proxy"), UpstreamDomains: api.SelectedMapList{"127.0.0.1"},
-		UpstreamPort: "8080", UpstreamProtocol: api.SelectedMap("0"),
+		Headers: api.SelectedMapList{headerID}, UpstreamPort: "8080", UpstreamProtocol: api.SelectedMap("0"),
 		Description: "opnsense-go acceptance test",
 	})
 	if err != nil {
 		t.Fatalf("AddHandler(): %v", err)
 	}
 	handler, err := controller.GetHandler(ctx, handlerID)
-	if err != nil || handler.Domain.String() != domainID {
+	if err != nil || handler.Domain.String() != domainID || handler.Headers.String() != headerID {
 		t.Fatalf("GetHandler() = %+v, %v", handler, err)
 	}
 
@@ -107,5 +126,9 @@ func TestCaddyAcceptance(t *testing.T) {
 	accessLists, err := controller.SearchAccessList(ctx)
 	if err != nil || accessLists.Total < 1 {
 		t.Fatalf("SearchAccessList() = %+v, %v", accessLists, err)
+	}
+	headers, err := controller.SearchHeader(ctx)
+	if err != nil || headers.Total < 1 {
+		t.Fatalf("SearchHeader() = %+v, %v", headers, err)
 	}
 }

@@ -1,6 +1,5 @@
 ---
 name: diagnostics
-reconfigureEndpoint: "" # Controller-wide reconfigure endpoint (can be overwritten)
 resources:
   # diagnostics resources
 
@@ -8,7 +7,9 @@ resources:
     filename: interface
     readOnly: true
     endpoints:
-      get: "/diagnostics/interface/getInterfaceConfig"
+      read:
+        path: "/diagnostics/interface/getInterfaceConfig"
+        method: GET
     getByFilter: true
     getAll: true
     attrs:

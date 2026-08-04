@@ -9,12 +9,12 @@ import (
 )
 
 var RecordOpts = api.ReqOpts{
-	AddEndpoint:         "/bind/record/add_record",
-	GetEndpoint:         "/bind/record/get_record",
-	UpdateEndpoint:      "/bind/record/set_record",
-	DeleteEndpoint:      "/bind/record/del_record",
-	ReconfigureEndpoint: bindReconfigureEndpoint,
-	Monad:               "record",
+	Create:      api.Endpoint{Path: "/bind/record/add_record", Method: "POST"},
+	Read:        api.Endpoint{Path: "/bind/record/get_record", Method: "GET"},
+	Update:      api.Endpoint{Path: "/bind/record/set_record", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/bind/record/del_record", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
+	Monad:       "record",
 }
 
 // Data structs

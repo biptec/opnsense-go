@@ -9,13 +9,13 @@ import (
 )
 
 var DomainOpts = api.ReqOpts{
-	AddEndpoint:         "/caddy/reverse_proxy/add_reverse_proxy",
-	GetEndpoint:         "/caddy/reverse_proxy/get_reverse_proxy",
-	UpdateEndpoint:      "/caddy/reverse_proxy/set_reverse_proxy",
-	DeleteEndpoint:      "/caddy/reverse_proxy/del_reverse_proxy",
-	SearchEndpoint:      "/caddy/reverse_proxy/search_reverse_proxy",
-	ReconfigureEndpoint: caddyReconfigureEndpoint,
-	Monad:               "reverse",
+	Create:      api.Endpoint{Path: "/caddy/reverse_proxy/add_reverse_proxy", Method: "POST"},
+	Read:        api.Endpoint{Path: "/caddy/reverse_proxy/get_reverse_proxy", Method: "POST"},
+	Update:      api.Endpoint{Path: "/caddy/reverse_proxy/set_reverse_proxy", Method: "POST"},
+	Delete:      api.Endpoint{Path: "/caddy/reverse_proxy/del_reverse_proxy", Method: "POST"},
+	Search:      api.Endpoint{Path: "/caddy/reverse_proxy/search_reverse_proxy", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/caddy/service/reconfigure", Method: "POST"},
+	Monad:       "reverse",
 }
 
 // Data structs
@@ -50,7 +50,7 @@ func (c *Controller) GetDomain(ctx context.Context, id string) (*Domain, error) 
 }
 
 func (c *Controller) SearchDomain(ctx context.Context) (*api.SearchResponse[Domain], error) {
-	return api.Search[Domain](c.Client(), ctx, DomainOpts.SearchEndpoint)
+	return api.Search[Domain](c.Client(), ctx, DomainOpts.Search)
 }
 
 func (c *Controller) UpdateDomain(ctx context.Context, id string, resource *Domain) error {
