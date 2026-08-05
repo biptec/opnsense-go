@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"github.com/biptec/opnsense-go/pkg/api"
 )
 
 const (
@@ -85,7 +87,10 @@ func (c *Controller) gatewayGroupMembersExist(ctx context.Context, resource *Gat
 		return false, nil
 	}
 
-	result, err := c.SearchGateway(ctx)
+	type gatewayNameRow struct {
+		Name string `json:"name"`
+	}
+	result, err := api.Search[gatewayNameRow](c.Client(), ctx, GatewayOpts.Search)
 	if err != nil {
 		return false, err
 	}

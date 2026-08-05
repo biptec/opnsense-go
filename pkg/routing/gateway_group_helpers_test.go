@@ -26,7 +26,7 @@ func TestAddGatewayGroupResolvedRetriesStaleOptions(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved", "uuid": "group-id"})
 		case "/api/routing/settings/searchGateway":
 			searchCalls++
-			_ = json.NewEncoder(w).Encode(map[string]any{"total": 1, "rowCount": 1, "current": 1, "rows": []map[string]any{{"name": "GW_A"}}})
+			_ = json.NewEncoder(w).Encode(map[string]any{"total": 1, "rowCount": 1, "current": 1, "rows": []map[string]any{{"name": "GW_A", "priority": 250}}})
 		case "/api/routing/group_settings/reconfigure":
 			reconfigureCalls++
 			_ = json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
