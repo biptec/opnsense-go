@@ -15,6 +15,8 @@ type DNSSECKey struct {
 	File      string `json:"file"`
 	KeyTag    string `json:"key_tag"`
 	Algorithm string `json:"algorithm"`
+	Flags     string `json:"flags"`
+	Role      string `json:"role"`
 }
 
 type DNSSECStatus struct {
