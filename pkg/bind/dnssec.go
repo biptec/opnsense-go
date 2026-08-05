@@ -20,14 +20,14 @@ type DNSSECKey struct {
 }
 
 type DNSSECStatus struct {
-	Zone          string            `json:"zone"`
-	View          string            `json:"view"`
-	DSRecords     []string          `json:"ds_records"`
-	Keys          []DNSSECKey       `json:"keys"`
-	RNDCStatus    map[string]string `json:"rndc_status"`
-	Secure        bool              `json:"secure"`
-	InlineSigning bool              `json:"inline_signing"`
-	Error         string            `json:"error,omitempty"`
+	Zone          string      `json:"zone"`
+	View          string      `json:"view"`
+	DSRecords     []string    `json:"ds_records"`
+	Keys          []DNSSECKey `json:"keys"`
+	RNDCStatus    RNDCStatus  `json:"rndc_status"`
+	Secure        bool        `json:"secure"`
+	InlineSigning bool        `json:"inline_signing"`
+	Error         string      `json:"error,omitempty"`
 }
 
 // DNSSECStatus executes the Status RPC call of the DNSSEC controller
