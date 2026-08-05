@@ -61,20 +61,29 @@ def guest_exec(script):
     raise TimeoutError("os-bind installation timed out")
 
 
-def main():
-    if not COMMIT_RE.fullmatch(COMMIT):
-        raise RuntimeError("OPNSENSE_BIND_PLUGIN_COMMIT must be a full Git commit SHA")
-    script = f"""set -eu
+def build_install_script(commit):
+    return f"""set -eu
 if [ ! -d /usr/plugins/.git ]; then
     opnsense-code plugins
 fi
-git -C /usr/plugins fetch --depth 1 https://github.com/biptec/opnsense-plugins.git {COMMIT}
+git -C /usr/plugins fetch --depth 1 https://github.com/biptec/opnsense-plugins.git {commit}
 git -C /usr/plugins checkout --detach FETCH_HEAD
 make -C /usr/plugins/dns/bind upgrade
-pkg info -e 'os-bind-1.35'
+pkg info -e 'os-bind-*'
+installed_hash=$(pkg query '%At:%Av' os-bind | sed -n 's/^product_hash://p')
+test -n "$installed_hash"
+case "{commit}" in
+    "$installed_hash"*) ;;
+    *) echo "installed os-bind hash does not match requested commit" >&2; exit 1 ;;
+esac
 test -f /usr/local/opnsense/mvc/app/models/OPNsense/Bind/View.xml
 """
-    guest_exec(script)
+
+
+def main():
+    if not COMMIT_RE.fullmatch(COMMIT):
+        raise RuntimeError("OPNSENSE_BIND_PLUGIN_COMMIT must be a full Git commit SHA")
+    guest_exec(build_install_script(COMMIT))
     print(f"Installed os-bind candidate {COMMIT[:12]}")
 
 
