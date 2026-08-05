@@ -71,6 +71,7 @@ func TestBindAcceptance(t *testing.T) {
 	suffix := strconv.FormatInt(time.Now().UnixNano(), 36)
 	name := "go-bind-" + suffix
 	domainName := name + ".invalid"
+	keyName := "_acme-challenge." + domainName
 	var aclID, viewID, keyID, domainID string
 	var recordIDs []string
 	t.Cleanup(func() {
@@ -117,7 +118,7 @@ func TestBindAcceptance(t *testing.T) {
 		t.Fatal("TSIGGenerateSecret() returned an empty secret")
 	}
 	keyID, err = controller.AddTsigKey(ctx, &TsigKey{
-		Enabled: "1", Name: name, Algorithm: api.SelectedMap("hmac-sha256"), Secret: generated.Secret,
+		Enabled: "1", Name: keyName, Algorithm: api.SelectedMap("hmac-sha256"), Secret: generated.Secret,
 	})
 	if err != nil {
 		t.Fatalf("AddTsigKey(%q): %v", keyID, err)
@@ -126,7 +127,7 @@ func TestBindAcceptance(t *testing.T) {
 	domainID, err = controller.AddPrimaryDomain(ctx, &PrimaryDomain{
 		View: api.SelectedMap(viewID), DomainName: domainName, Enabled: "1",
 		AllowRndcTransfer: "0", AllowRndcUpdate: "0", UpdateKeys: api.SelectedMapList{keyID},
-		UpdatePolicy: api.SelectedMap("zonesub_txt"), DNSSEC: "0",
+		UpdatePolicy: api.SelectedMap("self_txt"), DNSSEC: "0",
 		TimeToLive: "60", Refresh: "300", Retry: "300", Expire: "86400", Negative: "60",
 		MailAdmin: "hostmaster@" + domainName, DnsServer: "ns." + domainName,
 	})
@@ -155,11 +156,11 @@ func TestBindAcceptance(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetTsigKey(): %v", err)
 	}
-	if tsig.Name != name || tsig.Secret == "" {
+	if tsig.Name != keyName || tsig.Secret == "" {
 		t.Fatalf("GetTsigKey() returned unexpected metadata: name=%q secret_present=%t", tsig.Name, tsig.Secret != "")
 	}
 	domain, err := controller.GetPrimaryDomain(ctx, domainID)
-	if err != nil || domain.View.String() != viewID || domain.UpdateKeys.String() != keyID || domain.UpdatePolicy.String() != "zonesub_txt" {
+	if err != nil || domain.View.String() != viewID || domain.UpdateKeys.String() != keyID || domain.UpdatePolicy.String() != "self_txt" {
 		t.Fatalf("GetPrimaryDomain() = %+v, %v", domain, err)
 	}
 
