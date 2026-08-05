@@ -26,6 +26,7 @@ func (c *Controller) addGatewayGroupResolved(
 	retryTimeout time.Duration,
 ) (string, error) {
 	deadline := time.Now().Add(retryTimeout)
+	membersVerified := false
 	for {
 		id, err := c.AddGatewayGroup(ctx, resource)
 		if err == nil {
@@ -35,11 +36,17 @@ func (c *Controller) addGatewayGroupResolved(
 			return "", err
 		}
 
-		exist, verifyErr := c.gatewayGroupMembersExist(ctx, resource)
-		if verifyErr != nil {
-			return "", fmt.Errorf("verify gateway group members: %w", verifyErr)
+		if !membersVerified {
+			exist, verifyErr := c.gatewayGroupMembersExist(ctx, resource)
+			if verifyErr != nil {
+				return "", fmt.Errorf("verify gateway group members: %w", verifyErr)
+			}
+			if !exist {
+				return "", err
+			}
+			membersVerified = true
 		}
-		if !exist || retryTimeout <= 0 || time.Now().Add(retryInterval).After(deadline) {
+		if retryTimeout <= 0 || time.Now().Add(retryInterval).After(deadline) {
 			return "", err
 		}
 

@@ -41,7 +41,7 @@ func TestAddGatewayGroupResolvedRetriesStaleOptions(t *testing.T) {
 	if err != nil {
 		t.Fatalf("addGatewayGroupResolved(): %v", err)
 	}
-	if id != "group-id" || addCalls != 3 || searchCalls != 2 || reconfigureCalls != 1 {
+	if id != "group-id" || addCalls != 3 || searchCalls != 1 || reconfigureCalls != 1 {
 		t.Fatalf("id=%q add=%d search=%d reconfigure=%d", id, addCalls, searchCalls, reconfigureCalls)
 	}
 }
