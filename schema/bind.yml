@@ -73,6 +73,9 @@ resources:
       - name: MatchClients
         type: SelectedMapList
         key: matchclients
+      - name: MatchDestinations
+        type: SelectedMapList
+        key: matchdestinations
       - name: Recursion
         type: string
         key: recursion

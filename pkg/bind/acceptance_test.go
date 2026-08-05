@@ -103,7 +103,8 @@ func TestBindAcceptance(t *testing.T) {
 
 	viewID, err = controller.AddView(ctx, &View{
 		Enabled: "1", Sequence: sequence, Name: name, MatchAny: "0",
-		MatchClients: api.SelectedMapList{aclID}, Recursion: "0", AllowQueryAny: "0",
+		MatchClients: api.SelectedMapList{aclID}, MatchDestinations: api.SelectedMapList{aclID},
+		Recursion: "0", AllowQueryAny: "0",
 		AllowQuery: api.SelectedMapList{aclID}, DNSSECValidation: api.SelectedMap("auto"),
 	})
 	if err != nil {
@@ -149,7 +150,7 @@ func TestBindAcceptance(t *testing.T) {
 	}
 
 	view, err := controller.GetView(ctx, viewID)
-	if err != nil || view.Name != name || view.MatchClients.String() != aclID {
+	if err != nil || view.Name != name || view.MatchClients.String() != aclID || view.MatchDestinations.String() != aclID {
 		t.Fatalf("GetView() = %+v, %v", view, err)
 	}
 	tsig, err := controller.GetTsigKey(ctx, keyID)
