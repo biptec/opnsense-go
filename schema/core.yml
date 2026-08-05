@@ -121,3 +121,129 @@ rpc:
           - name: "id"
             optional: false
         result_type: "ServiceActionResult"
+
+  - name: "Firmware"
+    filename: firmware
+    customTypes:
+      FirmwarePackage:
+        - name: Name
+          type: string
+          key: name
+        - name: Version
+          type: string
+          key: version
+        - name: Comment
+          type: string
+          key: comment
+        - name: FlatSize
+          type: string
+          key: flatsize
+        - name: Locked
+          type: string
+          key: locked
+        - name: Automatic
+          type: string
+          key: automatic
+        - name: License
+          type: string
+          key: license
+        - name: Repository
+          type: string
+          key: repository
+        - name: Origin
+          type: string
+          key: origin
+        - name: Provided
+          type: string
+          key: provided
+        - name: Installed
+          type: string
+          key: installed
+        - name: Path
+          type: string
+          key: path
+        - name: Configured
+          type: string
+          key: configured
+        - name: Tier
+          type: string
+          key: tier
+      FirmwareInfoResponse:
+        - name: ProductID
+          type: string
+          key: product_id
+        - name: ProductVersion
+          type: string
+          key: product_version
+        - name: Packages
+          type: '[]FirmwarePackage'
+          key: package
+        - name: Plugins
+          type: '[]FirmwarePackage'
+          key: plugin
+      FirmwareActionResult:
+        - name: Status
+          type: string
+          key: status
+        - name: MessageUUID
+          type: string
+          key: msg_uuid
+      FirmwareRunningResponse:
+        - name: Status
+          type: string
+          key: status
+      FirmwareUpgradeStatusResponse:
+        - name: Status
+          type: string
+          key: status
+        - name: Log
+          type: string
+          key: log
+    rpc_calls:
+      - name: "Info"
+        endpoint:
+          path: "/core/firmware/info"
+          method: GET
+        result_type: "FirmwareInfoResponse"
+      - name: "Install"
+        endpoint:
+          path: "/core/firmware/install"
+          method: POST
+        params:
+          - name: "packageName"
+            optional: false
+        result_type: "FirmwareActionResult"
+      - name: "Remove"
+        endpoint:
+          path: "/core/firmware/remove"
+          method: POST
+        params:
+          - name: "packageName"
+            optional: false
+        result_type: "FirmwareActionResult"
+      - name: "Lock"
+        endpoint:
+          path: "/core/firmware/lock"
+          method: POST
+        params:
+          - name: "packageName"
+            optional: false
+        result_type: "FirmwareActionResult"
+      - name: "Unlock"
+        endpoint:
+          path: "/core/firmware/unlock"
+          method: POST
+        params:
+          - name: "packageName"
+            optional: false
+        result_type: "FirmwareActionResult"
+      - name: "Running"
+        endpoint:
+          path: "/core/firmware/running"
+          method: GET
+        result_type: "FirmwareRunningResponse"
+      - name: "UpgradeStatus"
+        endpoint:
+          path: "/core/firmware/upgradestatus"
+          method: GET
+        result_type: "FirmwareUpgradeStatusResponse"
