@@ -18,6 +18,9 @@ resources:
       delete:
         path: "/bind/acl/del_acl"
         method: POST
+      search:
+        path: "/bind/acl/search_acl"
+        method: POST
       reconfigure:
         path: "/bind/service/reconfigure"
         method: POST
@@ -31,6 +34,105 @@ resources:
       - name: Networks
         type: SelectedMapList
         key: networks
+
+  - name: View
+    filename: view
+    monad: view
+    endpoints:
+      create:
+        path: "/bind/view/add_view"
+        method: POST
+      read:
+        path: "/bind/view/get_view"
+        method: GET
+      update:
+        path: "/bind/view/set_view"
+        method: POST
+      delete:
+        path: "/bind/view/del_view"
+        method: POST
+      search:
+        path: "/bind/view/search_view"
+        method: POST
+      reconfigure:
+        path: "/bind/service/reconfigure"
+        method: POST
+    attrs:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: Sequence
+        type: string
+        key: sequence
+      - name: Name
+        type: string
+        key: name
+      - name: MatchAny
+        type: string
+        key: matchany
+      - name: MatchClients
+        type: SelectedMapList
+        key: matchclients
+      - name: MatchDestinations
+        type: SelectedMapList
+        key: matchdestinations
+      - name: Recursion
+        type: string
+        key: recursion
+      - name: AllowRecursion
+        type: SelectedMapList
+        key: allowrecursion
+      - name: AllowQueryAny
+        type: string
+        key: allowqueryany
+      - name: AllowQuery
+        type: SelectedMapList
+        key: allowquery
+      - name: AllowTransfer
+        type: SelectedMapList
+        key: allowtransfer
+      - name: Forwarders
+        type: SelectedMapList
+        key: forwarders
+      - name: DNSSECValidation
+        type: SelectedMap
+        key: dnssecvalidation
+
+  - name: TsigKey
+    filename: tsig_key
+    monad: key
+    endpoints:
+      create:
+        path: "/bind/tsig/add_key"
+        method: POST
+      read:
+        path: "/bind/tsig/get_key"
+        method: GET
+      update:
+        path: "/bind/tsig/set_key"
+        method: POST
+      delete:
+        path: "/bind/tsig/del_key"
+        method: POST
+      search:
+        path: "/bind/tsig/search_key"
+        method: POST
+      reconfigure:
+        path: "/bind/service/reconfigure"
+        method: POST
+    attrs:
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: Name
+        type: string
+        key: name
+      - name: Algorithm
+        type: SelectedMap
+        key: algorithm
+      - name: Secret
+        type: string
+        key: secret
 
   - name: PrimaryDomain
     filename: primary_domain
@@ -48,10 +150,16 @@ resources:
       delete:
         path: "/bind/domain/del_domain"
         method: POST
+      search:
+        path: "/bind/domain/search_primary_domain"
+        method: POST
       reconfigure:
         path: "/bind/service/reconfigure"
         method: POST
     attrs:
+      - name: View
+        type: SelectedMap
+        key: view
       - name: DomainName
         type: string
         key: domainname
@@ -61,9 +169,27 @@ resources:
       - name: AllowTransfer
         type: SelectedMapList
         key: allowtransfer
+      - name: AllowRndcTransfer
+        type: string
+        key: allowrndctransfer
       - name: AllowQuery
         type: SelectedMapList
         key: allowquery
+      - name: AllowRndcUpdate
+        type: string
+        key: allowrndcupdate
+      - name: UpdateKeys
+        type: SelectedMapList
+        key: updatekeys
+      - name: UpdatePolicy
+        type: SelectedMap
+        key: updatepolicy
+      - name: DNSSEC
+        type: string
+        key: dnssec
+      - name: Serial
+        type: string
+        key: serial
       - name: TimeToLive
         type: string
         key: ttl
@@ -86,6 +212,99 @@ resources:
         type: string
         key: dnsserver
 
+  - name: SecondaryDomain
+    filename: secondary_domain
+    monad: domain
+    endpoints:
+      create:
+        path: "/bind/domain/add_secondary_domain"
+        method: POST
+      read:
+        path: "/bind/domain/get_domain"
+        method: GET
+      update:
+        path: "/bind/domain/set_domain"
+        method: POST
+      delete:
+        path: "/bind/domain/del_domain"
+        method: POST
+      search:
+        path: "/bind/domain/search_secondary_domain"
+        method: POST
+      reconfigure:
+        path: "/bind/service/reconfigure"
+        method: POST
+    attrs:
+      - name: View
+        type: SelectedMap
+        key: view
+      - name: DomainName
+        type: string
+        key: domainname
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: PrimaryIP
+        type: SelectedMapList
+        key: primaryip
+      - name: AllowNotify
+        type: SelectedMapList
+        key: allownotifysecondary
+      - name: TransferKeyAlgorithm
+        type: SelectedMap
+        key: transferkeyalgo
+      - name: TransferKeyName
+        type: string
+        key: transferkeyname
+      - name: TransferKey
+        type: string
+        key: transferkey
+      - name: AllowTransfer
+        type: SelectedMapList
+        key: allowtransfer
+      - name: AllowQuery
+        type: SelectedMapList
+        key: allowquery
+
+  - name: ForwardDomain
+    filename: forward_domain
+    monad: domain
+    endpoints:
+      create:
+        path: "/bind/domain/add_forward_domain"
+        method: POST
+      read:
+        path: "/bind/domain/get_domain"
+        method: GET
+      update:
+        path: "/bind/domain/set_domain"
+        method: POST
+      delete:
+        path: "/bind/domain/del_domain"
+        method: POST
+      search:
+        path: "/bind/domain/search_forward_domain"
+        method: POST
+      reconfigure:
+        path: "/bind/service/reconfigure"
+        method: POST
+    attrs:
+      - name: View
+        type: SelectedMap
+        key: view
+      - name: DomainName
+        type: string
+        key: domainname
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: ForwardServers
+        type: SelectedMapList
+        key: forwardserver
+      - name: AllowQuery
+        type: SelectedMapList
+        key: allowquery
+
   - name: Record
     filename: record
     monad: record
@@ -101,6 +320,9 @@ resources:
         method: POST
       delete:
         path: "/bind/record/del_record"
+        method: POST
+      search:
+        path: "/bind/record/search_record"
         method: POST
       reconfigure:
         path: "/bind/service/reconfigure"
@@ -121,3 +343,219 @@ resources:
       - name: Value
         type: string
         key: value
+
+rpc:
+  - name: Settings
+    filename: settings
+    customTypes:
+      SettingsResponse:
+        - name: General
+          type: GeneralSettings
+          key: general
+      GeneralSettings:
+        - name: Enabled
+          type: string
+          key: enabled
+        - name: DisableIPv6
+          type: string
+          key: disablev6
+        - name: EnableRPZ
+          type: string
+          key: enablerpz
+        - name: ListenIPv4
+          type: SelectedMapList
+          key: listenv4
+        - name: ListenIPv6
+          type: SelectedMapList
+          key: listenv6
+        - name: QuerySource
+          type: string
+          key: querysource
+        - name: QuerySourceIPv6
+          type: string
+          key: querysourcev6
+        - name: TransferSource
+          type: string
+          key: transfersource
+        - name: TransferSourceIPv6
+          type: string
+          key: transfersourcev6
+        - name: Port
+          type: string
+          key: port
+        - name: Forwarders
+          type: SelectedMapList
+          key: forwarders
+        - name: FilterAAAAIPv4
+          type: string
+          key: filteraaaav4
+        - name: FilterAAAAIPv6
+          type: string
+          key: filteraaaav6
+        - name: FilterAAAAACL
+          type: SelectedMapList
+          key: filteraaaaacl
+        - name: LogSize
+          type: string
+          key: logsize
+        - name: LogLevel
+          type: SelectedMap
+          key: general_log_level
+        - name: MaxCacheSize
+          type: string
+          key: maxcachesize
+        - name: Recursion
+          type: SelectedMapList
+          key: recursion
+        - name: AllowTransfer
+          type: SelectedMapList
+          key: allowtransfer
+        - name: AllowQuery
+          type: SelectedMapList
+          key: allowquery
+        - name: DNSSECValidation
+          type: SelectedMap
+          key: dnssecvalidation
+        - name: HideHostname
+          type: string
+          key: hidehostname
+        - name: HideVersion
+          type: string
+          key: hideversion
+        - name: DisablePrefetch
+          type: string
+          key: disableprefetch
+        - name: EnableRateLimiting
+          type: string
+          key: enableratelimiting
+        - name: RateLimitCount
+          type: string
+          key: ratelimitcount
+        - name: RateLimitExcept
+          type: SelectedMapList
+          key: ratelimitexcept
+    rpc_calls:
+      - name: Get
+        endpoint:
+          path: "/bind/general/get"
+          method: GET
+        result_type: SettingsResponse
+      - name: Set
+        endpoint:
+          path: "/bind/general/set"
+          method: POST
+        params:
+          - name: general
+            optional: false
+            bodyParameter: true
+            customType: GeneralSettings
+        result_type: api.ActionResult
+
+  - name: Service
+    filename: service
+    customTypes:
+      ServiceStatus:
+        - name: Status
+          type: string
+          key: status
+    rpc_calls:
+      - name: Status
+        endpoint:
+          path: "/bind/service/status"
+          method: GET
+        result_type: ServiceStatus
+      - name: Reconfigure
+        endpoint:
+          path: "/bind/service/reconfigure"
+          method: POST
+        result_type: api.ReconfigureStatusResult
+      - name: Start
+        endpoint:
+          path: "/bind/service/start"
+          method: POST
+        result_type: api.ActionResult
+      - name: Stop
+        endpoint:
+          path: "/bind/service/stop"
+          method: POST
+        result_type: api.ActionResult
+      - name: Restart
+        endpoint:
+          path: "/bind/service/restart"
+          method: POST
+        result_type: api.ActionResult
+
+  - name: DNSSEC
+    filename: dnssec
+    customTypes:
+      DNSSECKey:
+        - name: File
+          type: string
+          key: file
+        - name: KeyTag
+          type: string
+          key: key_tag
+        - name: Algorithm
+          type: string
+          key: algorithm
+        - name: Flags
+          type: string
+          key: flags
+        - name: Role
+          type: string
+          key: role
+      DNSSECStatus:
+        - name: Zone
+          type: string
+          key: zone
+        - name: View
+          type: string
+          key: view
+        - name: DSRecords
+          type: "[]string"
+          key: ds_records
+        - name: Keys
+          type: "[]DNSSECKey"
+          key: keys
+        - name: RNDCStatus
+          type: "map[string]string"
+          key: rndc_status
+        - name: Secure
+          type: bool
+          key: secure
+        - name: InlineSigning
+          type: bool
+          key: inline_signing
+        - name: Error
+          type: string
+          key: error
+          omitEmpty: true
+    rpc_calls:
+      - name: Status
+        endpoint:
+          path: "/bind/general/dnssec_status"
+          method: POST
+        params:
+          - name: zone
+            key: zone
+            optional: false
+            bodyParameter: true
+          - name: uuid
+            key: uuid
+            optional: false
+            bodyParameter: true
+        result_type: DNSSECStatus
+
+  - name: TSIG
+    filename: tsig
+    customTypes:
+      GenerateSecretResponse:
+        - name: Secret
+          type: string
+          key: secret
+    rpc_calls:
+      - name: GenerateSecret
+        endpoint:
+          path: "/bind/tsig/generate_secret"
+          method: POST
+        result_type: GenerateSecretResponse

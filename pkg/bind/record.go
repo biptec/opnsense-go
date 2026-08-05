@@ -13,6 +13,7 @@ var RecordOpts = api.ReqOpts{
 	Read:        api.Endpoint{Path: "/bind/record/get_record", Method: "GET"},
 	Update:      api.Endpoint{Path: "/bind/record/set_record", Method: "POST"},
 	Delete:      api.Endpoint{Path: "/bind/record/del_record", Method: "POST"},
+	Search:      api.Endpoint{Path: "/bind/record/search_record", Method: "POST"},
 	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
 	Monad:       "record",
 }
@@ -35,6 +36,10 @@ func (c *Controller) AddRecord(ctx context.Context, resource *Record) (string, e
 
 func (c *Controller) GetRecord(ctx context.Context, id string) (*Record, error) {
 	return api.Get(c.Client(), ctx, RecordOpts, &Record{}, id)
+}
+
+func (c *Controller) SearchRecord(ctx context.Context) (*api.SearchResponse[Record], error) {
+	return api.Search[Record](c.Client(), ctx, RecordOpts.Search)
 }
 
 func (c *Controller) UpdateRecord(ctx context.Context, id string, resource *Record) error {

@@ -11,7 +11,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"net/http/httputil"
 	"strings"
 	"time"
 
@@ -49,8 +48,13 @@ type Options struct {
 
 func NewClient(options Options) *Client {
 	httpClient := retryablehttp.NewClient()
+	// Keep the client silent by default. Callers may supply a logger, but
+	// request and response bodies are never logged because OPNsense payloads
+	// frequently contain API keys, private keys and other credentials.
 	if options.Logger != nil {
 		httpClient.Logger = options.Logger
+	} else {
+		httpClient.Logger = nil
 	}
 	client := &Client{
 		client: httpClient,
@@ -95,13 +99,7 @@ func (c *Client) getAuth() string {
 
 func (c *Client) doRequest(ctx context.Context, method, endpoint string, body any, resp any) error {
 
-	// set logger
-	var logger *log.Logger
-	if c.opts.Logger != nil {
-		logger = c.opts.Logger
-	} else {
-		logger = log.Default()
-	}
+	logger := c.opts.Logger
 
 	// Create IO readers
 	var bodyReader io.Reader
@@ -128,12 +126,9 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, body an
 		req.Header.Add("Content-Type", "application/json")
 	}
 
-	// Log request
-	reqCopy := req.Clone(req.Context())
-	reqCopy.Header.Set("Authorization", "****************")
-
-	dReq, _ := httputil.DumpRequest(reqCopy, true)
-	logger.Printf("\n%s\n", string(dReq))
+	if logger != nil {
+		logger.Printf("OPNsense API request: %s %s", method, req.URL.Redacted())
+	}
 
 	// Do request
 	res, err := c.client.Do(req)
@@ -142,9 +137,9 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, body an
 	}
 	defer res.Body.Close()
 
-	// Log response
-	dRes, _ := httputil.DumpResponse(res, true)
-	logger.Printf("\n%s\n", string(dRes))
+	if logger != nil {
+		logger.Printf("OPNsense API response: %s %s -> %d", method, req.URL.Redacted(), res.StatusCode)
+	}
 
 	// Check for 200
 	if res.StatusCode != http.StatusOK {

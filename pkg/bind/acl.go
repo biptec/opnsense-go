@@ -13,6 +13,7 @@ var AclOpts = api.ReqOpts{
 	Read:        api.Endpoint{Path: "/bind/acl/get_acl", Method: "GET"},
 	Update:      api.Endpoint{Path: "/bind/acl/set_acl", Method: "POST"},
 	Delete:      api.Endpoint{Path: "/bind/acl/del_acl", Method: "POST"},
+	Search:      api.Endpoint{Path: "/bind/acl/search_acl", Method: "POST"},
 	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
 	Monad:       "acl",
 }
@@ -33,6 +34,10 @@ func (c *Controller) AddAcl(ctx context.Context, resource *Acl) (string, error) 
 
 func (c *Controller) GetAcl(ctx context.Context, id string) (*Acl, error) {
 	return api.Get(c.Client(), ctx, AclOpts, &Acl{}, id)
+}
+
+func (c *Controller) SearchAcl(ctx context.Context) (*api.SearchResponse[Acl], error) {
+	return api.Search[Acl](c.Client(), ctx, AclOpts.Search)
 }
 
 func (c *Controller) UpdateAcl(ctx context.Context, id string, resource *Acl) error {

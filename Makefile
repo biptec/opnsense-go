@@ -6,10 +6,13 @@ go := go
 PKG ?=
 TEST ?=
 
-.PHONY: all test testacc fmt fmt-check vet staticcheck check
+.PHONY: all test python-test testacc fmt fmt-check vet staticcheck check
 
 test:
 	$(go) test ./...
+
+python-test:
+	PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s scripts -p 'test_*.py'
 
 testacc:
 ifdef PKG
@@ -31,7 +34,7 @@ vet:
 staticcheck:
 	$(go) run honnef.co/go/tools/cmd/staticcheck@v0.7.0 ./...
 
-check: fmt-check test vet staticcheck
+check: fmt-check test python-test vet staticcheck
 
 pkg/opnsense/client.go: $(generator) $(wildcard schema/*.yml)
 	@echo "Generating opnsense client"

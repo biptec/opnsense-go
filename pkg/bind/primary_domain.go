@@ -13,6 +13,7 @@ var PrimaryDomainOpts = api.ReqOpts{
 	Read:        api.Endpoint{Path: "/bind/domain/get_domain", Method: "GET"},
 	Update:      api.Endpoint{Path: "/bind/domain/set_domain", Method: "POST"},
 	Delete:      api.Endpoint{Path: "/bind/domain/del_domain", Method: "POST"},
+	Search:      api.Endpoint{Path: "/bind/domain/search_primary_domain", Method: "POST"},
 	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
 	Monad:       "domain",
 }
@@ -20,17 +21,24 @@ var PrimaryDomainOpts = api.ReqOpts{
 // Data structs
 
 type PrimaryDomain struct {
-	DomainName    string              `json:"domainname"`
-	Enabled       string              `json:"enabled"`
-	AllowTransfer api.SelectedMapList `json:"allowtransfer"`
-	AllowQuery    api.SelectedMapList `json:"allowquery"`
-	TimeToLive    string              `json:"ttl"`
-	Refresh       string              `json:"refresh"`
-	Retry         string              `json:"retry"`
-	Expire        string              `json:"expire"`
-	Negative      string              `json:"negative"`
-	MailAdmin     string              `json:"mailadmin"`
-	DnsServer     string              `json:"dnsserver"`
+	View              api.SelectedMap     `json:"view"`
+	DomainName        string              `json:"domainname"`
+	Enabled           string              `json:"enabled"`
+	AllowTransfer     api.SelectedMapList `json:"allowtransfer"`
+	AllowRndcTransfer string              `json:"allowrndctransfer"`
+	AllowQuery        api.SelectedMapList `json:"allowquery"`
+	AllowRndcUpdate   string              `json:"allowrndcupdate"`
+	UpdateKeys        api.SelectedMapList `json:"updatekeys"`
+	UpdatePolicy      api.SelectedMap     `json:"updatepolicy"`
+	DNSSEC            string              `json:"dnssec"`
+	Serial            string              `json:"serial"`
+	TimeToLive        string              `json:"ttl"`
+	Refresh           string              `json:"refresh"`
+	Retry             string              `json:"retry"`
+	Expire            string              `json:"expire"`
+	Negative          string              `json:"negative"`
+	MailAdmin         string              `json:"mailadmin"`
+	DnsServer         string              `json:"dnsserver"`
 }
 
 // CRUD operations
@@ -41,6 +49,10 @@ func (c *Controller) AddPrimaryDomain(ctx context.Context, resource *PrimaryDoma
 
 func (c *Controller) GetPrimaryDomain(ctx context.Context, id string) (*PrimaryDomain, error) {
 	return api.Get(c.Client(), ctx, PrimaryDomainOpts, &PrimaryDomain{}, id)
+}
+
+func (c *Controller) SearchPrimaryDomain(ctx context.Context) (*api.SearchResponse[PrimaryDomain], error) {
+	return api.Search[PrimaryDomain](c.Client(), ctx, PrimaryDomainOpts.Search)
 }
 
 func (c *Controller) UpdatePrimaryDomain(ctx context.Context, id string, resource *PrimaryDomain) error {
