@@ -110,8 +110,11 @@ func TestBindAcceptance(t *testing.T) {
 	}
 
 	generated, err := controller.TSIGGenerateSecret(ctx)
-	if err != nil || generated.Secret == "" {
-		t.Fatalf("TSIGGenerateSecret() = %+v, %v", generated, err)
+	if err != nil {
+		t.Fatalf("TSIGGenerateSecret(): %v", err)
+	}
+	if generated.Secret == "" {
+		t.Fatal("TSIGGenerateSecret() returned an empty secret")
 	}
 	keyID, err = controller.AddTsigKey(ctx, &TsigKey{
 		Enabled: "1", Name: name, Algorithm: api.SelectedMap("hmac-sha256"), Secret: generated.Secret,
@@ -149,8 +152,11 @@ func TestBindAcceptance(t *testing.T) {
 		t.Fatalf("GetView() = %+v, %v", view, err)
 	}
 	tsig, err := controller.GetTsigKey(ctx, keyID)
-	if err != nil || tsig.Name != name || tsig.Secret == "" {
-		t.Fatalf("GetTsigKey() = %+v, %v", tsig, err)
+	if err != nil {
+		t.Fatalf("GetTsigKey(): %v", err)
+	}
+	if tsig.Name != name || tsig.Secret == "" {
+		t.Fatalf("GetTsigKey() returned unexpected metadata: name=%q secret_present=%t", tsig.Name, tsig.Secret != "")
 	}
 	domain, err := controller.GetPrimaryDomain(ctx, domainID)
 	if err != nil || domain.View.String() != viewID || domain.UpdateKeys.String() != keyID || domain.UpdatePolicy.String() != "zonesub_txt" {
@@ -163,8 +169,10 @@ func TestBindAcceptance(t *testing.T) {
 	if result, err := controller.SearchView(ctx); err != nil || result.Total < 1 {
 		t.Fatalf("SearchView() = %+v, %v", result, err)
 	}
-	if result, err := controller.SearchTsigKey(ctx); err != nil || result.Total < 1 {
-		t.Fatalf("SearchTsigKey() = %+v, %v", result, err)
+	if result, err := controller.SearchTsigKey(ctx); err != nil {
+		t.Fatalf("SearchTsigKey(): %v", err)
+	} else if result.Total < 1 {
+		t.Fatal("SearchTsigKey() returned no rows")
 	}
 	if result, err := controller.SearchPrimaryDomain(ctx); err != nil || result.Total < 1 {
 		t.Fatalf("SearchPrimaryDomain() = %+v, %v", result, err)

@@ -109,7 +109,8 @@ func TestBindViewTsigAndDNSSECContracts(t *testing.T) {
 			}
 			gotKey := body["key"]
 			if gotKey.Name != "acme" || gotKey.Algorithm.String() != "hmac-sha256" {
-				t.Fatalf("unexpected TSIG body: %+v", gotKey)
+				t.Fatalf("unexpected TSIG metadata: name=%q algorithm=%q secret_present=%t",
+					gotKey.Name, gotKey.Algorithm.String(), gotKey.Secret != "")
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved", "uuid": "key-id"})
 		case "/api/bind/general/dnssec_status":
@@ -149,8 +150,11 @@ func TestBindViewTsigAndDNSSECContracts(t *testing.T) {
 		t.Fatalf("GetView() = %+v, %v", view, err)
 	}
 	secret, err := controller.TSIGGenerateSecret(ctx)
-	if err != nil || secret.Secret == "" {
-		t.Fatalf("TSIGGenerateSecret() = %+v, %v", secret, err)
+	if err != nil {
+		t.Fatalf("TSIGGenerateSecret(): %v", err)
+	}
+	if secret.Secret == "" {
+		t.Fatal("TSIGGenerateSecret() returned an empty secret")
 	}
 	keyID, err := controller.AddTsigKey(ctx, &TsigKey{
 		Enabled: "1", Name: "acme", Algorithm: api.SelectedMap("hmac-sha256"), Secret: secret.Secret,
