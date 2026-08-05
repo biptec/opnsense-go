@@ -9,10 +9,10 @@ import (
     {{- end }}
 )
 
-// Client defines a client interface for the Proxmox Virtual Environment API.
+// Client defines the OPNsense API client interface.
 type Client interface {
     {{- range . }}
-    {{ . | ToTitle }}() *{{ . }}.Controller
+    {{ . | ToPascal }}() *{{ . }}.Controller
     {{- end }}
 }
 
@@ -26,7 +26,7 @@ func NewClient(a *api.Client) Client {
 }
 
 {{ range . }}
-func (c *client) {{ . | ToTitle }}() *{{ . }}.Controller {
+func (c *client) {{ . | ToPascal }}() *{{ . }}.Controller {
 	return &{{ . }}.Controller{Api: c.a}
 }
 {{ end }}

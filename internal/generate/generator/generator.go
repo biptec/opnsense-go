@@ -18,6 +18,23 @@ func lowerFirst(value string) string {
 	return strings.ToLower(value[:1]) + value[1:]
 }
 
+func pascalIdentifier(value string) string {
+	parts := strings.FieldsFunc(value, func(character rune) bool {
+		switch character {
+		case '_', '-', '.', ' ':
+			return true
+		default:
+			return false
+		}
+	})
+
+	var result strings.Builder
+	for _, part := range parts {
+		result.WriteString(cases.Title(language.English).String(part))
+	}
+	return result.String()
+}
+
 type Generator struct {
 	filename string
 	rendered []byte
@@ -35,6 +52,7 @@ func parseTemplate(body string, data any) ([]byte, error) {
 		Funcs(
 			template.FuncMap{
 				"ToTitle":    cases.Title(language.English).String,
+				"ToPascal":   pascalIdentifier,
 				"LowerFirst": lowerFirst,
 			}).
 		Parse(body)
