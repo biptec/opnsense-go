@@ -68,6 +68,7 @@ if [ ! -d /usr/plugins/.git ]; then
 fi
 git -C /usr/plugins fetch --depth 1 https://github.com/biptec/opnsense-plugins.git {commit}
 git -C /usr/plugins checkout --detach FETCH_HEAD
+pkg install -y bind920
 make -C /usr/plugins/dns/bind upgrade
 pkg info -e 'os-bind-*'
 installed_hash=$(pkg query '%At:%Av' os-bind | sed -n 's/^product_hash://p')
