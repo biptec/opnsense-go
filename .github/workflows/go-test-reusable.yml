@@ -127,7 +127,11 @@ jobs:
         run: mkdir -p opnsense-images
 
       - name: Download OPNsense image
-        run: curl -L "$OPNSENSE_URL" -o opnsense-images/opnsense.qcow2
+        run: |
+          curl --fail --location \
+            --retry 5 --retry-all-errors --retry-delay 5 \
+            --continue-at - \
+            "$OPNSENSE_URL" -o opnsense-images/opnsense.qcow2
 
       - name: Verify OPNsense image
         run: echo "$OPNSENSE_SHA1  opnsense-images/opnsense.qcow2" | sha1sum -c -
