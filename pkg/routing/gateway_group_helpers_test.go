@@ -71,3 +71,29 @@ func TestAddGatewayGroupResolvedDoesNotRetryMissingGateway(t *testing.T) {
 		t.Fatalf("add calls = %d, want 1", addCalls)
 	}
 }
+
+func TestAddGatewayGroupResolvedDoesNotRetryUnrelatedOptionError(t *testing.T) {
+	var addCalls, searchCalls int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		switch r.URL.Path {
+		case "/api/routing/group_settings/add":
+			addCalls++
+			_ = json.NewEncoder(w).Encode(map[string]any{"result": "failed", "validations": map[string]any{"gateway_group.trigger": "Option [invalid] not in list."}})
+		case "/api/routing/settings/searchGateway":
+			searchCalls++
+		default:
+			http.NotFound(w, r)
+		}
+	}))
+	defer server.Close()
+
+	group := &GatewayGroup{Name: "GROUP", Tier1: api.SelectedMapList{"GW_A"}}
+	_, err := testController(server).addGatewayGroupResolved(context.Background(), group, 0, time.Second)
+	if err == nil || !strings.Contains(err.Error(), "gateway_group.trigger") {
+		t.Fatalf("error = %v, want trigger validation", err)
+	}
+	if addCalls != 1 || searchCalls != 0 {
+		t.Fatalf("add calls = %d, search calls = %d; want 1, 0", addCalls, searchCalls)
+	}
+}

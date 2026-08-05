@@ -55,7 +55,21 @@ func (c *Controller) addGatewayGroupResolved(
 
 func isStaleGatewayOptionError(err error) bool {
 	message := err.Error()
-	return strings.Contains(message, "Option [") && strings.Contains(message, "not in list")
+	if !strings.Contains(message, "Option [") || !strings.Contains(message, "not in list") {
+		return false
+	}
+	for _, field := range []string{
+		"gateway_group.item:",
+		"gateway_group.item2:",
+		"gateway_group.item3:",
+		"gateway_group.item4:",
+		"gateway_group.item5:",
+	} {
+		if strings.Contains(message, field) {
+			return true
+		}
+	}
+	return false
 }
 
 func (c *Controller) gatewayGroupMembersExist(ctx context.Context, resource *GatewayGroup) (bool, error) {
