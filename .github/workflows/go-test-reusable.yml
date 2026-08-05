@@ -16,6 +16,7 @@ env:
   OPNSENSE_URL: "https://files.bsd.ac/opnsense-qemu/opnsense-26.1.qcow2"
   OPNSENSE_SHA1: 2266a644b1669be1a8d916a0a79fc91ba4be4733
   OPNSENSE_SSH_PORT: 8022
+  OPNSENSE_BIND_PLUGIN_COMMIT: 40c74c6ab2cead627e7d3baad4fc494047de1a91
   OPNSENSE_WEB_PORT: 8443
 
 jobs:
@@ -163,6 +164,10 @@ jobs:
           echo "qemu-pid=${QEMU_PID}" >> "$GITHUB_OUTPUT"
           sleep 180 # Wait for the VM to boot
           [ -d "/proc/${QEMU_PID}" ] || (echo "QEMU process not found" && exit 1)
+
+      - name: Install os-bind candidate
+        if: contains(matrix.packages, './pkg/bind/')
+        run: python3 scripts/install-bind-plugin.py
 
       - name: Create API key
         id: apikey
