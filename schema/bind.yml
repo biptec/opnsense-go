@@ -518,7 +518,7 @@ rpc:
           type: "[]DNSSECKey"
           key: keys
         - name: RNDCStatus
-          type: "map[string]string"
+          type: RNDCStatus
           key: rndc_status
         - name: Secure
           type: bool
