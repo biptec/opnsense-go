@@ -336,6 +336,9 @@ rpc:
         - name: HTTPSPort
           type: string
           key: HttpsPort
+        - name: ListenAddresses
+          type: SelectedMapList
+          key: ListenAddresses
         - name: ACMEEmail
           type: string
           key: TlsEmail

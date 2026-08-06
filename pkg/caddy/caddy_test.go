@@ -26,7 +26,10 @@ func TestSettingsGetAndSet(t *testing.T) {
 		switch r.URL.Path {
 		case "/api/caddy/general/get":
 			_ = json.NewEncoder(w).Encode(map[string]any{"caddy": map[string]any{"general": map[string]any{
-				"enabled": "1", "HttpPort": "8080", "HttpsPort": "8443", "TlsEmail": "ops@example.test",
+				"enabled": "1", "HttpPort": "8080", "HttpsPort": "8443", "ListenAddresses": map[string]any{
+					"192.0.2.10": map[string]any{"value": "192.0.2.10", "selected": 1},
+					"10.0.0.2":   map[string]any{"value": "10.0.0.2", "selected": 1},
+				}, "TlsEmail": "ops@example.test",
 				"TlsAutoHttps": selected(""), "TlsDnsProvider": selected(""), "DisableSuperuser": []map[string]any{
 					{"value": "root", "selected": 0}, {"value": "www", "selected": 1},
 				},
@@ -45,7 +48,8 @@ func TestSettingsGetAndSet(t *testing.T) {
 				t.Fatalf("decode settings body: %v", err)
 			}
 			got := body["caddy"].General
-			if got.HTTPPort != "8080" || got.HTTPSPort != "8443" || got.RunAsUser.String() != "1" {
+			if got.HTTPPort != "8080" || got.HTTPSPort != "8443" ||
+				got.ListenAddresses.String() != "10.0.0.2,192.0.2.10" || got.RunAsUser.String() != "1" {
 				t.Fatalf("unexpected settings body: %+v", got)
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved"})
@@ -66,6 +70,9 @@ func TestSettingsGetAndSet(t *testing.T) {
 	}
 	if general.HTTPVersions.String() != "h1,h2" {
 		t.Fatalf("unexpected HTTP versions: %q", general.HTTPVersions.String())
+	}
+	if general.ListenAddresses.String() != "10.0.0.2,192.0.2.10" {
+		t.Fatalf("unexpected listen addresses: %q", general.ListenAddresses.String())
 	}
 	if _, err := controller.SettingsSet(context.Background(), &settings.Caddy); err != nil {
 		t.Fatalf("SettingsSet() error = %v", err)
