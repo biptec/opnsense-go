@@ -482,3 +482,44 @@ resources:
       - name: TrackInterface
         type: SelectedMap
         key: trackif
+rpc:
+  - name: SourceNATSettings
+    filename: source_nat_settings
+    customTypes:
+      SourceNATSettingsResponse:
+        - name: Filter
+          type: SourceNATSettings
+          key: filter
+      SourceNATSettings:
+        - name: General
+          type: SourceNATGeneralSettings
+          key: general
+      SourceNATGeneralSettings:
+        - name: Mode
+          type: SelectedMap
+          key: snat_mode
+      SourceNATApplyResult:
+        - name: Status
+          type: string
+          key: status
+    rpc_calls:
+      - name: Get
+        endpoint:
+          path: "/firewall/source_nat/get"
+          method: GET
+        result_type: SourceNATSettingsResponse
+      - name: Set
+        endpoint:
+          path: "/firewall/source_nat/set"
+          method: POST
+        params:
+          - name: filter
+            optional: false
+            bodyParameter: true
+            customType: SourceNATSettings
+        result_type: api.ActionResult
+      - name: Apply
+        endpoint:
+          path: "/firewall/source_nat/apply"
+          method: POST
+        result_type: SourceNATApplyResult
