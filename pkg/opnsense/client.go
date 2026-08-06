@@ -4,6 +4,7 @@ package opnsense
 
 import (
 	"github.com/biptec/opnsense-go/pkg/api"
+	"github.com/biptec/opnsense-go/pkg/api_extensions"
 	"github.com/biptec/opnsense-go/pkg/auth"
 	"github.com/biptec/opnsense-go/pkg/bind"
 	"github.com/biptec/opnsense-go/pkg/caddy"
@@ -25,8 +26,9 @@ import (
 	"github.com/biptec/opnsense-go/pkg/wireguard"
 )
 
-// Client defines a client interface for the Proxmox Virtual Environment API.
+// Client defines the OPNsense API client interface.
 type Client interface {
+	ApiExtensions() *api_extensions.Controller
 	Auth() *auth.Controller
 	Bind() *bind.Controller
 	Caddy() *caddy.Controller
@@ -55,6 +57,10 @@ type client struct {
 // NewClient creates a new API client.
 func NewClient(a *api.Client) Client {
 	return &client{a: a}
+}
+
+func (c *client) ApiExtensions() *api_extensions.Controller {
+	return &api_extensions.Controller{Api: c.a}
 }
 
 func (c *client) Auth() *auth.Controller {

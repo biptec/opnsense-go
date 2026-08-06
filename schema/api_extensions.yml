@@ -1,0 +1,222 @@
+---
+name: api_extensions
+rpc:
+  - name: "Webgui"
+    filename: webgui
+    customTypes:
+      WebguiSettings:
+        - name: Protocol
+          type: string
+          key: protocol
+        - name: Port
+          type: int
+          key: port
+        - name: Interfaces
+          type: '[]string'
+          key: interfaces
+        - name: CertificateRef
+          type: string
+          key: certificate_ref
+        - name: SessionTimeout
+          type: '*int'
+          key: session_timeout
+        - name: HSTS
+          type: bool
+          key: hsts
+        - name: DisableHTTPRedirect
+          type: bool
+          key: disable_http_redirect
+        - name: AlternateHostnames
+          type: '[]string'
+          key: alternate_hostnames
+      WebguiResponse:
+        - name: Webgui
+          type: WebguiSettings
+          key: webgui
+      WebguiActionResult:
+        - name: Status
+          type: string
+          key: status
+        - name: Validations
+          type: 'map[string]string'
+          key: validations
+          omitEmpty: true
+        - name: MessageUUID
+          type: string
+          key: msg_uuid
+          omitEmpty: true
+        - name: Result
+          type: string
+          key: result
+          omitEmpty: true
+    rpc_calls:
+      - name: "Get"
+        endpoint:
+          path: "/api_extensions/webgui/get"
+          method: GET
+        result_type: "WebguiResponse"
+      - name: "Set"
+        endpoint:
+          path: "/api_extensions/webgui/set"
+          method: POST
+        params:
+          - name: "settings"
+            key: webgui
+            customType: WebguiSettings
+            bodyParameter: true
+        result_type: "WebguiActionResult"
+      - name: "Reconfigure"
+        endpoint:
+          path: "/api_extensions/webgui/reconfigure"
+          method: POST
+        result_type: "WebguiActionResult"
+
+  - name: "Ssh"
+    filename: ssh
+    customTypes:
+      SshSettings:
+        - name: Enabled
+          type: bool
+          key: enabled
+        - name: Port
+          type: int
+          key: port
+        - name: Interfaces
+          type: '[]string'
+          key: interfaces
+        - name: PasswordAuthentication
+          type: bool
+          key: password_authentication
+        - name: PermitRootLogin
+          type: bool
+          key: permit_root_login
+      SshResponse:
+        - name: SSH
+          type: SshSettings
+          key: ssh
+      SshActionResult:
+        - name: Status
+          type: string
+          key: status
+        - name: Validations
+          type: 'map[string]string'
+          key: validations
+          omitEmpty: true
+        - name: Result
+          type: string
+          key: result
+          omitEmpty: true
+    rpc_calls:
+      - name: "Get"
+        endpoint:
+          path: "/api_extensions/ssh/get"
+          method: GET
+        result_type: "SshResponse"
+      - name: "Set"
+        endpoint:
+          path: "/api_extensions/ssh/set"
+          method: POST
+        params:
+          - name: "settings"
+            key: ssh
+            customType: SshSettings
+            bodyParameter: true
+        result_type: "SshActionResult"
+      - name: "Reconfigure"
+        endpoint:
+          path: "/api_extensions/ssh/reconfigure"
+          method: POST
+        result_type: "SshActionResult"
+
+  - name: "Ntp"
+    filename: ntp
+    customTypes:
+      NtpServer:
+        - name: Host
+          type: string
+          key: host
+        - name: NoSelect
+          type: bool
+          key: noselect
+        - name: Prefer
+          type: bool
+          key: prefer
+        - name: IBurst
+          type: bool
+          key: iburst
+        - name: Pool
+          type: bool
+          key: pool
+      NtpSettings:
+        - name: Enabled
+          type: bool
+          key: enabled
+        - name: Servers
+          type: '[]NtpServer'
+          key: servers
+        - name: Interfaces
+          type: '[]string'
+          key: interfaces
+        - name: Orphan
+          type: int
+          key: orphan
+        - name: MaxClock
+          type: int
+          key: max_clock
+        - name: ClientMode
+          type: bool
+          key: client_mode
+        - name: KissOfDeath
+          type: bool
+          key: kiss_of_death
+        - name: RateLimiting
+          type: bool
+          key: rate_limiting
+        - name: DenyModifications
+          type: bool
+          key: deny_modifications
+        - name: DisableQueries
+          type: bool
+          key: disable_queries
+        - name: DisableServing
+          type: bool
+          key: disable_serving
+        - name: DenyPeerAssociations
+          type: bool
+          key: deny_peer_associations
+        - name: DenyTrapService
+          type: bool
+          key: deny_trap_service
+      NtpResponse:
+        - name: NTP
+          type: NtpSettings
+          key: ntp
+      NtpActionResult:
+        - name: Status
+          type: string
+          key: status
+        - name: Validations
+          type: 'map[string]string'
+          key: validations
+          omitEmpty: true
+    rpc_calls:
+      - name: "Get"
+        endpoint:
+          path: "/api_extensions/ntp/get"
+          method: GET
+        result_type: "NtpResponse"
+      - name: "Set"
+        endpoint:
+          path: "/api_extensions/ntp/set"
+          method: POST
+        params:
+          - name: "settings"
+            key: ntp
+            customType: NtpSettings
+            bodyParameter: true
+        result_type: "NtpActionResult"
+      - name: "Reconfigure"
+        endpoint:
+          path: "/api_extensions/ntp/reconfigure"
+          method: POST
+        result_type: "NtpActionResult"
