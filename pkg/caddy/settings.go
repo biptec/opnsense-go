@@ -16,6 +16,7 @@ type GeneralSettings struct {
 	EnableLayer4                  string              `json:"EnableLayer4"`
 	HTTPPort                      string              `json:"HttpPort"`
 	HTTPSPort                     string              `json:"HttpsPort"`
+	ListenAddresses               api.SelectedMapList `json:"ListenAddresses"`
 	ACMEEmail                     string              `json:"TlsEmail"`
 	AutoHTTPS                     api.SelectedMap     `json:"TlsAutoHttps"`
 	DNSProvider                   api.SelectedMap     `json:"TlsDnsProvider"`
