@@ -127,7 +127,8 @@ func TestBindAcceptance(t *testing.T) {
 
 	domainID, err = controller.AddPrimaryDomain(ctx, &PrimaryDomain{
 		View: api.SelectedMap(viewID), DomainName: domainName, Enabled: "1",
-		AllowRndcTransfer: "0", AllowRndcUpdate: "0", UpdateKeys: api.SelectedMapList{keyID},
+		AllowRndcTransfer: "0", TransferKey: api.SelectedMap(keyID), AlsoNotify: api.SelectedMapList{"192.0.2.54"},
+		AllowRndcUpdate: "0", UpdateKeys: api.SelectedMapList{keyID},
 		UpdatePolicy: api.SelectedMap("self_txt"), DNSSEC: "0",
 		TimeToLive: "60", Refresh: "300", Retry: "300", Expire: "86400", Negative: "60",
 		MailAdmin: "hostmaster@" + domainName, DnsServer: "ns." + domainName,
@@ -161,7 +162,9 @@ func TestBindAcceptance(t *testing.T) {
 		t.Fatalf("GetTsigKey() returned unexpected metadata: name=%q secret_present=%t", tsig.Name, tsig.Secret != "")
 	}
 	domain, err := controller.GetPrimaryDomain(ctx, domainID)
-	if err != nil || domain.View.String() != viewID || domain.UpdateKeys.String() != keyID || domain.UpdatePolicy.String() != "self_txt" {
+	if err != nil || domain.View.String() != viewID || domain.TransferKey.String() != keyID ||
+		domain.AlsoNotify.String() != "192.0.2.54" || domain.UpdateKeys.String() != keyID ||
+		domain.UpdatePolicy.String() != "self_txt" {
 		t.Fatalf("GetPrimaryDomain() = %+v, %v", domain, err)
 	}
 
