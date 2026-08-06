@@ -26,6 +26,8 @@ type PrimaryDomain struct {
 	Enabled           string              `json:"enabled"`
 	AllowTransfer     api.SelectedMapList `json:"allowtransfer"`
 	AllowRndcTransfer string              `json:"allowrndctransfer"`
+	TransferKey       api.SelectedMap     `json:"primarytransferkey"`
+	AlsoNotify        api.SelectedMapList `json:"alsonotify"`
 	AllowQuery        api.SelectedMapList `json:"allowquery"`
 	AllowRndcUpdate   string              `json:"allowrndcupdate"`
 	UpdateKeys        api.SelectedMapList `json:"updatekeys"`

@@ -172,6 +172,12 @@ resources:
       - name: AllowRndcTransfer
         type: string
         key: allowrndctransfer
+      - name: TransferKey
+        type: SelectedMap
+        key: primarytransferkey
+      - name: AlsoNotify
+        type: SelectedMapList
+        key: alsonotify
       - name: AllowQuery
         type: SelectedMapList
         key: allowquery
