@@ -14,7 +14,7 @@ var ViewOpts = api.ReqOpts{
 	Update:      api.Endpoint{Path: "/bind/view/set_view", Method: "POST"},
 	Delete:      api.Endpoint{Path: "/bind/view/del_view", Method: "POST"},
 	Search:      api.Endpoint{Path: "/bind/view/search_view", Method: "POST"},
-	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/bind/service/reload", Method: "POST"},
 	Monad:       "view",
 }
 

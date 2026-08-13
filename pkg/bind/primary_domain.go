@@ -14,7 +14,7 @@ var PrimaryDomainOpts = api.ReqOpts{
 	Update:      api.Endpoint{Path: "/bind/domain/set_domain", Method: "POST"},
 	Delete:      api.Endpoint{Path: "/bind/domain/del_domain", Method: "POST"},
 	Search:      api.Endpoint{Path: "/bind/domain/search_primary_domain", Method: "POST"},
-	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/bind/service/reload", Method: "POST"},
 	Monad:       "domain",
 }
 

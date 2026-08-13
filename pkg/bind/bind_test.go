@@ -18,6 +18,28 @@ func bindSelected(value string) map[string]any {
 	return map[string]any{value: map[string]any{"value": value, "selected": true}}
 }
 
+func TestBindResourceReconfigureUsesReload(t *testing.T) {
+	t.Parallel()
+
+	resources := map[string]api.ReqOpts{
+		"acl":              AclOpts,
+		"view":             ViewOpts,
+		"tsig_key":         TsigKeyOpts,
+		"primary_domain":   PrimaryDomainOpts,
+		"secondary_domain": SecondaryDomainOpts,
+		"forward_domain":   ForwardDomainOpts,
+		"record":           RecordOpts,
+	}
+	for name, opts := range resources {
+		if opts.Reconfigure.Path != "/bind/service/reload" {
+			t.Errorf("%s reconfigure path = %q, want /bind/service/reload", name, opts.Reconfigure.Path)
+		}
+		if opts.Reconfigure.Method != http.MethodPost {
+			t.Errorf("%s reconfigure method = %q, want POST", name, opts.Reconfigure.Method)
+		}
+	}
+}
+
 func TestBindSettingsAndServiceContracts(t *testing.T) {
 	t.Parallel()
 
@@ -126,7 +148,7 @@ func TestBindViewTsigAndDNSSECContracts(t *testing.T) {
 				"ds_records": []string{"example.test. IN DS 12345 13 2 ABCD"},
 				"keys":       []map[string]any{{"file": "Kexample.test.+013+12345.key", "key_tag": "12345", "algorithm": "13"}},
 			})
-		case "/api/bind/service/reconfigure":
+		case "/api/bind/service/reload":
 			reconfigureCalls++
 			_ = json.NewEncoder(w).Encode(map[string]any{"status": "ok"})
 		default:

@@ -22,7 +22,7 @@ resources:
         path: "/bind/acl/search_acl"
         method: POST
       reconfigure:
-        path: "/bind/service/reconfigure"
+        path: "/bind/service/reload"
         method: POST
     attrs:
       - name: Name
@@ -55,7 +55,7 @@ resources:
         path: "/bind/view/search_view"
         method: POST
       reconfigure:
-        path: "/bind/service/reconfigure"
+        path: "/bind/service/reload"
         method: POST
     attrs:
       - name: Enabled
@@ -118,7 +118,7 @@ resources:
         path: "/bind/tsig/search_key"
         method: POST
       reconfigure:
-        path: "/bind/service/reconfigure"
+        path: "/bind/service/reload"
         method: POST
     attrs:
       - name: Enabled
@@ -154,7 +154,7 @@ resources:
         path: "/bind/domain/search_primary_domain"
         method: POST
       reconfigure:
-        path: "/bind/service/reconfigure"
+        path: "/bind/service/reload"
         method: POST
     attrs:
       - name: View
@@ -238,7 +238,7 @@ resources:
         path: "/bind/domain/search_secondary_domain"
         method: POST
       reconfigure:
-        path: "/bind/service/reconfigure"
+        path: "/bind/service/reload"
         method: POST
     attrs:
       - name: View
@@ -292,7 +292,7 @@ resources:
         path: "/bind/domain/search_forward_domain"
         method: POST
       reconfigure:
-        path: "/bind/service/reconfigure"
+        path: "/bind/service/reload"
         method: POST
     attrs:
       - name: View
@@ -331,7 +331,7 @@ resources:
         path: "/bind/record/search_record"
         method: POST
       reconfigure:
-        path: "/bind/service/reconfigure"
+        path: "/bind/service/reload"
         method: POST
     attrs:
       - name: Domain

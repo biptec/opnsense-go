@@ -56,7 +56,7 @@ func TestPrimaryDomainTransferContract(t *testing.T) {
 				"mailadmin":          "hostmaster@example.net",
 				"dnsserver":          "ns1.example.net",
 			}})
-		case "/api/bind/service/reconfigure":
+		case "/api/bind/service/reload":
 			reconfigureCalls++
 			_ = json.NewEncoder(w).Encode(map[string]any{"status": "ok"})
 		default:
