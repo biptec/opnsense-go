@@ -14,7 +14,7 @@ var PrimaryDomainOpts = api.ReqOpts{
 	Update:      api.Endpoint{Path: "/bind/domain/set_domain", Method: "POST"},
 	Delete:      api.Endpoint{Path: "/bind/domain/del_domain", Method: "POST"},
 	Search:      api.Endpoint{Path: "/bind/domain/search_primary_domain", Method: "POST"},
-	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/bind/service/reload", Method: "POST"},
 	Monad:       "domain",
 }
 
@@ -33,7 +33,7 @@ type PrimaryDomain struct {
 	UpdateKeys        api.SelectedMapList `json:"updatekeys"`
 	UpdatePolicy      api.SelectedMap     `json:"updatepolicy"`
 	DNSSEC            string              `json:"dnssec"`
-	Serial            string              `json:"serial"`
+	Serial            string              `json:"serial,omitempty"`
 	TimeToLive        string              `json:"ttl"`
 	Refresh           string              `json:"refresh"`
 	Retry             string              `json:"retry"`

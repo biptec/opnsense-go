@@ -14,7 +14,7 @@ var AclOpts = api.ReqOpts{
 	Update:      api.Endpoint{Path: "/bind/acl/set_acl", Method: "POST"},
 	Delete:      api.Endpoint{Path: "/bind/acl/del_acl", Method: "POST"},
 	Search:      api.Endpoint{Path: "/bind/acl/search_acl", Method: "POST"},
-	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/bind/service/reload", Method: "POST"},
 	Monad:       "acl",
 }
 

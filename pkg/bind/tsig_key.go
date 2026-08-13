@@ -14,7 +14,7 @@ var TsigKeyOpts = api.ReqOpts{
 	Update:      api.Endpoint{Path: "/bind/tsig/set_key", Method: "POST"},
 	Delete:      api.Endpoint{Path: "/bind/tsig/del_key", Method: "POST"},
 	Search:      api.Endpoint{Path: "/bind/tsig/search_key", Method: "POST"},
-	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/bind/service/reload", Method: "POST"},
 	Monad:       "key",
 }
 

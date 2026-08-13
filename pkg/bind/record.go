@@ -14,7 +14,7 @@ var RecordOpts = api.ReqOpts{
 	Update:      api.Endpoint{Path: "/bind/record/set_record", Method: "POST"},
 	Delete:      api.Endpoint{Path: "/bind/record/del_record", Method: "POST"},
 	Search:      api.Endpoint{Path: "/bind/record/search_record", Method: "POST"},
-	Reconfigure: api.Endpoint{Path: "/bind/service/reconfigure", Method: "POST"},
+	Reconfigure: api.Endpoint{Path: "/bind/service/reload", Method: "POST"},
 	Monad:       "record",
 }
 
