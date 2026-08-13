@@ -33,7 +33,7 @@ type PrimaryDomain struct {
 	UpdateKeys        api.SelectedMapList `json:"updatekeys"`
 	UpdatePolicy      api.SelectedMap     `json:"updatepolicy"`
 	DNSSEC            string              `json:"dnssec"`
-	Serial            string              `json:"serial"`
+	Serial            string              `json:"serial,omitempty"`
 	TimeToLive        string              `json:"ttl"`
 	Refresh           string              `json:"refresh"`
 	Retry             string              `json:"retry"`

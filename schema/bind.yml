@@ -196,6 +196,7 @@ resources:
       - name: Serial
         type: string
         key: serial
+        omitEmpty: true
       - name: TimeToLive
         type: string
         key: ttl

@@ -10,6 +10,34 @@ import (
 	"github.com/biptec/opnsense-go/pkg/api"
 )
 
+func TestPrimaryDomainOmitsEmptySerial(t *testing.T) {
+	t.Parallel()
+
+	payload, err := json.Marshal(&PrimaryDomain{})
+	if err != nil {
+		t.Fatalf("marshal empty primary domain: %v", err)
+	}
+	var empty map[string]any
+	if err := json.Unmarshal(payload, &empty); err != nil {
+		t.Fatalf("decode empty primary domain: %v", err)
+	}
+	if _, ok := empty["serial"]; ok {
+		t.Fatalf("empty serial must be omitted from update payload: %s", payload)
+	}
+
+	payload, err = json.Marshal(&PrimaryDomain{Serial: "2608130928"})
+	if err != nil {
+		t.Fatalf("marshal primary domain serial: %v", err)
+	}
+	var populated map[string]any
+	if err := json.Unmarshal(payload, &populated); err != nil {
+		t.Fatalf("decode primary domain serial: %v", err)
+	}
+	if populated["serial"] != "2608130928" {
+		t.Fatalf("explicit serial missing from payload: %s", payload)
+	}
+}
+
 func TestPrimaryDomainTransferContract(t *testing.T) {
 	t.Parallel()
 
