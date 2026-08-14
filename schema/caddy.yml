@@ -351,6 +351,21 @@ rpc:
         - name: DNSAPIKey
           type: string
           key: TlsDnsApiKey
+        - name: DNSRFC2136Server
+          type: string
+          key: TlsDnsRfc2136Server
+        - name: DNSRFC2136Port
+          type: string
+          key: TlsDnsRfc2136Port
+        - name: DNSRFC2136KeyName
+          type: string
+          key: TlsDnsRfc2136KeyName
+        - name: DNSRFC2136KeyAlgorithm
+          type: SelectedMap
+          key: TlsDnsRfc2136KeyAlg
+        - name: DNSRFC2136Key
+          type: string
+          key: TlsDnsRfc2136Key
         - name: DNSPropagationTimeoutDisabled
           type: string
           key: TlsDnsPropagationTimeout

@@ -21,6 +21,11 @@ type GeneralSettings struct {
 	AutoHTTPS                     api.SelectedMap     `json:"TlsAutoHttps"`
 	DNSProvider                   api.SelectedMap     `json:"TlsDnsProvider"`
 	DNSAPIKey                     string              `json:"TlsDnsApiKey"`
+	DNSRFC2136Server              string              `json:"TlsDnsRfc2136Server"`
+	DNSRFC2136Port                string              `json:"TlsDnsRfc2136Port"`
+	DNSRFC2136KeyName             string              `json:"TlsDnsRfc2136KeyName"`
+	DNSRFC2136KeyAlgorithm        api.SelectedMap     `json:"TlsDnsRfc2136KeyAlg"`
+	DNSRFC2136Key                 string              `json:"TlsDnsRfc2136Key"`
 	DNSPropagationTimeoutDisabled string              `json:"TlsDnsPropagationTimeout"`
 	DNSPropagationTimeout         string              `json:"TlsDnsPropagationTimeoutPeriod"`
 	DNSPropagationDelay           string              `json:"TlsDnsPropagationDelay"`
