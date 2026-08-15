@@ -312,6 +312,42 @@ resources:
         type: SelectedMapList
         key: allowquery
 
+  - name: InViewDomain
+    filename: in_view_domain
+    monad: domain
+    endpoints:
+      create:
+        path: "/bind/domain/add_in_view_domain"
+        method: POST
+      read:
+        path: "/bind/domain/get_domain"
+        method: GET
+      update:
+        path: "/bind/domain/set_domain"
+        method: POST
+      delete:
+        path: "/bind/domain/del_domain"
+        method: POST
+      search:
+        path: "/bind/domain/search_in_view_domain"
+        method: POST
+      reconfigure:
+        path: "/bind/service/reload"
+        method: POST
+    attrs:
+      - name: View
+        type: SelectedMap
+        key: view
+      - name: DomainName
+        type: string
+        key: domainname
+      - name: Enabled
+        type: string
+        key: enabled
+      - name: SourceView
+        type: SelectedMap
+        key: inview
+
   - name: Record
     filename: record
     monad: record
