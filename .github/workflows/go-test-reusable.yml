@@ -59,7 +59,7 @@ jobs:
               "ipsec":    ["ipsec"],
               "firewall": ["firewall"],
               "other":    ["acmeclient", "api", "api_extensions", "auth", "bind", "caddy", "core", "cron", "diagnostics",
-                           "dyndns", "interfaces", "kea", "openvpn", "quagga",
+                           "dyndns", "haproxy", "interfaces", "kea", "openvpn", "quagga",
                            "routes", "routing", "trust", "unbound", "wireguard"],
           }
           # pkg/ directories that are infrastructure/generated — excluded from

@@ -15,6 +15,7 @@ import (
 	"github.com/biptec/opnsense-go/pkg/dnsmasq"
 	"github.com/biptec/opnsense-go/pkg/dyndns"
 	"github.com/biptec/opnsense-go/pkg/firewall"
+	"github.com/biptec/opnsense-go/pkg/haproxy"
 	"github.com/biptec/opnsense-go/pkg/interfaces"
 	"github.com/biptec/opnsense-go/pkg/ipsec"
 	"github.com/biptec/opnsense-go/pkg/kea"
@@ -40,6 +41,7 @@ type Client interface {
 	Dnsmasq() *dnsmasq.Controller
 	Dyndns() *dyndns.Controller
 	Firewall() *firewall.Controller
+	Haproxy() *haproxy.Controller
 	Interfaces() *interfaces.Controller
 	Ipsec() *ipsec.Controller
 	Kea() *kea.Controller
@@ -103,6 +105,10 @@ func (c *client) Dyndns() *dyndns.Controller {
 
 func (c *client) Firewall() *firewall.Controller {
 	return &firewall.Controller{Api: c.a}
+}
+
+func (c *client) Haproxy() *haproxy.Controller {
+	return &haproxy.Controller{Api: c.a}
 }
 
 func (c *client) Interfaces() *interfaces.Controller {
