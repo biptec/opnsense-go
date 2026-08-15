@@ -1,0 +1,172 @@
+---
+name: acmeclient
+resources:
+  - name: Account
+    filename: account
+    monad: account
+    endpoints:
+      create: {path: "/acmeclient/accounts/add", method: POST}
+      read: {path: "/acmeclient/accounts/get", method: GET}
+      update: {path: "/acmeclient/accounts/update", method: POST}
+      delete: {path: "/acmeclient/accounts/del", method: POST}
+      search: {path: "/acmeclient/accounts/search", method: POST}
+    attrs:
+      - {name: Enabled, type: string, key: enabled}
+      - {name: Name, type: string, key: name}
+      - {name: Description, type: string, key: description}
+      - {name: Email, type: string, key: email}
+      - {name: CA, type: SelectedMap, key: ca}
+      - {name: CustomCA, type: string, key: custom_ca}
+      - {name: StatusCode, type: string, key: statusCode}
+      - {name: StatusLastUpdate, type: string, key: statusLastUpdate}
+
+  - name: Validation
+    filename: validation
+    monad: validation
+    endpoints:
+      create: {path: "/acmeclient/validations/add", method: POST}
+      read: {path: "/acmeclient/validations/get", method: GET}
+      update: {path: "/acmeclient/validations/update", method: POST}
+      delete: {path: "/acmeclient/validations/del", method: POST}
+      search: {path: "/acmeclient/validations/search", method: POST}
+    attrs:
+      - {name: Enabled, type: string, key: enabled}
+      - {name: Name, type: string, key: name}
+      - {name: Description, type: string, key: description}
+      - {name: Method, type: SelectedMap, key: method}
+      - {name: DNSService, type: SelectedMap, key: dns_service}
+      - {name: DNSNsupdateServer, type: string, key: dns_nsupdate_server}
+      - {name: DNSNsupdateZone, type: string, key: dns_nsupdate_zone}
+      - {name: DNSNsupdateKey, type: string, key: dns_nsupdate_key}
+
+  - name: Action
+    filename: action
+    monad: action
+    endpoints:
+      create: {path: "/acmeclient/actions/add", method: POST}
+      read: {path: "/acmeclient/actions/get", method: GET}
+      update: {path: "/acmeclient/actions/update", method: POST}
+      delete: {path: "/acmeclient/actions/del", method: POST}
+      search: {path: "/acmeclient/actions/search", method: POST}
+    attrs:
+      - {name: Enabled, type: string, key: enabled}
+      - {name: Name, type: string, key: name}
+      - {name: Description, type: string, key: description}
+      - {name: Type, type: SelectedMap, key: type}
+
+  - name: Certificate
+    filename: certificate
+    monad: certificate
+    endpoints:
+      create: {path: "/acmeclient/certificates/add", method: POST}
+      read: {path: "/acmeclient/certificates/get", method: GET}
+      update: {path: "/acmeclient/certificates/update", method: POST}
+      delete: {path: "/acmeclient/certificates/del", method: POST}
+      search: {path: "/acmeclient/certificates/search", method: POST}
+    attrs:
+      - {name: Enabled, type: string, key: enabled}
+      - {name: Name, type: string, key: name}
+      - {name: Description, type: string, key: description}
+      - {name: AltNames, type: SelectedMapList, key: altNames}
+      - {name: Account, type: SelectedMap, key: account}
+      - {name: ValidationMethod, type: SelectedMap, key: validationMethod}
+      - {name: KeyLength, type: SelectedMap, key: keyLength}
+      - {name: OCSP, type: string, key: ocsp}
+      - {name: Profile, type: string, key: profile}
+      - {name: RestartActions, type: SelectedMapList, key: restartActions}
+      - {name: AutoRenewal, type: string, key: autoRenewal}
+      - {name: RenewInterval, type: string, key: renewInterval}
+      - {name: AliasMode, type: SelectedMap, key: aliasmode}
+      - {name: DomainAlias, type: string, key: domainalias}
+      - {name: ChallengeAlias, type: string, key: challengealias}
+      - {name: CertRefID, type: string, key: certRefId}
+      - {name: LastUpdate, type: string, key: lastUpdate}
+      - {name: StatusCode, type: string, key: statusCode}
+      - {name: StatusLastUpdate, type: string, key: statusLastUpdate}
+
+rpc:
+  - name: Settings
+    filename: settings
+    customTypes:
+      Settings:
+        - {name: Enabled, type: string, key: enabled}
+        - {name: AutoRenewal, type: string, key: autoRenewal}
+        - {name: UpdateCron, type: SelectedMap, key: UpdateCron}
+        - {name: Environment, type: SelectedMap, key: environment}
+        - {name: ChallengePort, type: string, key: challengePort}
+        - {name: TLSChallengePort, type: string, key: TLSchallengePort}
+        - {name: RestartTimeout, type: string, key: restartTimeout}
+        - {name: HAProxyIntegration, type: string, key: haproxyIntegration}
+        - {name: HAProxyACLRef, type: SelectedMap, key: haproxyAclRef}
+        - {name: HAProxyActionRef, type: SelectedMap, key: haproxyActionRef}
+        - {name: HAProxyServerRef, type: SelectedMap, key: haproxyServerRef}
+        - {name: HAProxyBackendRef, type: SelectedMap, key: haproxyBackendRef}
+        - {name: LogLevel, type: SelectedMap, key: logLevel}
+        - {name: ShowIntro, type: string, key: showIntro}
+      SettingsRoot:
+        - {name: Settings, type: Settings, key: settings}
+      SettingsResponse:
+        - {name: AcmeClient, type: SettingsRoot, key: acmeclient}
+      SaveResult:
+        - {name: Result, type: string, key: result}
+        - {name: Validations, type: 'map[string]interface{}', key: validations, omitEmpty: true}
+    rpc_calls:
+      - name: Get
+        endpoint: {path: "/acmeclient/settings/get", method: GET}
+        result_type: SettingsResponse
+      - name: Set
+        endpoint: {path: "/acmeclient/settings/set", method: POST}
+        params:
+          - {name: root, key: acmeclient, customType: SettingsRoot, bodyParameter: true}
+        result_type: SaveResult
+      - name: FetchCronIntegration
+        endpoint: {path: "/acmeclient/settings/fetch_cron_integration", method: POST}
+        result_type: SaveResult
+
+  - name: Service
+    filename: service
+    customTypes:
+      ServiceResult:
+        - {name: Status, type: string, key: status, omitEmpty: true}
+        - {name: Result, type: string, key: result, omitEmpty: true}
+    rpc_calls:
+      - name: Configtest
+        endpoint: {path: "/acmeclient/service/configtest", method: POST}
+        result_type: ServiceResult
+      - name: Reconfigure
+        endpoint: {path: "/acmeclient/service/reconfigure", method: POST}
+        result_type: ServiceResult
+      - name: Status
+        endpoint: {path: "/acmeclient/service/status", method: GET}
+        result_type: ServiceResult
+
+  - name: Account
+    filename: account_actions
+    customTypes:
+      AccountActionResponse:
+        - {name: Result, type: string, key: result, omitEmpty: true}
+        - {name: Response, type: string, key: response, omitEmpty: true}
+    rpc_calls:
+      - name: Register
+        endpoint: {path: "/acmeclient/accounts/register", method: POST}
+        params:
+          - {name: uuid}
+        result_type: AccountActionResponse
+
+  - name: Certificate
+    filename: certificate_actions
+    customTypes:
+      CertificateActionResponse:
+        - {name: Result, type: string, key: result, omitEmpty: true}
+        - {name: Response, type: string, key: response, omitEmpty: true}
+    rpc_calls:
+      - name: Sign
+        endpoint: {path: "/acmeclient/certificates/sign", method: POST}
+        params:
+          - {name: uuid}
+        result_type: CertificateActionResponse
+      - name: Automation
+        endpoint: {path: "/acmeclient/certificates/automation", method: POST}
+        params:
+          - {name: uuid}
+        result_type: CertificateActionResponse

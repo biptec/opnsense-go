@@ -3,6 +3,7 @@
 package opnsense
 
 import (
+	"github.com/biptec/opnsense-go/pkg/acmeclient"
 	"github.com/biptec/opnsense-go/pkg/api"
 	"github.com/biptec/opnsense-go/pkg/api_extensions"
 	"github.com/biptec/opnsense-go/pkg/auth"
@@ -28,6 +29,7 @@ import (
 
 // Client defines the OPNsense API client interface.
 type Client interface {
+	Acmeclient() *acmeclient.Controller
 	ApiExtensions() *api_extensions.Controller
 	Auth() *auth.Controller
 	Bind() *bind.Controller
@@ -57,6 +59,10 @@ type client struct {
 // NewClient creates a new API client.
 func NewClient(a *api.Client) Client {
 	return &client{a: a}
+}
+
+func (c *client) Acmeclient() *acmeclient.Controller {
+	return &acmeclient.Controller{Api: c.a}
 }
 
 func (c *client) ApiExtensions() *api_extensions.Controller {
