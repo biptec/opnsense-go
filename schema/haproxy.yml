@@ -122,6 +122,11 @@ resources:
       - {name: Negate, type: string, key: negate, omitEmpty: true}
       - {name: CaseSensitive, type: string, key: caseSensitive, omitEmpty: true}
       - {name: SSLFCSNI, type: string, key: ssl_fc_sni, omitEmpty: true}
+      - {name: SSLSNI, type: string, key: ssl_sni, omitEmpty: true}
+      - {name: SSLSNISub, type: string, key: ssl_sni_sub, omitEmpty: true}
+      - {name: SSLSNIBeg, type: string, key: ssl_sni_beg, omitEmpty: true}
+      - {name: SSLSNIEnd, type: string, key: ssl_sni_end, omitEmpty: true}
+      - {name: SSLSNIReg, type: string, key: ssl_sni_reg, omitEmpty: true}
       - {name: SSLHelloType, type: SelectedMap, key: ssl_hello_type, omitEmpty: true}
       - {name: CustomACL, type: string, key: custom_acl, omitEmpty: true}
       - {name: Value, type: string, key: value, omitEmpty: true}

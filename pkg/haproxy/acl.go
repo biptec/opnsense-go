@@ -28,6 +28,11 @@ type ACL struct {
 	Negate        string          `json:"negate,omitempty"`
 	CaseSensitive string          `json:"caseSensitive,omitempty"`
 	SSLFCSNI      string          `json:"ssl_fc_sni,omitempty"`
+	SSLSNI        string          `json:"ssl_sni,omitempty"`
+	SSLSNISub     string          `json:"ssl_sni_sub,omitempty"`
+	SSLSNIBeg     string          `json:"ssl_sni_beg,omitempty"`
+	SSLSNIEnd     string          `json:"ssl_sni_end,omitempty"`
+	SSLSNIReg     string          `json:"ssl_sni_reg,omitempty"`
 	SSLHelloType  api.SelectedMap `json:"ssl_hello_type,omitempty"`
 	CustomACL     string          `json:"custom_acl,omitempty"`
 	Value         string          `json:"value,omitempty"`
