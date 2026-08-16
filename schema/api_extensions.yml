@@ -1,5 +1,42 @@
 ---
 name: api_extensions
+resources:
+  - name: CarpHealthCheck
+    filename: carp_health_check
+    monad: check
+    endpoints:
+      create:
+        path: "/api_extensions/carp_health/addCheck"
+        method: POST
+      read:
+        path: "/api_extensions/carp_health/getCheck"
+        method: GET
+      update:
+        path: "/api_extensions/carp_health/setCheck"
+        method: POST
+      delete:
+        path: "/api_extensions/carp_health/delCheck"
+        method: POST
+      search:
+        path: "/api_extensions/carp_health/searchCheck"
+        method: GET
+      reconfigure:
+        path: "/api_extensions/carp_health/reconfigure"
+        method: POST
+    attrs:
+      - name: Enabled
+        type: api.BoolString
+        key: enabled
+      - name: Name
+        type: string
+        key: name
+      - name: Interface
+        type: SelectedMap
+        key: interface
+      - name: Target
+        type: string
+        key: target
+
 rpc:
   - name: "Webgui"
     filename: webgui
@@ -220,3 +257,113 @@ rpc:
           path: "/api_extensions/ntp/reconfigure"
           method: POST
         result_type: "NtpActionResult"
+
+  - name: "CarpHealth"
+    filename: carp_health
+    customTypes:
+      CarpHealthSettings:
+        - name: Enabled
+          type: api.BoolString
+          key: enabled
+        - name: Interval
+          type: string
+          key: interval
+        - name: FailureThreshold
+          type: string
+          key: failure_threshold
+        - name: RecoveryThreshold
+          type: string
+          key: recovery_threshold
+      CarpHealthResponse:
+        - name: CarpHealth
+          type: CarpHealthSettings
+          key: carp_health
+      CarpHealthActionResult:
+        - name: Status
+          type: string
+          key: status
+          omitEmpty: true
+        - name: Result
+          type: string
+          key: result
+          omitEmpty: true
+        - name: Validations
+          type: 'map[string]interface{}'
+          key: validations
+          omitEmpty: true
+      CarpHealthCheckStatus:
+        - name: UUID
+          type: string
+          key: uuid
+        - name: Name
+          type: string
+          key: name
+        - name: Interface
+          type: string
+          key: interface
+        - name: Device
+          type: string
+          key: device
+        - name: Target
+          type: string
+          key: target
+        - name: Healthy
+          type: bool
+          key: healthy
+        - name: Failures
+          type: int
+          key: failures
+        - name: Successes
+          type: int
+          key: successes
+      CarpHealthStatusResponse:
+        - name: Status
+          type: string
+          key: status
+        - name: Enabled
+          type: bool
+          key: enabled
+        - name: Ready
+          type: bool
+          key: ready
+        - name: Healthy
+          type: bool
+          key: healthy
+        - name: Running
+          type: bool
+          key: running
+        - name: Timestamp
+          type: float64
+          key: timestamp
+        - name: ConfigSignature
+          type: string
+          key: config_signature
+        - name: Checks
+          type: '[]CarpHealthCheckStatus'
+          key: checks
+    rpc_calls:
+      - name: "Get"
+        endpoint:
+          path: "/api_extensions/carp_health/get"
+          method: GET
+        result_type: "CarpHealthResponse"
+      - name: "Set"
+        endpoint:
+          path: "/api_extensions/carp_health/set"
+          method: POST
+        params:
+          - name: "settings"
+            key: carp_health
+            customType: CarpHealthSettings
+            bodyParameter: true
+        result_type: "CarpHealthActionResult"
+      - name: "Reconfigure"
+        endpoint:
+          path: "/api_extensions/carp_health/reconfigure"
+          method: POST
+        result_type: "CarpHealthActionResult"
+      - name: "Status"
+        endpoint:
+          path: "/api_extensions/carp_health/status"
+          method: GET
+        result_type: "CarpHealthStatusResponse"
