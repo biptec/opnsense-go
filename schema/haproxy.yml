@@ -1,0 +1,211 @@
+---
+name: haproxy
+resources:
+  - name: Frontend
+    filename: frontend
+    monad: frontend
+    endpoints:
+      create: {path: "/haproxy/settings/add_frontend", method: POST}
+      read: {path: "/haproxy/settings/get_frontend", method: GET}
+      update: {path: "/haproxy/settings/set_frontend", method: POST}
+      delete: {path: "/haproxy/settings/del_frontend", method: POST}
+      search: {path: "/haproxy/settings/search_frontends", method: POST}
+      reconfigure: {path: "/haproxy/service/reconfigure", method: POST}
+    attrs:
+      - {name: UUID, type: string, key: uuid, omitEmpty: true}
+      - {name: Enabled, type: string, key: enabled}
+      - {name: Name, type: string, key: name}
+      - {name: Description, type: string, key: description, omitEmpty: true}
+      - {name: Bind, type: SelectedMapList, key: bind}
+      - {name: BindOptions, type: string, key: bindOptions, omitEmpty: true}
+      - {name: Mode, type: SelectedMap, key: mode}
+      - {name: DefaultBackend, type: SelectedMap, key: defaultBackend, omitEmpty: true}
+      - {name: SSLEnabled, type: string, key: ssl_enabled, omitEmpty: true}
+      - {name: CustomOptions, type: string, key: customOptions, omitEmpty: true}
+      - {name: LinkedActions, type: SelectedMapList, key: linkedActions}
+
+  - name: Backend
+    filename: backend
+    monad: backend
+    endpoints:
+      create: {path: "/haproxy/settings/add_backend", method: POST}
+      read: {path: "/haproxy/settings/get_backend", method: GET}
+      update: {path: "/haproxy/settings/set_backend", method: POST}
+      delete: {path: "/haproxy/settings/del_backend", method: POST}
+      search: {path: "/haproxy/settings/search_backends", method: POST}
+      reconfigure: {path: "/haproxy/service/reconfigure", method: POST}
+    attrs:
+      - {name: UUID, type: string, key: uuid, omitEmpty: true}
+      - {name: Enabled, type: string, key: enabled}
+      - {name: Name, type: string, key: name}
+      - {name: Description, type: string, key: description, omitEmpty: true}
+      - {name: Mode, type: SelectedMap, key: mode}
+      - {name: Algorithm, type: SelectedMap, key: algorithm}
+      - {name: LinkedServers, type: SelectedMapList, key: linkedServers}
+      - {name: HealthCheckEnabled, type: string, key: healthCheckEnabled, omitEmpty: true}
+      - {name: HealthCheck, type: SelectedMap, key: healthCheck, omitEmpty: true}
+      - {name: CheckInterval, type: string, key: checkInterval, omitEmpty: true}
+      - {name: CheckDownInterval, type: string, key: checkDownInterval, omitEmpty: true}
+      - {name: HealthCheckFall, type: string, key: healthCheckFall, omitEmpty: true}
+      - {name: HealthCheckRise, type: string, key: healthCheckRise, omitEmpty: true}
+      - {name: CustomOptions, type: string, key: customOptions, omitEmpty: true}
+
+  - name: Server
+    filename: server
+    monad: server
+    endpoints:
+      create: {path: "/haproxy/settings/add_server", method: POST}
+      read: {path: "/haproxy/settings/get_server", method: GET}
+      update: {path: "/haproxy/settings/set_server", method: POST}
+      delete: {path: "/haproxy/settings/del_server", method: POST}
+      search: {path: "/haproxy/settings/search_servers", method: POST}
+      reconfigure: {path: "/haproxy/service/reconfigure", method: POST}
+    attrs:
+      - {name: UUID, type: string, key: uuid, omitEmpty: true}
+      - {name: Enabled, type: string, key: enabled}
+      - {name: Name, type: string, key: name}
+      - {name: Description, type: string, key: description, omitEmpty: true}
+      - {name: Address, type: string, key: address}
+      - {name: Port, type: string, key: port, omitEmpty: true}
+      - {name: CheckPort, type: string, key: checkport, omitEmpty: true}
+      - {name: Mode, type: SelectedMap, key: mode}
+      - {name: Type, type: SelectedMap, key: type}
+      - {name: SSL, type: string, key: ssl, omitEmpty: true}
+      - {name: MaxConnections, type: string, key: maxConnections, omitEmpty: true}
+      - {name: Weight, type: string, key: weight, omitEmpty: true}
+      - {name: CheckInterval, type: string, key: checkInterval, omitEmpty: true}
+      - {name: CheckDownInterval, type: string, key: checkDownInterval, omitEmpty: true}
+      - {name: Advanced, type: string, key: advanced, omitEmpty: true}
+
+  - name: Healthcheck
+    filename: healthcheck
+    monad: healthcheck
+    endpoints:
+      create: {path: "/haproxy/settings/add_healthcheck", method: POST}
+      read: {path: "/haproxy/settings/get_healthcheck", method: GET}
+      update: {path: "/haproxy/settings/set_healthcheck", method: POST}
+      delete: {path: "/haproxy/settings/del_healthcheck", method: POST}
+      search: {path: "/haproxy/settings/search_healthchecks", method: POST}
+      reconfigure: {path: "/haproxy/service/reconfigure", method: POST}
+    attrs:
+      - {name: UUID, type: string, key: uuid, omitEmpty: true}
+      - {name: Name, type: string, key: name}
+      - {name: Description, type: string, key: description, omitEmpty: true}
+      - {name: Type, type: SelectedMap, key: type}
+      - {name: Interval, type: string, key: interval, omitEmpty: true}
+      - {name: SSL, type: SelectedMap, key: ssl, omitEmpty: true}
+      - {name: SSLSNI, type: string, key: sslSNI, omitEmpty: true}
+      - {name: ForceSSL, type: string, key: force_ssl, omitEmpty: true}
+      - {name: CheckPort, type: string, key: checkport, omitEmpty: true}
+      - {name: HTTPMethod, type: SelectedMap, key: http_method, omitEmpty: true}
+      - {name: HTTPURI, type: string, key: http_uri, omitEmpty: true}
+      - {name: HTTPHost, type: string, key: http_host, omitEmpty: true}
+      - {name: TCPSendValue, type: string, key: tcp_sendValue, omitEmpty: true}
+      - {name: TCPMatchType, type: SelectedMap, key: tcp_matchType, omitEmpty: true}
+      - {name: TCPMatchValue, type: string, key: tcp_matchValue, omitEmpty: true}
+
+  - name: ACL
+    filename: acl
+    monad: acl
+    endpoints:
+      create: {path: "/haproxy/settings/add_acl", method: POST}
+      read: {path: "/haproxy/settings/get_acl", method: GET}
+      update: {path: "/haproxy/settings/set_acl", method: POST}
+      delete: {path: "/haproxy/settings/del_acl", method: POST}
+      search: {path: "/haproxy/settings/search_acls", method: POST}
+      reconfigure: {path: "/haproxy/service/reconfigure", method: POST}
+    attrs:
+      - {name: UUID, type: string, key: uuid, omitEmpty: true}
+      - {name: Name, type: string, key: name}
+      - {name: Description, type: string, key: description, omitEmpty: true}
+      - {name: Expression, type: SelectedMap, key: expression}
+      - {name: Negate, type: string, key: negate, omitEmpty: true}
+      - {name: CaseSensitive, type: string, key: caseSensitive, omitEmpty: true}
+      - {name: SSLFCSNI, type: string, key: ssl_fc_sni, omitEmpty: true}
+      - {name: SSLSNI, type: string, key: ssl_sni, omitEmpty: true}
+      - {name: SSLSNISub, type: string, key: ssl_sni_sub, omitEmpty: true}
+      - {name: SSLSNIBeg, type: string, key: ssl_sni_beg, omitEmpty: true}
+      - {name: SSLSNIEnd, type: string, key: ssl_sni_end, omitEmpty: true}
+      - {name: SSLSNIReg, type: string, key: ssl_sni_reg, omitEmpty: true}
+      - {name: SSLHelloType, type: SelectedMap, key: ssl_hello_type, omitEmpty: true}
+      - {name: CustomACL, type: string, key: custom_acl, omitEmpty: true}
+      - {name: Value, type: string, key: value, omitEmpty: true}
+
+  - name: Action
+    filename: action
+    monad: action
+    endpoints:
+      create: {path: "/haproxy/settings/add_action", method: POST}
+      read: {path: "/haproxy/settings/get_action", method: GET}
+      update: {path: "/haproxy/settings/set_action", method: POST}
+      delete: {path: "/haproxy/settings/del_action", method: POST}
+      search: {path: "/haproxy/settings/search_actions", method: POST}
+      reconfigure: {path: "/haproxy/service/reconfigure", method: POST}
+    attrs:
+      - {name: UUID, type: string, key: uuid, omitEmpty: true}
+      - {name: Enabled, type: string, key: enabled}
+      - {name: Name, type: string, key: name}
+      - {name: Description, type: string, key: description, omitEmpty: true}
+      - {name: TestType, type: SelectedMap, key: testType, omitEmpty: true}
+      - {name: LinkedACLs, type: SelectedMapList, key: linkedAcls}
+      - {name: Operator, type: SelectedMap, key: operator, omitEmpty: true}
+      - {name: Type, type: SelectedMap, key: type}
+      - {name: UseBackend, type: SelectedMap, key: use_backend, omitEmpty: true}
+      - {name: Custom, type: string, key: custom, omitEmpty: true}
+      - {name: TCPRequestAction, type: SelectedMap, key: tcp_request_action, omitEmpty: true}
+      - {name: TCPRequestOption, type: string, key: tcp_request_option, omitEmpty: true}
+      - {name: TCPRequestInspectDelay, type: string, key: tcp_request_inspect_delay, omitEmpty: true}
+
+rpc:
+  - name: Settings
+    filename: settings
+    customTypes:
+      SettingsResponse:
+        - {name: HAProxy, type: Settings, key: haproxy}
+      Settings:
+        - {name: General, type: GeneralSettings, key: general}
+      GeneralSettings:
+        - {name: Enabled, type: string, key: enabled}
+        - {name: GracefulStop, type: string, key: gracefulStop}
+        - {name: HardStopAfter, type: string, key: hardStopAfter}
+        - {name: CloseSpreadTime, type: string, key: closeSpreadTime}
+        - {name: SeamlessReload, type: string, key: seamlessReload}
+    rpc_calls:
+      - name: Get
+        endpoint: {path: "/haproxy/settings/get", method: GET}
+        result_type: SettingsResponse
+      - name: Set
+        endpoint: {path: "/haproxy/settings/set", method: POST}
+        params:
+          - name: haproxy
+            optional: false
+            bodyParameter: true
+            customType: Settings
+        result_type: api.ActionResult
+
+  - name: Service
+    filename: service
+    customTypes:
+      ServiceStatus:
+        - {name: Status, type: string, key: status}
+      ConfigtestResult:
+        - {name: Result, type: string, key: result}
+    rpc_calls:
+      - name: Status
+        endpoint: {path: "/haproxy/service/status", method: GET}
+        result_type: ServiceStatus
+      - name: Reconfigure
+        endpoint: {path: "/haproxy/service/reconfigure", method: POST}
+        result_type: api.ReconfigureStatusResult
+      - name: Configtest
+        endpoint: {path: "/haproxy/service/configtest", method: POST}
+        result_type: ConfigtestResult
+      - name: Start
+        endpoint: {path: "/haproxy/service/start", method: POST}
+        result_type: api.ActionResult
+      - name: Stop
+        endpoint: {path: "/haproxy/service/stop", method: POST}
+        result_type: api.ActionResult
+      - name: Restart
+        endpoint: {path: "/haproxy/service/restart", method: POST}
+        result_type: api.ActionResult
