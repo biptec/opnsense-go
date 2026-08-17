@@ -36,6 +36,12 @@ resources:
       - name: Target
         type: string
         key: target
+      - name: Scope
+        type: SelectedMap
+        key: scope
+      - name: VHID
+        type: string
+        key: vhid
 
 rpc:
   - name: "Webgui"
@@ -307,6 +313,24 @@ rpc:
         - name: Target
           type: string
           key: target
+        - name: Scope
+          type: string
+          key: scope
+        - name: VHID
+          type: int
+          key: vhid
+        - name: CarpState
+          type: string
+          key: carp_state
+        - name: ConfiguredAdvSkew
+          type: '*int'
+          key: configured_advskew
+        - name: CurrentAdvSkew
+          type: '*int'
+          key: current_advskew
+        - name: ControlOK
+          type: bool
+          key: control_ok
         - name: Healthy
           type: bool
           key: healthy
@@ -316,6 +340,62 @@ rpc:
         - name: Successes
           type: int
           key: successes
+      CarpHealthGlobalStatus:
+        - name: Active
+          type: bool
+          key: active
+        - name: CheckCount
+          type: int
+          key: check_count
+        - name: Ready
+          type: bool
+          key: ready
+        - name: Healthy
+          type: bool
+          key: healthy
+      CarpHealthVHIDStatus:
+        - name: Key
+          type: string
+          key: key
+        - name: Interface
+          type: string
+          key: interface
+        - name: Device
+          type: string
+          key: device
+        - name: VHID
+          type: int
+          key: vhid
+        - name: Checks
+          type: '[]string'
+          key: checks
+        - name: Ready
+          type: bool
+          key: ready
+        - name: Healthy
+          type: bool
+          key: healthy
+        - name: DesiredDemoted
+          type: bool
+          key: desired_demoted
+        - name: ConfiguredAdvSkew
+          type: '*int'
+          key: configured_advskew
+        - name: CurrentAdvSkew
+          type: '*int'
+          key: current_advskew
+        - name: CarpState
+          type: string
+          key: carp_state
+        - name: ControlOK
+          type: bool
+          key: control_ok
+        - name: Retired
+          type: bool
+          key: retired
+        - name: Error
+          type: string
+          key: error
       CarpHealthStatusResponse:
         - name: Status
           type: string
@@ -329,6 +409,12 @@ rpc:
         - name: Healthy
           type: bool
           key: healthy
+        - name: ProbeHealthy
+          type: bool
+          key: probe_healthy
+        - name: ControlOK
+          type: bool
+          key: control_ok
         - name: Running
           type: bool
           key: running
@@ -338,6 +424,12 @@ rpc:
         - name: ConfigSignature
           type: string
           key: config_signature
+        - name: Global
+          type: CarpHealthGlobalStatus
+          key: global
+        - name: VHIDs
+          type: '[]CarpHealthVHIDStatus'
+          key: vhids
         - name: Checks
           type: '[]CarpHealthCheckStatus'
           key: checks

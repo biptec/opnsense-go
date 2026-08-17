@@ -31,11 +31,20 @@ func TestCarpHealthAPI(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(map[string]string{"result": "saved"})
 		case r.URL.Path == "/api/api_extensions/carp_health/status" && r.Method == http.MethodGet:
 			_ = json.NewEncoder(w).Encode(map[string]any{
-				"status": "ok", "enabled": true, "ready": true, "healthy": true, "running": true,
-				"timestamp": 123.0, "config_signature": "sig",
+				"status": "ok", "enabled": true, "ready": true, "healthy": true, "probe_healthy": true,
+				"control_ok": true, "running": true, "timestamp": 123.0, "config_signature": "sig",
+				"global": map[string]any{"active": false, "check_count": 0, "ready": true, "healthy": true},
+				"vhids": []map[string]any{{
+					"key": "opt2:51", "interface": "opt2", "device": "vlan02", "vhid": 51,
+					"checks": []string{"leaf"}, "ready": true, "healthy": true, "desired_demoted": false,
+					"configured_advskew": 10, "current_advskew": 10, "carp_state": "MASTER",
+					"control_ok": true, "retired": false, "error": "",
+				}},
 				"checks": []map[string]any{{
 					"uuid": uuid, "name": "leaf", "interface": "opt2", "device": "vlan02",
-					"target": "192.0.2.2", "healthy": true, "failures": 0, "successes": 0,
+					"target": "192.0.2.2", "scope": "vhid", "vhid": 51, "carp_state": "MASTER",
+					"configured_advskew": 10, "current_advskew": 10, "control_ok": true,
+					"healthy": true, "failures": 0, "successes": 0,
 				}},
 			})
 		case r.URL.Path == "/api/api_extensions/carp_health/addCheck" && r.Method == http.MethodPost:
@@ -43,13 +52,15 @@ func TestCarpHealthAPI(t *testing.T) {
 			if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 				t.Fatalf("decode check: %v", err)
 			}
-			if string(body["check"].Interface) != "opt2" || body["check"].Target != "192.0.2.2" {
+			if string(body["check"].Interface) != "opt2" || body["check"].Target != "192.0.2.2" ||
+				string(body["check"].Scope) != "vhid" || body["check"].VHID != "51" {
 				t.Fatalf("unexpected check: %#v", body)
 			}
 			_ = json.NewEncoder(w).Encode(map[string]string{"result": "saved", "uuid": uuid})
 		case r.URL.Path == "/api/api_extensions/carp_health/getCheck/"+uuid && r.Method == http.MethodGet:
 			_ = json.NewEncoder(w).Encode(map[string]any{"check": map[string]any{
 				"enabled": "1", "name": "leaf", "interface": "opt2", "target": "192.0.2.2",
+				"scope": "vhid", "vhid": "51",
 			}})
 		case r.URL.Path == "/api/api_extensions/carp_health/setCheck/"+uuid && r.Method == http.MethodPost:
 			_ = json.NewEncoder(w).Encode(map[string]string{"result": "saved", "uuid": uuid})
@@ -58,7 +69,7 @@ func TestCarpHealthAPI(t *testing.T) {
 		case r.URL.Path == "/api/api_extensions/carp_health/searchCheck" && r.Method == http.MethodGet:
 			_ = json.NewEncoder(w).Encode(map[string]any{
 				"total": 1, "rowCount": 1, "current": 1,
-				"rows": []map[string]any{{"enabled": true, "name": "leaf", "interface": "opt2", "target": "192.0.2.2"}},
+				"rows": []map[string]any{{"enabled": true, "name": "leaf", "interface": "opt2", "target": "192.0.2.2", "scope": "vhid", "vhid": "51"}},
 			})
 		case r.URL.Path == "/api/api_extensions/carp_health/reconfigure" && r.Method == http.MethodPost:
 			_ = json.NewEncoder(w).Encode(map[string]string{"status": "ok", "result": "ok"})
@@ -80,21 +91,24 @@ func TestCarpHealthAPI(t *testing.T) {
 		t.Fatalf("CarpHealthSet() = %#v, %v", result, err)
 	}
 	status, err := controller.CarpHealthStatus(ctx)
-	if err != nil || !status.Running || !status.Healthy || len(status.Checks) != 1 {
+	if err != nil || !status.Running || !status.Healthy || !status.ProbeHealthy || !status.ControlOK ||
+		len(status.Checks) != 1 || len(status.VHIDs) != 1 || status.VHIDs[0].VHID != 51 || status.VHIDs[0].CarpState != "MASTER" ||
+		status.Global.CheckCount != 0 || status.Checks[0].Scope != "vhid" || status.Checks[0].VHID != 51 {
 		t.Fatalf("CarpHealthStatus() = %#v, %v", status, err)
 	}
 
-	check := &CarpHealthCheck{Enabled: "1", Name: "leaf", Interface: api.SelectedMap("opt2"), Target: "192.0.2.2"}
+	check := &CarpHealthCheck{Enabled: "1", Name: "leaf", Interface: api.SelectedMap("opt2"), Target: "192.0.2.2", Scope: api.SelectedMap("vhid"), VHID: "51"}
 	id, err := controller.AddCarpHealthCheck(ctx, check)
 	if err != nil || id != uuid {
 		t.Fatalf("AddCarpHealthCheck() = %q, %v", id, err)
 	}
 	retrieved, err := controller.GetCarpHealthCheck(ctx, uuid)
-	if err != nil || retrieved.Name != "leaf" || retrieved.Enabled != "1" || retrieved.Interface.String() != "opt2" {
+	if err != nil || retrieved.Name != "leaf" || retrieved.Enabled != "1" || retrieved.Interface.String() != "opt2" ||
+		retrieved.Scope.String() != "vhid" || retrieved.VHID != "51" {
 		t.Fatalf("GetCarpHealthCheck() = %#v, %v", retrieved, err)
 	}
 	search, err := controller.SearchCarpHealthCheck(ctx)
-	if err != nil || search.Total != 1 || search.Rows[0].Enabled != "1" {
+	if err != nil || search.Total != 1 || search.Rows[0].Enabled != "1" || search.Rows[0].Scope.String() != "vhid" || search.Rows[0].VHID != "51" {
 		t.Fatalf("SearchCarpHealthCheck() = %#v, %v", search, err)
 	}
 	check.Target = "192.0.2.3"
