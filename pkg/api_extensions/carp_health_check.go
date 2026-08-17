@@ -21,18 +21,20 @@ var CarpHealthCheckOpts = api.ReqOpts{
 // Data structs
 
 type CarpHealthCheck struct {
-	Enabled             api.BoolString      `json:"enabled"`
-	Name                string              `json:"name"`
-	Interface           api.SelectedMap     `json:"interface"`
-	Target              string              `json:"target"`
-	Scope               api.SelectedMap     `json:"scope"`
-	VHID                string              `json:"vhid"`
-	FailureAdvSkew      string              `json:"failure_advskew"`
-	VHIDTargets         api.SelectedMapList `json:"vhid_targets"`
-	FallbackIPv4Target  string              `json:"fallback_ipv4_target"`
-	FallbackIPv4Gateway string              `json:"fallback_ipv4_gateway"`
-	FallbackIPv6Target  string              `json:"fallback_ipv6_target"`
-	FallbackIPv6Gateway string              `json:"fallback_ipv6_gateway"`
+	Enabled                    api.BoolString      `json:"enabled"`
+	Name                       string              `json:"name"`
+	Interface                  api.SelectedMap     `json:"interface"`
+	Target                     string              `json:"target"`
+	Scope                      api.SelectedMap     `json:"scope"`
+	VHID                       string              `json:"vhid"`
+	FailureAdvSkew             string              `json:"failure_advskew"`
+	VHIDTargets                api.SelectedMapList `json:"vhid_targets"`
+	FallbackIPv4Target         string              `json:"fallback_ipv4_target"`
+	FallbackIPv4Gateway        string              `json:"fallback_ipv4_gateway"`
+	FallbackIPv6Target         string              `json:"fallback_ipv6_target"`
+	FallbackIPv6Gateway        string              `json:"fallback_ipv6_gateway"`
+	FallbackIPv4DefaultGateway string              `json:"fallback_ipv4_default_gateway"`
+	FallbackIPv6DefaultGateway string              `json:"fallback_ipv6_default_gateway"`
 }
 
 // CRUD operations

@@ -60,6 +60,12 @@ resources:
       - name: FallbackIPv6Gateway
         type: string
         key: fallback_ipv6_gateway
+      - name: FallbackIPv4DefaultGateway
+        type: string
+        key: fallback_ipv4_default_gateway
+      - name: FallbackIPv6DefaultGateway
+        type: string
+        key: fallback_ipv6_default_gateway
 
 rpc:
   - name: "Webgui"
@@ -328,6 +334,9 @@ rpc:
         - name: Family
           type: string
           key: family
+        - name: RouteType
+          type: string
+          key: route_type
         - name: Destination
           type: string
           key: destination
