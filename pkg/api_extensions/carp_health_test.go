@@ -31,8 +31,8 @@ func TestCarpHealthAPI(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(map[string]string{"result": "saved"})
 		case r.URL.Path == "/api/api_extensions/carp_health/status" && r.Method == http.MethodGet:
 			route := map[string]any{
-				"key": uuid + ":inet", "check_uuid": uuid, "check": "wan-health", "family": "inet",
-				"destination": "192.0.2.2", "gateway": "10.16.224.5", "desired_installed": true,
+				"key": uuid + ":inet:network:0.0.0.0/1", "check_uuid": uuid, "check": "wan-health", "family": "inet",
+				"route_type": "network", "destination": "0.0.0.0/1", "gateway": "10.16.224.5", "desired_installed": true,
 				"installed": true, "managed": true, "control_ok": true, "retired": false, "error": "",
 			}
 			vhidState := map[string]any{
@@ -66,7 +66,8 @@ func TestCarpHealthAPI(t *testing.T) {
 				check.VHID != "0" || check.FailureAdvSkew != "200" || len(check.VHIDTargets) != 2 ||
 				check.VHIDTargets[0] != "opt2:51" || check.VHIDTargets[1] != "opt3:52" ||
 				check.FallbackIPv4Target != "192.0.2.2" || check.FallbackIPv4Gateway != "10.16.224.5" ||
-				check.FallbackIPv6Target != "2001:db8:1::2" || check.FallbackIPv6Gateway != "2001:db8:2::1" {
+				check.FallbackIPv6Target != "2001:db8:1::2" || check.FallbackIPv6Gateway != "2001:db8:2::1" ||
+				check.FallbackIPv4DefaultGateway != "10.16.224.6" || check.FallbackIPv6DefaultGateway != "2001:db8:2::2" {
 				t.Fatalf("unexpected check: %#v", body)
 			}
 			_ = json.NewEncoder(w).Encode(map[string]string{"result": "saved", "uuid": uuid})
@@ -75,6 +76,7 @@ func TestCarpHealthAPI(t *testing.T) {
 				"enabled": "1", "name": "leaf", "interface": "opt2", "target": "192.0.2.2",
 				"scope": "interface", "vhid": "0", "failure_advskew": "254", "vhid_targets": "",
 				"fallback_ipv4_target": "", "fallback_ipv4_gateway": "", "fallback_ipv6_target": "", "fallback_ipv6_gateway": "",
+				"fallback_ipv4_default_gateway": "", "fallback_ipv6_default_gateway": "",
 			}})
 		case r.URL.Path == "/api/api_extensions/carp_health/setCheck/"+uuid && r.Method == http.MethodPost:
 			_ = json.NewEncoder(w).Encode(map[string]string{"result": "saved", "uuid": uuid})
@@ -122,6 +124,7 @@ func TestCarpHealthAPI(t *testing.T) {
 		VHIDTargets:        api.SelectedMapList{"opt2:51", "opt3:52"},
 		FallbackIPv4Target: "192.0.2.2", FallbackIPv4Gateway: "10.16.224.5",
 		FallbackIPv6Target: "2001:db8:1::2", FallbackIPv6Gateway: "2001:db8:2::1",
+		FallbackIPv4DefaultGateway: "10.16.224.6", FallbackIPv6DefaultGateway: "2001:db8:2::2",
 	}
 	id, err := controller.AddCarpHealthCheck(ctx, check)
 	if err != nil || id != uuid {
