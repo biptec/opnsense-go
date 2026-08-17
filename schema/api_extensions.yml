@@ -42,6 +42,24 @@ resources:
       - name: VHID
         type: string
         key: vhid
+      - name: FailureAdvSkew
+        type: string
+        key: failure_advskew
+      - name: VHIDTargets
+        type: SelectedMapList
+        key: vhid_targets
+      - name: FallbackIPv4Target
+        type: string
+        key: fallback_ipv4_target
+      - name: FallbackIPv4Gateway
+        type: string
+        key: fallback_ipv4_gateway
+      - name: FallbackIPv6Target
+        type: string
+        key: fallback_ipv6_target
+      - name: FallbackIPv6Gateway
+        type: string
+        key: fallback_ipv6_gateway
 
 rpc:
   - name: "Webgui"
@@ -297,6 +315,43 @@ rpc:
           type: 'map[string]interface{}'
           key: validations
           omitEmpty: true
+      CarpHealthRouteStatus:
+        - name: Key
+          type: string
+          key: key
+        - name: CheckUUID
+          type: string
+          key: check_uuid
+        - name: Check
+          type: string
+          key: check
+        - name: Family
+          type: string
+          key: family
+        - name: Destination
+          type: string
+          key: destination
+        - name: Gateway
+          type: string
+          key: gateway
+        - name: DesiredInstalled
+          type: bool
+          key: desired_installed
+        - name: Installed
+          type: bool
+          key: installed
+        - name: Managed
+          type: bool
+          key: managed
+        - name: ControlOK
+          type: bool
+          key: control_ok
+        - name: Retired
+          type: bool
+          key: retired
+        - name: Error
+          type: string
+          key: error
       CarpHealthCheckStatus:
         - name: UUID
           type: string
@@ -319,6 +374,21 @@ rpc:
         - name: VHID
           type: int
           key: vhid
+        - name: VHIDTargets
+          type: '[]string'
+          key: vhid_targets
+        - name: ConfiguredVHIDTargets
+          type: '[]string'
+          key: configured_vhid_targets
+        - name: FailureAdvSkew
+          type: int
+          key: failure_advskew
+        - name: VHIDStates
+          type: '[]CarpHealthVHIDStatus'
+          key: vhid_states
+        - name: FallbackRoutes
+          type: '[]CarpHealthRouteStatus'
+          key: fallback_routes
         - name: CarpState
           type: string
           key: carp_state
@@ -378,6 +448,9 @@ rpc:
         - name: DesiredDemoted
           type: bool
           key: desired_demoted
+        - name: DesiredAdvSkew
+          type: '*int'
+          key: desired_advskew
         - name: ConfiguredAdvSkew
           type: '*int'
           key: configured_advskew
@@ -430,6 +503,9 @@ rpc:
         - name: VHIDs
           type: '[]CarpHealthVHIDStatus'
           key: vhids
+        - name: Routes
+          type: '[]CarpHealthRouteStatus'
+          key: routes
         - name: Checks
           type: '[]CarpHealthCheckStatus'
           key: checks

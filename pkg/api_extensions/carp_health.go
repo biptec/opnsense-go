@@ -18,20 +18,25 @@ type CarpHealthActionResult struct {
 }
 
 type CarpHealthCheckStatus struct {
-	UUID              string `json:"uuid"`
-	Name              string `json:"name"`
-	Interface         string `json:"interface"`
-	Device            string `json:"device"`
-	Target            string `json:"target"`
-	Scope             string `json:"scope"`
-	VHID              int    `json:"vhid"`
-	CarpState         string `json:"carp_state"`
-	ConfiguredAdvSkew *int   `json:"configured_advskew"`
-	CurrentAdvSkew    *int   `json:"current_advskew"`
-	ControlOK         bool   `json:"control_ok"`
-	Healthy           bool   `json:"healthy"`
-	Failures          int    `json:"failures"`
-	Successes         int    `json:"successes"`
+	UUID                  string                  `json:"uuid"`
+	Name                  string                  `json:"name"`
+	Interface             string                  `json:"interface"`
+	Device                string                  `json:"device"`
+	Target                string                  `json:"target"`
+	Scope                 string                  `json:"scope"`
+	VHID                  int                     `json:"vhid"`
+	VHIDTargets           []string                `json:"vhid_targets"`
+	ConfiguredVHIDTargets []string                `json:"configured_vhid_targets"`
+	FailureAdvSkew        int                     `json:"failure_advskew"`
+	VHIDStates            []CarpHealthVHIDStatus  `json:"vhid_states"`
+	FallbackRoutes        []CarpHealthRouteStatus `json:"fallback_routes"`
+	CarpState             string                  `json:"carp_state"`
+	ConfiguredAdvSkew     *int                    `json:"configured_advskew"`
+	CurrentAdvSkew        *int                    `json:"current_advskew"`
+	ControlOK             bool                    `json:"control_ok"`
+	Healthy               bool                    `json:"healthy"`
+	Failures              int                     `json:"failures"`
+	Successes             int                     `json:"successes"`
 }
 
 type CarpHealthGlobalStatus struct {
@@ -43,6 +48,21 @@ type CarpHealthGlobalStatus struct {
 
 type CarpHealthResponse struct {
 	CarpHealth CarpHealthSettings `json:"carp_health"`
+}
+
+type CarpHealthRouteStatus struct {
+	Key              string `json:"key"`
+	CheckUUID        string `json:"check_uuid"`
+	Check            string `json:"check"`
+	Family           string `json:"family"`
+	Destination      string `json:"destination"`
+	Gateway          string `json:"gateway"`
+	DesiredInstalled bool   `json:"desired_installed"`
+	Installed        bool   `json:"installed"`
+	Managed          bool   `json:"managed"`
+	ControlOK        bool   `json:"control_ok"`
+	Retired          bool   `json:"retired"`
+	Error            string `json:"error"`
 }
 
 type CarpHealthSettings struct {
@@ -64,6 +84,7 @@ type CarpHealthStatusResponse struct {
 	ConfigSignature string                  `json:"config_signature"`
 	Global          CarpHealthGlobalStatus  `json:"global"`
 	VHIDs           []CarpHealthVHIDStatus  `json:"vhids"`
+	Routes          []CarpHealthRouteStatus `json:"routes"`
 	Checks          []CarpHealthCheckStatus `json:"checks"`
 }
 
@@ -76,6 +97,7 @@ type CarpHealthVHIDStatus struct {
 	Ready             bool     `json:"ready"`
 	Healthy           bool     `json:"healthy"`
 	DesiredDemoted    bool     `json:"desired_demoted"`
+	DesiredAdvSkew    *int     `json:"desired_advskew"`
 	ConfiguredAdvSkew *int     `json:"configured_advskew"`
 	CurrentAdvSkew    *int     `json:"current_advskew"`
 	CarpState         string   `json:"carp_state"`
