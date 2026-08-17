@@ -309,3 +309,19 @@ rpc:
           path: "/core/hasync/reconfigure"
           method: POST
         result_type: api.ReconfigureStatusResult
+
+resources:
+  - name: Tunable
+    filename: tunable
+    monad: sysctl
+    endpoints:
+      create: {path: "/core/tunables/add_item", method: POST}
+      read: {path: "/core/tunables/get_item", method: GET}
+      update: {path: "/core/tunables/set_item", method: POST}
+      delete: {path: "/core/tunables/del_item", method: POST}
+      search: {path: "/core/tunables/search_item", method: POST}
+      reconfigure: {path: "/core/tunables/reconfigure", method: POST}
+    attrs:
+      - {name: Tunable, type: string, key: tunable}
+      - {name: Value, type: string, key: value}
+      - {name: Description, type: string, key: descr}

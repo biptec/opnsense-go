@@ -25,6 +25,8 @@ type CarpHealthCheck struct {
 	Name      string          `json:"name"`
 	Interface api.SelectedMap `json:"interface"`
 	Target    string          `json:"target"`
+	Scope     api.SelectedMap `json:"scope"`
+	VHID      string          `json:"vhid"`
 }
 
 // CRUD operations

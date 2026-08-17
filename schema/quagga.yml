@@ -267,3 +267,164 @@ resources:
       - name: Set
         type: string
         key: set
+
+  - name: OSPFNetwork
+    filename: ospf_network
+    monad: network
+    endpoints:
+      create: {path: "/quagga/ospfsettings/addNetwork", method: POST}
+      read: {path: "/quagga/ospfsettings/getNetwork", method: GET}
+      update: {path: "/quagga/ospfsettings/setNetwork", method: POST}
+      delete: {path: "/quagga/ospfsettings/delNetwork", method: POST}
+      search: {path: "/quagga/ospfsettings/searchNetwork", method: POST}
+      reconfigure: {path: "/quagga/service/reconfigure", method: POST}
+    attrs:
+      - {name: Enabled, type: string, key: enabled}
+      - {name: IPAddress, type: string, key: ipaddr}
+      - {name: Area, type: string, key: area}
+      - {name: Netmask, type: string, key: netmask}
+      - {name: AreaRange, type: string, key: arearange}
+      - {name: PrefixListIn, type: SelectedMap, key: linkedPrefixlistIn}
+      - {name: PrefixListOut, type: SelectedMap, key: linkedPrefixlistOut}
+
+  - name: OSPFInterface
+    filename: ospf_interface
+    monad: interface
+    endpoints:
+      create: {path: "/quagga/ospfsettings/addInterface", method: POST}
+      read: {path: "/quagga/ospfsettings/getInterface", method: GET}
+      update: {path: "/quagga/ospfsettings/setInterface", method: POST}
+      delete: {path: "/quagga/ospfsettings/delInterface", method: POST}
+      search: {path: "/quagga/ospfsettings/searchInterface", method: POST}
+      reconfigure: {path: "/quagga/service/reconfigure", method: POST}
+    attrs:
+      - {name: Enabled, type: string, key: enabled}
+      - {name: InterfaceName, type: SelectedMap, key: interfacename}
+      - {name: AuthType, type: SelectedMap, key: authtype}
+      - {name: AuthKey, type: string, key: authkey}
+      - {name: AuthKeyID, type: string, key: authkey_id}
+      - {name: Area, type: string, key: area}
+      - {name: Cost, type: string, key: cost}
+      - {name: CostDemoted, type: string, key: cost_demoted}
+      - {name: CarpDependOn, type: SelectedMap, key: carp_depend_on}
+      - {name: HelloInterval, type: string, key: hellointerval}
+      - {name: DeadInterval, type: string, key: deadinterval}
+      - {name: RetransmitInterval, type: string, key: retransmitinterval}
+      - {name: TransmitDelay, type: string, key: transmitdelay}
+      - {name: Priority, type: string, key: priority}
+      - {name: BFD, type: string, key: bfd}
+      - {name: NetworkType, type: SelectedMap, key: networktype}
+      - {name: P2MPOptions, type: SelectedMap, key: p2mpoptions}
+
+  - name: OSPF6Network
+    filename: ospf6_network
+    monad: network
+    endpoints:
+      create: {path: "/quagga/ospf6settings/addNetwork", method: POST}
+      read: {path: "/quagga/ospf6settings/getNetwork", method: GET}
+      update: {path: "/quagga/ospf6settings/setNetwork", method: POST}
+      delete: {path: "/quagga/ospf6settings/delNetwork", method: POST}
+      search: {path: "/quagga/ospf6settings/searchNetwork", method: POST}
+      reconfigure: {path: "/quagga/service/reconfigure", method: POST}
+    attrs:
+      - {name: Enabled, type: string, key: enabled}
+      - {name: IPAddress, type: string, key: ipaddr}
+      - {name: Netmask, type: string, key: netmask}
+      - {name: Area, type: string, key: area}
+      - {name: AreaRange, type: string, key: arearange}
+      - {name: PrefixListIn, type: SelectedMap, key: linkedPrefixlistIn}
+      - {name: PrefixListOut, type: SelectedMap, key: linkedPrefixlistOut}
+
+  - name: OSPF6Interface
+    filename: ospf6_interface
+    monad: interface
+    endpoints:
+      create: {path: "/quagga/ospf6settings/addInterface", method: POST}
+      read: {path: "/quagga/ospf6settings/getInterface", method: GET}
+      update: {path: "/quagga/ospf6settings/setInterface", method: POST}
+      delete: {path: "/quagga/ospf6settings/delInterface", method: POST}
+      search: {path: "/quagga/ospf6settings/searchInterface", method: POST}
+      reconfigure: {path: "/quagga/service/reconfigure", method: POST}
+    attrs:
+      - {name: Enabled, type: string, key: enabled}
+      - {name: InterfaceName, type: SelectedMap, key: interfacename}
+      - {name: Area, type: string, key: area}
+      - {name: Passive, type: string, key: passive}
+      - {name: Cost, type: string, key: cost}
+      - {name: CostDemoted, type: string, key: cost_demoted}
+      - {name: CarpDependOn, type: SelectedMap, key: carp_depend_on}
+      - {name: HelloInterval, type: string, key: hellointerval}
+      - {name: DeadInterval, type: string, key: deadinterval}
+      - {name: RetransmitInterval, type: string, key: retransmitinterval}
+      - {name: TransmitDelay, type: string, key: transmitdelay}
+      - {name: Priority, type: string, key: priority}
+      - {name: BFD, type: string, key: bfd}
+      - {name: NetworkType, type: SelectedMap, key: networktype}
+
+rpc:
+  - name: FRRGeneral
+    filename: frr_general
+    customTypes:
+      FRRGeneralResponse:
+        - {name: General, type: FRRGeneralSettings, key: general}
+      FRRGeneralSettings:
+        - {name: Enabled, type: string, key: enabled}
+        - {name: Profile, type: SelectedMap, key: profile}
+        - {name: EnableCARP, type: string, key: enablecarp}
+        - {name: EnableSyslog, type: string, key: enablesyslog}
+        - {name: EnableSNMP, type: string, key: enablesnmp}
+        - {name: SyslogLevel, type: SelectedMap, key: sysloglevel}
+        - {name: FirewallRules, type: string, key: fwrules}
+    rpc_calls:
+      - {name: Get, endpoint: {path: "/quagga/general/get", method: GET}, result_type: FRRGeneralResponse}
+      - name: Set
+        endpoint: {path: "/quagga/general/set", method: POST}
+        params:
+          - {name: general, optional: false, bodyParameter: true, customType: FRRGeneralSettings}
+        result_type: api.ActionResult
+      - {name: Reconfigure, endpoint: {path: "/quagga/service/reconfigure", method: POST}, result_type: api.ReconfigureStatusResult}
+
+  - name: OSPFSettings
+    filename: ospf_settings
+    customTypes:
+      OSPFSettingsResponse:
+        - {name: OSPF, type: OSPFSettingsData, key: ospf}
+      OSPFSettingsData:
+        - {name: Enabled, type: string, key: enabled}
+        - {name: CarpDemote, type: string, key: carp_demote}
+        - {name: RouterID, type: string, key: routerid}
+        - {name: CostReference, type: string, key: costreference}
+        - {name: LogAdjacencyChanges, type: string, key: logadjacencychanges}
+        - {name: Originate, type: string, key: originate}
+        - {name: OriginateAlways, type: string, key: originatealways}
+        - {name: OriginateMetric, type: string, key: originatemetric}
+        - {name: PassiveInterfaces, type: SelectedMapList, key: passiveinterfaces}
+    rpc_calls:
+      - {name: Get, endpoint: {path: "/quagga/ospfsettings/get", method: GET}, result_type: OSPFSettingsResponse}
+      - name: Set
+        endpoint: {path: "/quagga/ospfsettings/set", method: POST}
+        params:
+          - {name: ospf, optional: false, bodyParameter: true, customType: OSPFSettingsData}
+        result_type: api.ActionResult
+      - {name: Reconfigure, endpoint: {path: "/quagga/service/reconfigure", method: POST}, result_type: api.ReconfigureStatusResult}
+
+  - name: OSPF6Settings
+    filename: ospf6_settings
+    customTypes:
+      OSPF6SettingsResponse:
+        - {name: OSPF6, type: OSPF6SettingsData, key: ospf6}
+      OSPF6SettingsData:
+        - {name: Enabled, type: string, key: enabled}
+        - {name: CarpDemote, type: string, key: carp_demote}
+        - {name: RouterID, type: string, key: routerid}
+        - {name: Originate, type: string, key: originate}
+        - {name: OriginateAlways, type: string, key: originatealways}
+        - {name: OriginateMetric, type: string, key: originatemetric}
+    rpc_calls:
+      - {name: Get, endpoint: {path: "/quagga/ospf6settings/get", method: GET}, result_type: OSPF6SettingsResponse}
+      - name: Set
+        endpoint: {path: "/quagga/ospf6settings/set", method: POST}
+        params:
+          - {name: ospf6, optional: false, bodyParameter: true, customType: OSPF6SettingsData}
+        result_type: api.ActionResult
+      - {name: Reconfigure, endpoint: {path: "/quagga/service/reconfigure", method: POST}, result_type: api.ReconfigureStatusResult}

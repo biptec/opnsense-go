@@ -18,14 +18,27 @@ type CarpHealthActionResult struct {
 }
 
 type CarpHealthCheckStatus struct {
-	UUID      string `json:"uuid"`
-	Name      string `json:"name"`
-	Interface string `json:"interface"`
-	Device    string `json:"device"`
-	Target    string `json:"target"`
-	Healthy   bool   `json:"healthy"`
-	Failures  int    `json:"failures"`
-	Successes int    `json:"successes"`
+	UUID              string `json:"uuid"`
+	Name              string `json:"name"`
+	Interface         string `json:"interface"`
+	Device            string `json:"device"`
+	Target            string `json:"target"`
+	Scope             string `json:"scope"`
+	VHID              int    `json:"vhid"`
+	CarpState         string `json:"carp_state"`
+	ConfiguredAdvSkew *int   `json:"configured_advskew"`
+	CurrentAdvSkew    *int   `json:"current_advskew"`
+	ControlOK         bool   `json:"control_ok"`
+	Healthy           bool   `json:"healthy"`
+	Failures          int    `json:"failures"`
+	Successes         int    `json:"successes"`
+}
+
+type CarpHealthGlobalStatus struct {
+	Active     bool `json:"active"`
+	CheckCount int  `json:"check_count"`
+	Ready      bool `json:"ready"`
+	Healthy    bool `json:"healthy"`
 }
 
 type CarpHealthResponse struct {
@@ -44,10 +57,31 @@ type CarpHealthStatusResponse struct {
 	Enabled         bool                    `json:"enabled"`
 	Ready           bool                    `json:"ready"`
 	Healthy         bool                    `json:"healthy"`
+	ProbeHealthy    bool                    `json:"probe_healthy"`
+	ControlOK       bool                    `json:"control_ok"`
 	Running         bool                    `json:"running"`
 	Timestamp       float64                 `json:"timestamp"`
 	ConfigSignature string                  `json:"config_signature"`
+	Global          CarpHealthGlobalStatus  `json:"global"`
+	VHIDs           []CarpHealthVHIDStatus  `json:"vhids"`
 	Checks          []CarpHealthCheckStatus `json:"checks"`
+}
+
+type CarpHealthVHIDStatus struct {
+	Key               string   `json:"key"`
+	Interface         string   `json:"interface"`
+	Device            string   `json:"device"`
+	VHID              int      `json:"vhid"`
+	Checks            []string `json:"checks"`
+	Ready             bool     `json:"ready"`
+	Healthy           bool     `json:"healthy"`
+	DesiredDemoted    bool     `json:"desired_demoted"`
+	ConfiguredAdvSkew *int     `json:"configured_advskew"`
+	CurrentAdvSkew    *int     `json:"current_advskew"`
+	CarpState         string   `json:"carp_state"`
+	ControlOK         bool     `json:"control_ok"`
+	Retired           bool     `json:"retired"`
+	Error             string   `json:"error"`
 }
 
 // CarpHealthGet executes the Get RPC call of the CarpHealth controller
