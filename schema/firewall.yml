@@ -88,7 +88,7 @@ resources:
         type: string
         key: destination_port
       - name: Log
-        type: string
+        type: api.BoolString
         key: log
       - name: TCPFlags
         type: SelectedMapList

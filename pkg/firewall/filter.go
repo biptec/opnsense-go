@@ -41,7 +41,7 @@ type Filter struct {
 	DestinationInvert        string              `json:"destination_not"`
 	DestinationNet           string              `json:"destination_net"`
 	DestinationPort          string              `json:"destination_port"`
-	Log                      string              `json:"log"`
+	Log                      api.BoolString      `json:"log"`
 	TCPFlags                 api.SelectedMapList `json:"tcpflags1"`
 	TCPFlagsOutOf            api.SelectedMapList `json:"tcpflags2"`
 	Schedule                 api.SelectedMap     `json:"sched"`

@@ -175,7 +175,7 @@ jobs:
 
       - name: Create API key
         id: apikey
-        run: python3 scripts/create-apikey.py 2> "$GITHUB_OUTPUT"
+        run: python3 scripts/create-apikey.py
 
       - name: Setup env vars for tests
         run: |
