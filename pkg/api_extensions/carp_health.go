@@ -56,6 +56,7 @@ type CarpHealthRouteStatus struct {
 	Check            string `json:"check"`
 	Family           string `json:"family"`
 	RouteType        string `json:"route_type"`
+	Trigger          string `json:"trigger"`
 	Destination      string `json:"destination"`
 	Gateway          string `json:"gateway"`
 	DesiredInstalled bool   `json:"desired_installed"`

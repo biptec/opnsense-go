@@ -35,6 +35,8 @@ type CarpHealthCheck struct {
 	FallbackIPv6Gateway        string              `json:"fallback_ipv6_gateway"`
 	FallbackIPv4DefaultGateway string              `json:"fallback_ipv4_default_gateway"`
 	FallbackIPv6DefaultGateway string              `json:"fallback_ipv6_default_gateway"`
+	BackupIPv4DefaultGateway   string              `json:"backup_ipv4_default_gateway"`
+	BackupIPv6DefaultGateway   string              `json:"backup_ipv6_default_gateway"`
 }
 
 // CRUD operations

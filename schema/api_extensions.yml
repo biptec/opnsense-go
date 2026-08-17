@@ -66,6 +66,12 @@ resources:
       - name: FallbackIPv6DefaultGateway
         type: string
         key: fallback_ipv6_default_gateway
+      - name: BackupIPv4DefaultGateway
+        type: string
+        key: backup_ipv4_default_gateway
+      - name: BackupIPv6DefaultGateway
+        type: string
+        key: backup_ipv6_default_gateway
 
 rpc:
   - name: "Webgui"
@@ -337,6 +343,9 @@ rpc:
         - name: RouteType
           type: string
           key: route_type
+        - name: Trigger
+          type: string
+          key: trigger
         - name: Destination
           type: string
           key: destination
