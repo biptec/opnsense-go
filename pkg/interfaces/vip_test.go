@@ -36,6 +36,7 @@ func TestVip(t *testing.T) {
 		Gateway:           "",
 		NoExpand:          "0",
 		NoBind:            "0",
+		VirtualMAC:        "02:de:ad:be:ef:01",
 		AdvertisementBase: "1",
 		AdvertisementSkew: "0",
 		NoSync:            "0",
@@ -67,6 +68,9 @@ func TestVip(t *testing.T) {
 	}
 	if got.Gateway != vip.Gateway {
 		t.Errorf("Gateway mismatch: got %s, want %s", got.Gateway, vip.Gateway)
+	}
+	if got.VirtualMAC != vip.VirtualMAC {
+		t.Errorf("VirtualMAC mismatch: got %s, want %s", got.VirtualMAC, vip.VirtualMAC)
 	}
 
 	// UPDATE

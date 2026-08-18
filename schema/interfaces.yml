@@ -617,6 +617,9 @@ resources:
   - name: VHID
     type: string
     key: vhid
+  - name: VirtualMAC
+    type: string
+    key: vmac
   - name: AdvertisementBase
     type: string
     key: advbase
