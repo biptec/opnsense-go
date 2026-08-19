@@ -1,7 +1,9 @@
 package interfaces
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"os"
 	"testing"
 
@@ -36,7 +38,6 @@ func TestVip(t *testing.T) {
 		Gateway:           "",
 		NoExpand:          "0",
 		NoBind:            "0",
-		VirtualMAC:        "02:de:ad:be:ef:01",
 		AdvertisementBase: "1",
 		AdvertisementSkew: "0",
 		NoSync:            "0",
@@ -69,9 +70,6 @@ func TestVip(t *testing.T) {
 	if got.Gateway != vip.Gateway {
 		t.Errorf("Gateway mismatch: got %s, want %s", got.Gateway, vip.Gateway)
 	}
-	if got.VirtualMAC != vip.VirtualMAC {
-		t.Errorf("VirtualMAC mismatch: got %s, want %s", got.VirtualMAC, vip.VirtualMAC)
-	}
 
 	// UPDATE
 	vip.Network = "192.168.0.195/32" // change VIP
@@ -99,4 +97,22 @@ func TestVip(t *testing.T) {
 		t.Fatalf("Failed to delete VIP: %v", err)
 	}
 	t.Logf("Deleted VIP with key: %s", key)
+}
+
+func TestVipVirtualMACJSONRoundTrip(t *testing.T) {
+	input := Vip{VirtualMAC: "02:de:ad:be:ef:01"}
+	payload, err := json.Marshal(input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Contains(payload, []byte(`"vmac":"02:de:ad:be:ef:01"`)) {
+		t.Fatalf("virtual MAC missing from JSON payload: %s", payload)
+	}
+	var output Vip
+	if err := json.Unmarshal(payload, &output); err != nil {
+		t.Fatal(err)
+	}
+	if output.VirtualMAC != input.VirtualMAC {
+		t.Fatalf("virtual MAC round trip mismatch: got %q want %q", output.VirtualMAC, input.VirtualMAC)
+	}
 }
