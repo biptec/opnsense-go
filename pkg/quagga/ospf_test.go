@@ -109,4 +109,13 @@ func TestOSPFEndpointContracts(t *testing.T) {
 	if OSPFNetworkOpts.Search.Path != "/quagga/ospfsettings/searchNetwork" || OSPF6NetworkOpts.Search.Path != "/quagga/ospf6settings/searchNetwork" {
 		t.Fatalf("unexpected OSPF network endpoints: v2=%#v v3=%#v", OSPFNetworkOpts, OSPF6NetworkOpts)
 	}
+	if OSPFPrefixListOpts.Search.Path != "/quagga/ospfsettings/searchPrefixlist" || OSPF6PrefixListOpts.Search.Path != "/quagga/ospf6settings/searchPrefixlist" {
+		t.Fatalf("unexpected OSPF prefix-list endpoints: v2=%#v v3=%#v", OSPFPrefixListOpts, OSPF6PrefixListOpts)
+	}
+	if OSPFRouteMapOpts.Create.Path != "/quagga/ospfsettings/addRoutemap" || OSPF6RouteMapOpts.Create.Path != "/quagga/ospf6settings/addRoutemap" {
+		t.Fatalf("unexpected OSPF route-map endpoints: v2=%#v v3=%#v", OSPFRouteMapOpts, OSPF6RouteMapOpts)
+	}
+	if OSPFRedistributionOpts.Create.Path != "/quagga/ospfsettings/addRedistribution" || OSPF6RedistributionOpts.Create.Path != "/quagga/ospf6settings/addRedistribution" {
+		t.Fatalf("unexpected OSPF redistribution endpoints: v2=%#v v3=%#v", OSPFRedistributionOpts, OSPF6RedistributionOpts)
+	}
 }
