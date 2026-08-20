@@ -21,6 +21,7 @@ var ViewOpts = api.ReqOpts{
 // Data structs
 
 type View struct {
+	UUID              string              `json:"uuid,omitempty"`
 	Enabled           string              `json:"enabled"`
 	Sequence          string              `json:"sequence"`
 	Name              string              `json:"name"`

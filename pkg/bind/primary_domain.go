@@ -21,6 +21,7 @@ var PrimaryDomainOpts = api.ReqOpts{
 // Data structs
 
 type PrimaryDomain struct {
+	UUID              string              `json:"uuid,omitempty"`
 	View              api.SelectedMap     `json:"view"`
 	DomainName        string              `json:"domainname"`
 	Enabled           string              `json:"enabled"`
