@@ -193,3 +193,38 @@ func TestBindViewTsigAndDNSSECContracts(t *testing.T) {
 		t.Fatalf("reconfigure calls = %d, want 2", reconfigureCalls)
 	}
 }
+
+func TestBindSearchRowsExposeUUIDs(t *testing.T) {
+	t.Parallel()
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		switch r.URL.Path {
+		case "/api/bind/view/search_view":
+			_ = json.NewEncoder(w).Encode(map[string]any{
+				"total": 1, "rowCount": 1, "current": 1,
+				"rows": []map[string]any{{"uuid": "view-id", "name": "internal", "sequence": "10"}},
+			})
+		case "/api/bind/domain/search_primary_domain":
+			_ = json.NewEncoder(w).Encode(map[string]any{
+				"total": 1, "rowCount": 1, "current": 1,
+				"rows": []map[string]any{{"uuid": "zone-id", "view": "view-id", "domainname": "example.test"}},
+			})
+		default:
+			http.NotFound(w, r)
+		}
+	}))
+	defer server.Close()
+
+	controller := bindTestController(server)
+	ctx := context.Background()
+
+	views, err := controller.SearchView(ctx)
+	if err != nil || len(views.Rows) != 1 || views.Rows[0].UUID != "view-id" || views.Rows[0].Name != "internal" {
+		t.Fatalf("SearchView() = %+v, %v", views, err)
+	}
+	zones, err := controller.SearchPrimaryDomain(ctx)
+	if err != nil || len(zones.Rows) != 1 || zones.Rows[0].UUID != "zone-id" || zones.Rows[0].DomainName != "example.test" {
+		t.Fatalf("SearchPrimaryDomain() = %+v, %v", zones, err)
+	}
+}

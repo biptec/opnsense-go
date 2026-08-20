@@ -58,6 +58,10 @@ resources:
         path: "/bind/service/reload"
         method: POST
     attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
       - name: Enabled
         type: string
         key: enabled
@@ -157,6 +161,10 @@ resources:
         path: "/bind/service/reload"
         method: POST
     attrs:
+      - name: UUID
+        type: string
+        key: uuid
+        omitEmpty: true
       - name: View
         type: SelectedMap
         key: view
