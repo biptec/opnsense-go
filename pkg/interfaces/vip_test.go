@@ -1,7 +1,9 @@
 package interfaces
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"os"
 	"testing"
 
@@ -95,4 +97,22 @@ func TestVip(t *testing.T) {
 		t.Fatalf("Failed to delete VIP: %v", err)
 	}
 	t.Logf("Deleted VIP with key: %s", key)
+}
+
+func TestVipVirtualMACJSONRoundTrip(t *testing.T) {
+	input := Vip{VirtualMAC: "02:de:ad:be:ef:01"}
+	payload, err := json.Marshal(input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Contains(payload, []byte(`"vmac":"02:de:ad:be:ef:01"`)) {
+		t.Fatalf("virtual MAC missing from JSON payload: %s", payload)
+	}
+	var output Vip
+	if err := json.Unmarshal(payload, &output); err != nil {
+		t.Fatal(err)
+	}
+	if output.VirtualMAC != input.VirtualMAC {
+		t.Fatalf("virtual MAC round trip mismatch: got %q want %q", output.VirtualMAC, input.VirtualMAC)
+	}
 }

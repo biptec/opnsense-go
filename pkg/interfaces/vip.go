@@ -30,6 +30,7 @@ type Vip struct {
 	NoBind            string          `json:"nobind"`
 	Password          string          `json:"password"`
 	VHID              string          `json:"vhid"`
+	VirtualMAC        string          `json:"vmac"`
 	AdvertisementBase string          `json:"advbase"`
 	AdvertisementSkew string          `json:"advskew"`
 	PeerIPv4          string          `json:"peer"`
