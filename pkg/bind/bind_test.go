@@ -98,6 +98,49 @@ func TestBindSettingsAndServiceContracts(t *testing.T) {
 	}
 }
 
+func TestBindSecondaryDomainSharedTransferKeyContract(t *testing.T) {
+	t.Parallel()
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		switch r.URL.Path {
+		case "/api/bind/domain/add_secondary_domain":
+			var body map[string]SecondaryDomain
+			if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+				t.Fatalf("decode secondary domain: %v", err)
+			}
+			got := body["domain"]
+			if got.DomainName != "example.test" || got.TransferKeyID.String() != "shared-key-id" || got.TransferKey != "" {
+				t.Fatalf("unexpected secondary domain body: %+v", got)
+			}
+			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved", "uuid": "secondary-id"})
+		case "/api/bind/domain/get_domain/secondary-id":
+			_ = json.NewEncoder(w).Encode(map[string]any{"domain": map[string]any{
+				"view": bindSelected("public-view-id"), "domainname": "example.test", "enabled": "1",
+				"primaryip": bindSelected("10.16.16.53"), "secondarytransferkey": bindSelected("shared-key-id"),
+			}})
+		case "/api/bind/service/reload":
+			_ = json.NewEncoder(w).Encode(map[string]any{"status": "ok"})
+		default:
+			http.NotFound(w, r)
+		}
+	}))
+	defer server.Close()
+
+	controller := bindTestController(server)
+	id, err := controller.AddSecondaryDomain(context.Background(), &SecondaryDomain{
+		View: api.SelectedMap("public-view-id"), DomainName: "example.test", Enabled: "1",
+		PrimaryIP: api.SelectedMapList{"10.16.16.53"}, TransferKeyID: api.SelectedMap("shared-key-id"),
+	})
+	if err != nil || id != "secondary-id" {
+		t.Fatalf("AddSecondaryDomain() = %q, %v", id, err)
+	}
+	got, err := controller.GetSecondaryDomain(context.Background(), id)
+	if err != nil || got.TransferKeyID.String() != "shared-key-id" {
+		t.Fatalf("GetSecondaryDomain() = %+v, %v", got, err)
+	}
+}
+
 func TestBindViewTsigAndDNSSECContracts(t *testing.T) {
 	t.Parallel()
 

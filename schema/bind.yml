@@ -271,6 +271,9 @@ resources:
       - name: AllowNotify
         type: SelectedMapList
         key: allownotifysecondary
+      - name: TransferKeyID
+        type: SelectedMap
+        key: secondarytransferkey
       - name: TransferKeyAlgorithm
         type: SelectedMap
         key: transferkeyalgo

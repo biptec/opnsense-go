@@ -26,6 +26,7 @@ type SecondaryDomain struct {
 	Enabled              string              `json:"enabled"`
 	PrimaryIP            api.SelectedMapList `json:"primaryip"`
 	AllowNotify          api.SelectedMapList `json:"allownotifysecondary"`
+	TransferKeyID        api.SelectedMap     `json:"secondarytransferkey"`
 	TransferKeyAlgorithm api.SelectedMap     `json:"transferkeyalgo"`
 	TransferKeyName      string              `json:"transferkeyname"`
 	TransferKey          string              `json:"transferkey"`
