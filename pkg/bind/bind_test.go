@@ -52,7 +52,8 @@ func TestBindSettingsAndServiceContracts(t *testing.T) {
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{"general": map[string]any{
 				"enabled": "1", "disablev6": "0", "listenv4": bindSelected("10.0.0.1"),
-				"listenv6": bindSelected("::1"), "port": "53", "general_log_level": bindSelected("info"),
+				"listenv6": bindSelected("::1"), "transfersource": "10.16.18.53", "notifysource": "10.16.16.53",
+				"notifysourcev6": "2a07:e580:a10:1034::2", "port": "53", "general_log_level": bindSelected("info"),
 				"dnssecvalidation": bindSelected("auto"), "ratelimitexcept": bindSelected("127.0.0.1"),
 			}})
 		case "/api/bind/general/set":
@@ -64,7 +65,7 @@ func TestBindSettingsAndServiceContracts(t *testing.T) {
 				t.Fatalf("decode settings: %v", err)
 			}
 			general := body["general"]
-			if general.Port != "53" || general.ListenIPv4.String() != "10.0.0.1" || general.DNSSECValidation.String() != "auto" {
+			if general.Port != "53" || general.ListenIPv4.String() != "10.0.0.1" || general.DNSSECValidation.String() != "auto" || general.NotifySource != "10.16.16.53" || general.NotifySourceIPv6 != "2a07:e580:a10:1034::2" {
 				t.Fatalf("unexpected settings body: %+v", general)
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved"})
@@ -83,7 +84,7 @@ func TestBindSettingsAndServiceContracts(t *testing.T) {
 	if err != nil {
 		t.Fatalf("SettingsGet(): %v", err)
 	}
-	if settings.General.Port != "53" || settings.General.ListenIPv4.String() != "10.0.0.1" {
+	if settings.General.Port != "53" || settings.General.ListenIPv4.String() != "10.0.0.1" || settings.General.NotifySource != "10.16.16.53" || settings.General.NotifySourceIPv6 != "2a07:e580:a10:1034::2" {
 		t.Fatalf("unexpected settings: %+v", settings.General)
 	}
 	if _, err := controller.SettingsSet(context.Background(), &settings.General); err != nil {
