@@ -111,14 +111,20 @@ func TestBindViewTsigAndDNSSECContracts(t *testing.T) {
 				t.Fatalf("decode view: %v", err)
 			}
 			gotView := body["view"]
-			if gotView.Name != "internal" || gotView.MatchClients.String() != "acl-id" || gotView.MatchDestinations.String() != "destination-acl-id" {
+			if gotView.Name != "internal" || gotView.MatchClients.String() != "acl-id" ||
+				gotView.MatchClientTSIGKeys.String() != "internal-key-id" ||
+				gotView.ExcludeMatchClientTSIGKeys.String() != "public-key-id" ||
+				gotView.MatchDestinations.String() != "destination-acl-id" {
 				t.Fatalf("unexpected view body: %+v", gotView)
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved", "uuid": "view-id"})
 		case "/api/bind/view/get_view/view-id":
 			_ = json.NewEncoder(w).Encode(map[string]any{"view": map[string]any{
 				"enabled": "1", "sequence": "10", "name": "internal", "matchany": "0",
-				"matchclients": bindSelected("acl-id"), "matchdestinations": bindSelected("destination-acl-id"), "recursion": "1",
+				"matchclients":               bindSelected("acl-id"),
+				"matchclienttsigkeys":        bindSelected("internal-key-id"),
+				"excludematchclienttsigkeys": bindSelected("public-key-id"),
+				"matchdestinations":          bindSelected("destination-acl-id"), "recursion": "1",
 				"allowrecursion": bindSelected("acl-id"), "allowquery": bindSelected("acl-id"),
 				"dnssecvalidation": bindSelected("auto"),
 			}})
@@ -161,15 +167,20 @@ func TestBindViewTsigAndDNSSECContracts(t *testing.T) {
 	controller := bindTestController(server)
 	viewID, err := controller.AddView(ctx, &View{
 		Enabled: "1", Sequence: "10", Name: "internal", MatchClients: api.SelectedMapList{"acl-id"},
-		MatchDestinations: api.SelectedMapList{"destination-acl-id"},
-		Recursion:         "1", AllowRecursion: api.SelectedMapList{"acl-id"}, AllowQuery: api.SelectedMapList{"acl-id"},
+		MatchClientTSIGKeys:        api.SelectedMapList{"internal-key-id"},
+		ExcludeMatchClientTSIGKeys: api.SelectedMapList{"public-key-id"},
+		MatchDestinations:          api.SelectedMapList{"destination-acl-id"},
+		Recursion:                  "1", AllowRecursion: api.SelectedMapList{"acl-id"}, AllowQuery: api.SelectedMapList{"acl-id"},
 		DNSSECValidation: api.SelectedMap("auto"),
 	})
 	if err != nil || viewID != "view-id" {
 		t.Fatalf("AddView() = %q, %v", viewID, err)
 	}
 	view, err := controller.GetView(ctx, viewID)
-	if err != nil || view.MatchClients.String() != "acl-id" || view.MatchDestinations.String() != "destination-acl-id" || view.DNSSECValidation.String() != "auto" {
+	if err != nil || view.MatchClients.String() != "acl-id" ||
+		view.MatchClientTSIGKeys.String() != "internal-key-id" ||
+		view.ExcludeMatchClientTSIGKeys.String() != "public-key-id" ||
+		view.MatchDestinations.String() != "destination-acl-id" || view.DNSSECValidation.String() != "auto" {
 		t.Fatalf("GetView() = %+v, %v", view, err)
 	}
 	secret, err := controller.TSIGGenerateSecret(ctx)

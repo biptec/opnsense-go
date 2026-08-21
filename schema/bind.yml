@@ -77,6 +77,12 @@ resources:
       - name: MatchClients
         type: SelectedMapList
         key: matchclients
+      - name: MatchClientTSIGKeys
+        type: SelectedMapList
+        key: matchclienttsigkeys
+      - name: ExcludeMatchClientTSIGKeys
+        type: SelectedMapList
+        key: excludematchclienttsigkeys
       - name: MatchDestinations
         type: SelectedMapList
         key: matchdestinations
