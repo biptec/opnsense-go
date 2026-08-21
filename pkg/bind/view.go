@@ -21,20 +21,22 @@ var ViewOpts = api.ReqOpts{
 // Data structs
 
 type View struct {
-	UUID              string              `json:"uuid,omitempty"`
-	Enabled           string              `json:"enabled"`
-	Sequence          string              `json:"sequence"`
-	Name              string              `json:"name"`
-	MatchAny          string              `json:"matchany"`
-	MatchClients      api.SelectedMapList `json:"matchclients"`
-	MatchDestinations api.SelectedMapList `json:"matchdestinations"`
-	Recursion         string              `json:"recursion"`
-	AllowRecursion    api.SelectedMapList `json:"allowrecursion"`
-	AllowQueryAny     string              `json:"allowqueryany"`
-	AllowQuery        api.SelectedMapList `json:"allowquery"`
-	AllowTransfer     api.SelectedMapList `json:"allowtransfer"`
-	Forwarders        api.SelectedMapList `json:"forwarders"`
-	DNSSECValidation  api.SelectedMap     `json:"dnssecvalidation"`
+	UUID                       string              `json:"uuid,omitempty"`
+	Enabled                    string              `json:"enabled"`
+	Sequence                   string              `json:"sequence"`
+	Name                       string              `json:"name"`
+	MatchAny                   string              `json:"matchany"`
+	MatchClients               api.SelectedMapList `json:"matchclients"`
+	MatchClientTSIGKeys        api.SelectedMapList `json:"matchclienttsigkeys"`
+	ExcludeMatchClientTSIGKeys api.SelectedMapList `json:"excludematchclienttsigkeys"`
+	MatchDestinations          api.SelectedMapList `json:"matchdestinations"`
+	Recursion                  string              `json:"recursion"`
+	AllowRecursion             api.SelectedMapList `json:"allowrecursion"`
+	AllowQueryAny              string              `json:"allowqueryany"`
+	AllowQuery                 api.SelectedMapList `json:"allowquery"`
+	AllowTransfer              api.SelectedMapList `json:"allowtransfer"`
+	Forwarders                 api.SelectedMapList `json:"forwarders"`
+	DNSSECValidation           api.SelectedMap     `json:"dnssecvalidation"`
 }
 
 // CRUD operations
