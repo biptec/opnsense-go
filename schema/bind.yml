@@ -440,6 +440,12 @@ rpc:
         - name: TransferSourceIPv6
           type: string
           key: transfersourcev6
+        - name: NotifySource
+          type: string
+          key: notifysource
+        - name: NotifySourceIPv6
+          type: string
+          key: notifysourcev6
         - name: Port
           type: string
           key: port

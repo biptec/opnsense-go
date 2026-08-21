@@ -21,6 +21,8 @@ type GeneralSettings struct {
 	QuerySourceIPv6    string              `json:"querysourcev6"`
 	TransferSource     string              `json:"transfersource"`
 	TransferSourceIPv6 string              `json:"transfersourcev6"`
+	NotifySource       string              `json:"notifysource"`
+	NotifySourceIPv6   string              `json:"notifysourcev6"`
 	Port               string              `json:"port"`
 	Forwarders         api.SelectedMapList `json:"forwarders"`
 	FilterAAAAIPv4     string              `json:"filteraaaav4"`
