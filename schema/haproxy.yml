@@ -166,6 +166,7 @@ rpc:
         - {name: General, type: GeneralSettings, key: general}
       GeneralSettings:
         - {name: Enabled, type: string, key: enabled}
+        - {name: ShowIntro, type: string, key: showIntro}
         - {name: GracefulStop, type: string, key: gracefulStop}
         - {name: HardStopAfter, type: string, key: hardStopAfter}
         - {name: CloseSpreadTime, type: string, key: closeSpreadTime}

@@ -13,6 +13,7 @@ import (
 
 type GeneralSettings struct {
 	Enabled         string `json:"enabled"`
+	ShowIntro       string `json:"showIntro"`
 	GracefulStop    string `json:"gracefulStop"`
 	HardStopAfter   string `json:"hardStopAfter"`
 	CloseSpreadTime string `json:"closeSpreadTime"`
