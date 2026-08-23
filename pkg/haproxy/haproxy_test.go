@@ -29,7 +29,7 @@ func TestHAProxySettingsAndServiceContracts(t *testing.T) {
 		switch r.URL.Path {
 		case "/api/haproxy/settings/get":
 			_ = json.NewEncoder(w).Encode(map[string]any{"haproxy": map[string]any{"general": map[string]any{
-				"enabled": "1", "gracefulStop": "1", "hardStopAfter": "60s",
+				"enabled": "1", "showIntro": "0", "gracefulStop": "1", "hardStopAfter": "60s",
 				"closeSpreadTime": "5s", "seamlessReload": "1",
 			}}})
 		case "/api/haproxy/settings/set":
@@ -37,7 +37,7 @@ func TestHAProxySettingsAndServiceContracts(t *testing.T) {
 			if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 				t.Fatalf("decode settings body: %v", err)
 			}
-			if body["haproxy"].General.Enabled != "1" || body["haproxy"].General.SeamlessReload != "1" {
+			if body["haproxy"].General.Enabled != "1" || body["haproxy"].General.ShowIntro != "0" || body["haproxy"].General.SeamlessReload != "1" {
 				t.Fatalf("unexpected HAProxy settings body: %+v", body["haproxy"].General)
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved"})
@@ -57,7 +57,7 @@ func TestHAProxySettingsAndServiceContracts(t *testing.T) {
 	if err != nil {
 		t.Fatalf("SettingsGet() error = %v", err)
 	}
-	if settings.HAProxy.General.Enabled != "1" || settings.HAProxy.General.CloseSpreadTime != "5s" {
+	if settings.HAProxy.General.Enabled != "1" || settings.HAProxy.General.ShowIntro != "0" || settings.HAProxy.General.CloseSpreadTime != "5s" {
 		t.Fatalf("unexpected settings response: %+v", settings.HAProxy.General)
 	}
 	if _, err := controller.SettingsSet(ctx, &settings.HAProxy); err != nil {
