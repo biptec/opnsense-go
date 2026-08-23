@@ -161,3 +161,54 @@ func TestUpdateRouteResolvedRetriesStaleGatewayOptions(t *testing.T) {
 		t.Fatalf("update=%d search=%d reconfigure=%d", updateCalls, searchCalls, reconfigureCalls)
 	}
 }
+
+func TestAddRouteResolvedWaitsForGatewaySearchPropagation(t *testing.T) {
+	var addCalls, searchCalls, reconfigureCalls int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		switch r.URL.Path {
+		case "/api/routes/routes/addroute":
+			addCalls++
+			if addCalls == 1 {
+				_ = json.NewEncoder(w).Encode(map[string]any{
+					"result": "failed",
+					"validations": map[string]any{
+						"route.gateway": "Specify a valid gateway from the list matching the networks ip protocol.",
+					},
+				})
+				return
+			}
+			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved", "uuid": "route-id"})
+		case "/api/routing/settings/searchGateway":
+			searchCalls++
+			rows := []map[string]any{}
+			if searchCalls > 1 {
+				rows = append(rows, map[string]any{
+					"name": "GW_A", "gateway": "192.0.2.1", "disabled": false,
+				})
+			}
+			_ = json.NewEncoder(w).Encode(map[string]any{
+				"total": len(rows), "rowCount": len(rows), "current": 1, "rows": rows,
+			})
+		case "/api/routes/routes/reconfigure":
+			reconfigureCalls++
+			_ = json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
+		default:
+			http.NotFound(w, r)
+		}
+	}))
+	defer server.Close()
+
+	route := &Route{Gateway: api.SelectedMap("GW_A"), Network: "192.0.2.0/24", Enabled: "1"}
+	settings := routeGatewayRetrySettings{
+		routeTimeout:  time.Second,
+		verifyTimeout: time.Second,
+	}
+	id, err := routeTestController(server).addRouteResolvedWithSettings(context.Background(), route, settings)
+	if err != nil {
+		t.Fatalf("addRouteResolvedWithSettings(): %v", err)
+	}
+	if id != "route-id" || addCalls != 2 || searchCalls != 2 || reconfigureCalls != 1 {
+		t.Fatalf("id=%q add=%d search=%d reconfigure=%d", id, addCalls, searchCalls, reconfigureCalls)
+	}
+}
