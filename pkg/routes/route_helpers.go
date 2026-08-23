@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/biptec/opnsense-go/pkg/api"
 	"github.com/biptec/opnsense-go/pkg/routing"
 )
 
@@ -112,8 +113,11 @@ func (c *Controller) routeGatewayExists(ctx context.Context, resource *Route) (b
 		expectedProtocol = "inet6"
 	}
 
-	controller := routing.Controller{Api: c.Client()}
-	result, err := controller.SearchGateway(ctx)
+	type gatewayRouteRow struct {
+		Name       string `json:"name"`
+		IPProtocol string `json:"ipprotocol"`
+	}
+	result, err := api.Search[gatewayRouteRow](c.Client(), ctx, routing.GatewayOpts.Search)
 	if err != nil {
 		return false, err
 	}
@@ -121,7 +125,7 @@ func (c *Controller) routeGatewayExists(ctx context.Context, resource *Route) (b
 		if gateway.Name != name {
 			continue
 		}
-		protocol := gateway.IPProtocol.String()
+		protocol := gateway.IPProtocol
 		if protocol == expectedProtocol || (expectedProtocol == "inet" && protocol == "inet6") {
 			return true, nil
 		}

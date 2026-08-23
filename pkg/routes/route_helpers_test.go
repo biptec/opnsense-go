@@ -37,7 +37,7 @@ func TestAddRouteResolvedRetriesStaleGatewayOptions(t *testing.T) {
 			searchCalls++
 			_ = json.NewEncoder(w).Encode(map[string]any{
 				"total": 1, "rowCount": 1, "current": 1,
-				"rows": []map[string]any{{"name": "GW_A", "ipprotocol": "inet"}},
+				"rows": []map[string]any{{"name": "GW_A", "ipprotocol": "inet", "disabled": false}},
 			})
 		case "/api/routes/routes/reconfigure":
 			reconfigureCalls++
@@ -72,7 +72,7 @@ func TestAddRouteResolvedDoesNotRetryMissingGateway(t *testing.T) {
 		case "/api/routing/settings/searchGateway":
 			_ = json.NewEncoder(w).Encode(map[string]any{
 				"total": 1, "rowCount": 1, "current": 1,
-				"rows": []map[string]any{{"name": "GW_OTHER", "ipprotocol": "inet"}},
+				"rows": []map[string]any{{"name": "GW_OTHER", "ipprotocol": "inet", "disabled": false}},
 			})
 		default:
 			http.NotFound(w, r)
@@ -104,7 +104,7 @@ func TestAddRouteResolvedDoesNotRetryWrongFamily(t *testing.T) {
 		case "/api/routing/settings/searchGateway":
 			_ = json.NewEncoder(w).Encode(map[string]any{
 				"total": 1, "rowCount": 1, "current": 1,
-				"rows": []map[string]any{{"name": "GW_V4", "ipprotocol": "inet"}},
+				"rows": []map[string]any{{"name": "GW_V4", "ipprotocol": "inet", "disabled": false}},
 			})
 		default:
 			http.NotFound(w, r)
@@ -141,7 +141,7 @@ func TestUpdateRouteResolvedRetriesStaleGatewayOptions(t *testing.T) {
 			searchCalls++
 			_ = json.NewEncoder(w).Encode(map[string]any{
 				"total": 1, "rowCount": 1, "current": 1,
-				"rows": []map[string]any{{"name": "GW_A", "ipprotocol": "inet"}},
+				"rows": []map[string]any{{"name": "GW_A", "ipprotocol": "inet", "disabled": false}},
 			})
 		case "/api/routes/routes/reconfigure":
 			reconfigureCalls++
