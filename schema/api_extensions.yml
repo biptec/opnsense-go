@@ -73,6 +73,63 @@ resources:
         type: string
         key: backup_ipv6_default_gateway
 
+  - name: InterfaceSyncPolicy
+    filename: interface_sync_policy
+    monad: policy
+    endpoints:
+      create:
+        path: "/api_extensions/interface_policy/addPolicy"
+        method: POST
+      read:
+        path: "/api_extensions/interface_policy/getPolicy"
+        method: GET
+      update:
+        path: "/api_extensions/interface_policy/setPolicy"
+        method: POST
+      delete:
+        path: "/api_extensions/interface_policy/delPolicy"
+        method: POST
+      search:
+        path: "/api_extensions/interface_policy/searchPolicy"
+        method: GET
+    attrs:
+      - name: ID
+        type: string
+        key: id
+      - name: Description
+        type: string
+        key: description
+      - name: Synchronize
+        type: api.BoolString
+        key: synchronize
+
+  - name: InterfacePolicyAssignment
+    filename: interface_policy_assignment
+    monad: assignment
+    endpoints:
+      create:
+        path: "/api_extensions/interface_policy/addAssignment"
+        method: POST
+      read:
+        path: "/api_extensions/interface_policy/getAssignment"
+        method: GET
+      update:
+        path: "/api_extensions/interface_policy/setAssignment"
+        method: POST
+      delete:
+        path: "/api_extensions/interface_policy/delAssignment"
+        method: POST
+      search:
+        path: "/api_extensions/interface_policy/searchAssignment"
+        method: GET
+    attrs:
+      - name: Interface
+        type: SelectedMap
+        key: interface
+      - name: PolicyID
+        type: SelectedMap
+        key: policy_id
+
 rpc:
   - name: "Webgui"
     filename: webgui
