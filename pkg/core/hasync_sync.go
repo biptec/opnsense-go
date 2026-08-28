@@ -36,8 +36,10 @@ func (c *Controller) HasyncSync(ctx context.Context, items []string) (*HasyncSyn
 	}
 
 	callOpts := api.RPCOpts{
-		Endpoint:       api.Endpoint{Path: "/core/hasync_status/sync", Method: "POST"},
-		PathParameters: []string{strings.Join(normalized, ",")},
+		Endpoint: api.Endpoint{Path: "/core/hasync_status/sync", Method: "POST"},
+		BodyParameters: map[string]interface{}{
+			"items": normalized,
+		},
 	}
 	result, err := api.Call(c.Client(), ctx, callOpts, &HasyncSyncResult{})
 	if err != nil {

@@ -13,9 +13,19 @@ import (
 func TestHasyncSync(t *testing.T) {
 	t.Parallel()
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPost || r.URL.Path != "/api/core/hasync_status/sync/interface_vlans,virtualip,rules" {
+		t.Logf("request method=%s path=%s content_type=%s", r.Method, r.URL.Path, r.Header.Get("Content-Type"))
+		if r.Method != http.MethodPost || r.URL.Path != "/api/core/hasync_status/sync" {
 			http.NotFound(w, r)
 			return
+		}
+		var body struct {
+			Items []string `json:"items"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+			t.Fatalf("decode sync request: %v", err)
+		}
+		if len(body.Items) != 3 || body.Items[0] != "interface_vlans" || body.Items[1] != "virtualip" || body.Items[2] != "rules" {
+			t.Fatalf("unexpected sync request items: %#v", body.Items)
 		}
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(map[string]any{
