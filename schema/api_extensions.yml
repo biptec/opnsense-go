@@ -402,6 +402,53 @@ rpc:
           method: POST
         result_type: "DnsActionResult"
 
+  - name: "Package"
+    filename: package
+    customTypes:
+      PackageState:
+        - name: Name
+          type: string
+          key: name
+        - name: Installed
+          type: bool
+          key: installed
+        - name: Provided
+          type: bool
+          key: provided
+        - name: Version
+          type: string
+          key: version
+        - name: Locked
+          type: bool
+          key: locked
+        - name: Repository
+          type: string
+          key: repository
+        - name: Origin
+          type: string
+          key: origin
+      PackageResponse:
+        - name: Status
+          type: string
+          key: status
+        - name: Message
+          type: string
+          key: message
+          omitEmpty: true
+        - name: Package
+          type: PackageState
+          key: package
+    rpc_calls:
+      - name: "Get"
+        endpoint:
+          path: "/api_extensions/package/get"
+          method: GET
+        params:
+          - name: "packageName"
+            optional: false
+            bodyParameter: false
+        result_type: "PackageResponse"
+
   - name: "CarpHealth"
     filename: carp_health
     customTypes:
