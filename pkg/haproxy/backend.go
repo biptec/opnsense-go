@@ -25,6 +25,7 @@ type Backend struct {
 	Enabled               string              `json:"enabled"`
 	Name                  string              `json:"name"`
 	Description           string              `json:"description,omitempty"`
+	HAPolicy              api.SelectedMap     `json:"ha_policy,omitempty"`
 	Mode                  api.SelectedMap     `json:"mode"`
 	Algorithm             api.SelectedMap     `json:"algorithm"`
 	ProxyProtocol         api.SelectedMap     `json:"proxyProtocol,omitempty"`

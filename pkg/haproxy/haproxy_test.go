@@ -85,7 +85,7 @@ func TestHAProxyL4SNIResourceContracts(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved", "uuid": "be-id"})
 		case "/api/haproxy/settings/get_backend/be-id":
 			_ = json.NewEncoder(w).Encode(map[string]any{"backend": map[string]any{
-				"enabled": "1", "name": "web_rigi", "mode": haproxySelected("tcp"),
+				"enabled": "1", "name": "web_rigi", "ha_policy": haproxySelected("endpoint"), "mode": haproxySelected("tcp"),
 				"algorithm": haproxySelected("roundrobin"), "proxyProtocol": haproxySelected("v2"),
 				"linkedServers": haproxySelectedList("srv-id"), "healthCheckProxyProto": haproxySelected("backend"),
 			}})
@@ -93,14 +93,14 @@ func TestHAProxyL4SNIResourceContracts(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved", "uuid": "srv-id"})
 		case "/api/haproxy/settings/get_server/srv-id":
 			_ = json.NewEncoder(w).Encode(map[string]any{"server": map[string]any{
-				"enabled": "1", "name": "rigi", "address": "10.0.0.20", "port": "443",
+				"enabled": "1", "name": "rigi", "ha_policy": haproxySelected("endpoint"), "address": "10.0.0.20", "port": "443",
 				"mode": haproxySelected("active"), "type": haproxySelected("static"),
 			}})
 		case "/api/haproxy/settings/add_healthcheck":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved", "uuid": "hc-id"})
 		case "/api/haproxy/settings/get_healthcheck/hc-id":
 			_ = json.NewEncoder(w).Encode(map[string]any{"healthcheck": map[string]any{
-				"name": "tcp_tls", "type": haproxySelected("tcp"), "interval": "5s",
+				"name": "tcp_tls", "ha_policy": haproxySelected("endpoint"), "type": haproxySelected("tcp"), "interval": "5s",
 			}})
 		case "/api/haproxy/settings/add_acl":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": "saved", "uuid": "acl-id"})
@@ -131,7 +131,7 @@ func TestHAProxyL4SNIResourceContracts(t *testing.T) {
 		t.Fatalf("AddServer() = %q, %v", srvID, err)
 	}
 	srv, err := controller.GetServer(ctx, srvID)
-	if err != nil || srv.Address != "10.0.0.20" || srv.Mode.String() != "active" {
+	if err != nil || srv.Address != "10.0.0.20" || srv.Mode.String() != "active" || srv.HAPolicy.String() != "endpoint" {
 		t.Fatalf("GetServer() = %+v, %v", srv, err)
 	}
 
@@ -140,7 +140,7 @@ func TestHAProxyL4SNIResourceContracts(t *testing.T) {
 		t.Fatalf("AddHealthcheck() = %q, %v", hcID, err)
 	}
 	hc, err := controller.GetHealthcheck(ctx, hcID)
-	if err != nil || hc.Type.String() != "tcp" {
+	if err != nil || hc.Type.String() != "tcp" || hc.HAPolicy.String() != "endpoint" {
 		t.Fatalf("GetHealthcheck() = %+v, %v", hc, err)
 	}
 
@@ -149,7 +149,7 @@ func TestHAProxyL4SNIResourceContracts(t *testing.T) {
 		t.Fatalf("AddBackend() = %q, %v", beID, err)
 	}
 	backend, err := controller.GetBackend(ctx, beID)
-	if err != nil || backend.LinkedServers.String() != "srv-id" || backend.ProxyProtocol.String() != "v2" || backend.HealthCheckProxyProto.String() != "backend" {
+	if err != nil || backend.LinkedServers.String() != "srv-id" || backend.HAPolicy.String() != "endpoint" || backend.ProxyProtocol.String() != "v2" || backend.HealthCheckProxyProto.String() != "backend" {
 		t.Fatalf("GetBackend() = %+v, %v", backend, err)
 	}
 

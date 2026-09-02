@@ -24,6 +24,7 @@ type Healthcheck struct {
 	UUID          string          `json:"uuid,omitempty"`
 	Name          string          `json:"name"`
 	Description   string          `json:"description,omitempty"`
+	HAPolicy      api.SelectedMap `json:"ha_policy,omitempty"`
 	Type          api.SelectedMap `json:"type"`
 	Interval      string          `json:"interval,omitempty"`
 	SSL           api.SelectedMap `json:"ssl,omitempty"`
