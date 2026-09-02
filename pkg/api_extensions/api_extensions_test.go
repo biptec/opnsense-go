@@ -100,6 +100,22 @@ func newTestController(t *testing.T) (*Controller, *httptest.Server) {
 			_ = json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
 		case "/api/api_extensions/ntp/reconfigure":
 			_ = json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
+		case "/api/api_extensions/package/get/os-api-extensions":
+			if r.Method != http.MethodGet {
+				t.Errorf("package get method = %q, want GET", r.Method)
+			}
+			_ = json.NewEncoder(w).Encode(map[string]any{
+				"status": "ok",
+				"package": map[string]any{
+					"name":       "os-api-extensions",
+					"installed":  true,
+					"provided":   true,
+					"version":    "0.12",
+					"locked":     false,
+					"repository": "OPNsense",
+					"origin":     "opnsense/os-api-extensions",
+				},
+			})
 		default:
 			http.NotFound(w, r)
 		}
@@ -193,5 +209,24 @@ func TestNtpAPI(t *testing.T) {
 	result, err = controller.NtpReconfigure(ctx)
 	if err != nil || result.Status != "ok" {
 		t.Fatalf("NtpReconfigure() = %#v, %v", result, err)
+	}
+}
+
+func TestPackageAPI(t *testing.T) {
+	controller, server := newTestController(t)
+	defer server.Close()
+
+	response, err := controller.PackageGet(context.Background(), "os-api-extensions")
+	if err != nil {
+		t.Fatalf("PackageGet() error = %v", err)
+	}
+	if response.Status != "ok" {
+		t.Fatalf("PackageGet() status = %q, want ok", response.Status)
+	}
+	if response.Package.Name != "os-api-extensions" || !response.Package.Installed || !response.Package.Provided {
+		t.Fatalf("unexpected package response: %#v", response.Package)
+	}
+	if response.Package.Version != "0.12" || response.Package.Locked || response.Package.Repository != "OPNsense" {
+		t.Fatalf("unexpected package metadata: %#v", response.Package)
 	}
 }
