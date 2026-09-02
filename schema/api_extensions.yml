@@ -351,6 +351,57 @@ rpc:
           method: POST
         result_type: "NtpActionResult"
 
+  - name: "Dns"
+    filename: dns
+    customTypes:
+      DnsSettings:
+        - name: Servers
+          type: '[]string'
+          key: servers
+        - name: AllowOverride
+          type: bool
+          key: allow_override
+        - name: UseLocalService
+          type: bool
+          key: use_local_service
+      DnsResponse:
+        - name: DNS
+          type: DnsSettings
+          key: dns
+      DnsActionResult:
+        - name: Status
+          type: string
+          key: status
+        - name: Validations
+          type: 'map[string]string'
+          key: validations
+          omitEmpty: true
+        - name: Result
+          type: string
+          key: result
+          omitEmpty: true
+    rpc_calls:
+      - name: "Get"
+        endpoint:
+          path: "/api_extensions/dns/get"
+          method: GET
+        result_type: "DnsResponse"
+      - name: "Set"
+        endpoint:
+          path: "/api_extensions/dns/set"
+          method: POST
+        params:
+          - name: "settings"
+            key: dns
+            customType: DnsSettings
+            bodyParameter: true
+        result_type: "DnsActionResult"
+      - name: "Reconfigure"
+        endpoint:
+          path: "/api_extensions/dns/reconfigure"
+          method: POST
+        result_type: "DnsActionResult"
+
   - name: "CarpHealth"
     filename: carp_health
     customTypes:
