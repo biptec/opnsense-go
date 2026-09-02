@@ -39,11 +39,14 @@ resources:
       - {name: Enabled, type: string, key: enabled}
       - {name: Name, type: string, key: name}
       - {name: Description, type: string, key: description, omitEmpty: true}
+      - {name: HAPolicy, type: SelectedMap, key: ha_policy, omitEmpty: true}
       - {name: Mode, type: SelectedMap, key: mode}
       - {name: Algorithm, type: SelectedMap, key: algorithm}
+      - {name: ProxyProtocol, type: SelectedMap, key: proxyProtocol, omitEmpty: true}
       - {name: LinkedServers, type: SelectedMapList, key: linkedServers}
       - {name: HealthCheckEnabled, type: string, key: healthCheckEnabled, omitEmpty: true}
       - {name: HealthCheck, type: SelectedMap, key: healthCheck, omitEmpty: true}
+      - {name: HealthCheckProxyProto, type: SelectedMap, key: healthCheckProxyProto, omitEmpty: true}
       - {name: CheckInterval, type: string, key: checkInterval, omitEmpty: true}
       - {name: CheckDownInterval, type: string, key: checkDownInterval, omitEmpty: true}
       - {name: HealthCheckFall, type: string, key: healthCheckFall, omitEmpty: true}
@@ -65,6 +68,7 @@ resources:
       - {name: Enabled, type: string, key: enabled}
       - {name: Name, type: string, key: name}
       - {name: Description, type: string, key: description, omitEmpty: true}
+      - {name: HAPolicy, type: SelectedMap, key: ha_policy, omitEmpty: true}
       - {name: Address, type: string, key: address}
       - {name: Port, type: string, key: port, omitEmpty: true}
       - {name: CheckPort, type: string, key: checkport, omitEmpty: true}
@@ -91,6 +95,7 @@ resources:
       - {name: UUID, type: string, key: uuid, omitEmpty: true}
       - {name: Name, type: string, key: name}
       - {name: Description, type: string, key: description, omitEmpty: true}
+      - {name: HAPolicy, type: SelectedMap, key: ha_policy, omitEmpty: true}
       - {name: Type, type: SelectedMap, key: type}
       - {name: Interval, type: string, key: interval, omitEmpty: true}
       - {name: SSL, type: SelectedMap, key: ssl, omitEmpty: true}
