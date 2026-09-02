@@ -41,9 +41,11 @@ resources:
       - {name: Description, type: string, key: description, omitEmpty: true}
       - {name: Mode, type: SelectedMap, key: mode}
       - {name: Algorithm, type: SelectedMap, key: algorithm}
+      - {name: ProxyProtocol, type: SelectedMap, key: proxyProtocol, omitEmpty: true}
       - {name: LinkedServers, type: SelectedMapList, key: linkedServers}
       - {name: HealthCheckEnabled, type: string, key: healthCheckEnabled, omitEmpty: true}
       - {name: HealthCheck, type: SelectedMap, key: healthCheck, omitEmpty: true}
+      - {name: HealthCheckProxyProto, type: SelectedMap, key: healthCheckProxyProto, omitEmpty: true}
       - {name: CheckInterval, type: string, key: checkInterval, omitEmpty: true}
       - {name: CheckDownInterval, type: string, key: checkDownInterval, omitEmpty: true}
       - {name: HealthCheckFall, type: string, key: healthCheckFall, omitEmpty: true}

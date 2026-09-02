@@ -21,20 +21,22 @@ var BackendOpts = api.ReqOpts{
 // Data structs
 
 type Backend struct {
-	UUID               string              `json:"uuid,omitempty"`
-	Enabled            string              `json:"enabled"`
-	Name               string              `json:"name"`
-	Description        string              `json:"description,omitempty"`
-	Mode               api.SelectedMap     `json:"mode"`
-	Algorithm          api.SelectedMap     `json:"algorithm"`
-	LinkedServers      api.SelectedMapList `json:"linkedServers"`
-	HealthCheckEnabled string              `json:"healthCheckEnabled,omitempty"`
-	HealthCheck        api.SelectedMap     `json:"healthCheck,omitempty"`
-	CheckInterval      string              `json:"checkInterval,omitempty"`
-	CheckDownInterval  string              `json:"checkDownInterval,omitempty"`
-	HealthCheckFall    string              `json:"healthCheckFall,omitempty"`
-	HealthCheckRise    string              `json:"healthCheckRise,omitempty"`
-	CustomOptions      string              `json:"customOptions,omitempty"`
+	UUID                  string              `json:"uuid,omitempty"`
+	Enabled               string              `json:"enabled"`
+	Name                  string              `json:"name"`
+	Description           string              `json:"description,omitempty"`
+	Mode                  api.SelectedMap     `json:"mode"`
+	Algorithm             api.SelectedMap     `json:"algorithm"`
+	ProxyProtocol         api.SelectedMap     `json:"proxyProtocol,omitempty"`
+	LinkedServers         api.SelectedMapList `json:"linkedServers"`
+	HealthCheckEnabled    string              `json:"healthCheckEnabled,omitempty"`
+	HealthCheck           api.SelectedMap     `json:"healthCheck,omitempty"`
+	HealthCheckProxyProto api.SelectedMap     `json:"healthCheckProxyProto,omitempty"`
+	CheckInterval         string              `json:"checkInterval,omitempty"`
+	CheckDownInterval     string              `json:"checkDownInterval,omitempty"`
+	HealthCheckFall       string              `json:"healthCheckFall,omitempty"`
+	HealthCheckRise       string              `json:"healthCheckRise,omitempty"`
+	CustomOptions         string              `json:"customOptions,omitempty"`
 }
 
 // CRUD operations
