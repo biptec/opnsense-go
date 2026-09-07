@@ -164,6 +164,12 @@ func (c *Client) doEndpointRequest(ctx context.Context, endpoint Endpoint, body,
 
 // ReconfigureService defined at the endpoint.
 func (c *Client) ReconfigureService(ctx context.Context, endpoint Endpoint) error {
+	return c.ReconfigureServiceWithBody(ctx, endpoint, nil)
+}
+
+// ReconfigureServiceWithBody reconfigures the service while forwarding optional
+// scope metadata returned by the preceding write operation.
+func (c *Client) ReconfigureServiceWithBody(ctx context.Context, endpoint Endpoint, body any) error {
 	// Handle services without a reconfigure endpoint
 	if endpoint.Path == "" {
 		return nil
@@ -174,7 +180,7 @@ func (c *Client) ReconfigureService(ctx context.Context, endpoint Endpoint) erro
 		Status string `json:"status,omitempty"`
 		Result string `json:"result,omitempty"`
 	}{}
-	err := c.doEndpointRequest(ctx, endpoint, nil, respJson)
+	err := c.doEndpointRequest(ctx, endpoint, body, respJson)
 	if err != nil {
 		return err
 	}

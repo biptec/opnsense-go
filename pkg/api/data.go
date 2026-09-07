@@ -49,10 +49,12 @@ type addResp struct {
 	Result      string                 `json:"result"`
 	UUID        string                 `json:"uuid"`
 	Validations map[string]interface{} `json:"validations,omitempty"`
+	Reconfigure map[string]interface{} `json:"reconfigure,omitempty"`
 }
 
 type deleteResp struct {
-	Result string `json:"result"`
+	Result      string                 `json:"result"`
+	Reconfigure map[string]interface{} `json:"reconfigure,omitempty"`
 }
 
 // RCP Options

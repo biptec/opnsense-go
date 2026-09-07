@@ -28,6 +28,13 @@ func resourceUnwrap[K any](monad string, resource K, reqData map[string]json.Raw
 	return nil
 }
 
+func optionalReconfigureBody(metadata map[string]interface{}) any {
+	if len(metadata) == 0 {
+		return nil
+	}
+	return metadata
+}
+
 func set[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, endpoint Endpoint) (string, error) {
 	// Since the OPNsense controller has to be reconfigured after every change, locking the mutex prevents
 	// the API from being written to while it's reconfiguring, which results in data loss.
@@ -51,8 +58,11 @@ func set[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, endpo
 		return "", fmt.Errorf("resource not changed. result: %s. errors: %s", respJson.Result, respJson.Validations)
 	}
 
-	// Reconfigure (i.e. restart) the OPNsense service
-	err = c.ReconfigureService(ctx, opts.Reconfigure)
+	// Reconfigure (i.e. restart) the OPNsense service. Controllers may
+	// return optional scope metadata so unrelated interfaces/services stay untouched.
+	// Keep the historical empty request body when no metadata was returned: a nil
+	// map converted directly to `any` would otherwise be encoded as JSON `null`.
+	err = c.ReconfigureServiceWithBody(ctx, opts.Reconfigure, optionalReconfigureBody(respJson.Reconfigure))
 	if err != nil {
 		return respJson.UUID, err
 	}
@@ -177,8 +187,10 @@ func Delete(c *Client, ctx context.Context, opts ReqOpts, id string) error {
 		return fmt.Errorf("resource not deleted. result: %s", respJson.Result)
 	}
 
-	// Reconfigure (i.e. restart) the OPNsense service
-	err = c.ReconfigureService(ctx, opts.Reconfigure)
+	// Reconfigure (i.e. restart) the OPNsense service. Controllers may
+	// return optional scope metadata so unrelated interfaces/services stay untouched.
+	// Preserve the legacy empty POST when the delete response has no metadata.
+	err = c.ReconfigureServiceWithBody(ctx, opts.Reconfigure, optionalReconfigureBody(respJson.Reconfigure))
 	if err != nil {
 		return err
 	}
