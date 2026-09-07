@@ -51,8 +51,9 @@ func set[K any](c *Client, ctx context.Context, opts ReqOpts, resource *K, endpo
 		return "", fmt.Errorf("resource not changed. result: %s. errors: %s", respJson.Result, respJson.Validations)
 	}
 
-	// Reconfigure (i.e. restart) the OPNsense service
-	err = c.ReconfigureService(ctx, opts.Reconfigure)
+	// Reconfigure (i.e. restart) the OPNsense service.  Controllers may
+	// return optional scope metadata so unrelated interfaces/services stay untouched.
+	err = c.ReconfigureServiceWithBody(ctx, opts.Reconfigure, respJson.Reconfigure)
 	if err != nil {
 		return respJson.UUID, err
 	}
@@ -177,8 +178,9 @@ func Delete(c *Client, ctx context.Context, opts ReqOpts, id string) error {
 		return fmt.Errorf("resource not deleted. result: %s", respJson.Result)
 	}
 
-	// Reconfigure (i.e. restart) the OPNsense service
-	err = c.ReconfigureService(ctx, opts.Reconfigure)
+	// Reconfigure (i.e. restart) the OPNsense service.  Controllers may
+	// return optional scope metadata so unrelated interfaces/services stay untouched.
+	err = c.ReconfigureServiceWithBody(ctx, opts.Reconfigure, respJson.Reconfigure)
 	if err != nil {
 		return err
 	}
