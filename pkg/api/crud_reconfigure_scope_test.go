@@ -74,6 +74,54 @@ func TestAddForwardsReconfigureScope(t *testing.T) {
 	}
 }
 
+func TestAddWithoutReconfigureScopeKeepsLegacyEmptyBody(t *testing.T) {
+	t.Parallel()
+
+	var mu sync.Mutex
+	var bodyBytes int64
+	var contentType string
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		switch r.URL.Path {
+		case "/api/test/add":
+			_ = json.NewEncoder(w).Encode(map[string]any{
+				"result": "saved",
+				"uuid":   "test-uuid",
+			})
+		case "/api/test/reconfigure":
+			mu.Lock()
+			bodyBytes = r.ContentLength
+			contentType = r.Header.Get("Content-Type")
+			mu.Unlock()
+			_ = json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
+		default:
+			http.NotFound(w, r)
+		}
+	}))
+	defer server.Close()
+
+	client := NewClient(Options{Uri: server.URL})
+	opts := ReqOpts{
+		Create:      Endpoint{Path: "/test/add", Method: http.MethodPost},
+		Reconfigure: Endpoint{Path: "/test/reconfigure", Method: http.MethodPost},
+		Monad:       "item",
+	}
+	if _, err := Add(client, context.Background(), opts, &scopedCRUDTestResource{Name: "test"}); err != nil {
+		t.Fatalf("Add() error = %v", err)
+	}
+
+	mu.Lock()
+	gotBytes := bodyBytes
+	gotContentType := contentType
+	mu.Unlock()
+	if gotBytes > 0 {
+		t.Fatalf("legacy CRUD reconfigure sent body content length %d, want zero/unknown", gotBytes)
+	}
+	if gotContentType != "" {
+		t.Fatalf("legacy CRUD reconfigure content type = %q, want empty", gotContentType)
+	}
+}
+
 func TestDeleteForwardsReconfigureScope(t *testing.T) {
 	t.Parallel()
 
