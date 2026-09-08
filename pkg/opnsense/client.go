@@ -19,6 +19,7 @@ import (
 	"github.com/biptec/opnsense-go/pkg/interfaces"
 	"github.com/biptec/opnsense-go/pkg/ipsec"
 	"github.com/biptec/opnsense-go/pkg/kea"
+	"github.com/biptec/opnsense-go/pkg/ndpproxy"
 	"github.com/biptec/opnsense-go/pkg/openvpn"
 	"github.com/biptec/opnsense-go/pkg/quagga"
 	"github.com/biptec/opnsense-go/pkg/routes"
@@ -45,6 +46,7 @@ type Client interface {
 	Interfaces() *interfaces.Controller
 	Ipsec() *ipsec.Controller
 	Kea() *kea.Controller
+	NdpProxy() *ndpproxy.Controller
 	Openvpn() *openvpn.Controller
 	Quagga() *quagga.Controller
 	Routes() *routes.Controller
@@ -121,6 +123,10 @@ func (c *client) Ipsec() *ipsec.Controller {
 
 func (c *client) Kea() *kea.Controller {
 	return &kea.Controller{Api: c.a}
+}
+
+func (c *client) NdpProxy() *ndpproxy.Controller {
+	return &ndpproxy.Controller{Api: c.a}
 }
 
 func (c *client) Openvpn() *openvpn.Controller {
