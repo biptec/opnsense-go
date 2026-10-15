@@ -20,16 +20,18 @@ import (
 )
 
 const (
-	clientMaxBackoff = 30
-	clientMinBackoff = 1
-	clientMaxRetries = 4
+	clientMaxBackoff     = 30
+	clientMinBackoff     = 1
+	clientMaxRetries     = 4
+	clientRequestTimeout = 120
 )
 
 var clientMutexKey = "OPNSENSE"
 
 type Client struct {
-	client *retryablehttp.Client
-	opts   Options
+	client         *retryablehttp.Client
+	opts           Options
+	requestTimeout time.Duration
 }
 
 type Options struct {
@@ -39,9 +41,10 @@ type Options struct {
 	AllowInsecure bool
 
 	// Retries
-	MaxBackoff int64
-	MinBackoff int64
-	MaxRetries int64
+	MaxBackoff     int64
+	MinBackoff     int64
+	MaxRetries     int64
+	RequestTimeout int64
 
 	Logger *log.Logger
 }
@@ -56,9 +59,14 @@ func NewClient(options Options) *Client {
 	} else {
 		httpClient.Logger = nil
 	}
+	requestTimeout := int64(clientRequestTimeout)
+	if options.RequestTimeout > 0 {
+		requestTimeout = options.RequestTimeout
+	}
 	client := &Client{
-		client: httpClient,
-		opts:   options,
+		client:         httpClient,
+		opts:           options,
+		requestTimeout: time.Duration(requestTimeout) * time.Second,
 	}
 
 	// Configure HTTP client
@@ -114,8 +122,13 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, body an
 		bodyReader = bytes.NewReader(bodyBytes)
 	}
 
+	// Bound the entire request/retry lifecycle. Without a deadline, a backend
+	// reconfigure handler that never returns can block Terraform indefinitely.
+	requestCtx, cancel := context.WithTimeout(ctx, c.requestTimeout)
+	defer cancel()
+
 	// Create request
-	req, err := retryablehttp.NewRequestWithContext(ctx, method, c.endpointURL(endpoint), bodyReader)
+	req, err := retryablehttp.NewRequestWithContext(requestCtx, method, c.endpointURL(endpoint), bodyReader)
 	if err != nil {
 		return err
 	}

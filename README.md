@@ -41,6 +41,7 @@ client := opnsense.NewClient(apiClient)
 | `MaxRetries` | 4 | Number of times to retry a failed request |
 | `MinBackoff` | 1s | Minimum wait between retries |
 | `MaxBackoff` | 30s | Maximum wait between retries |
+| `RequestTimeout` | 120s | Maximum total time for one API request including retries |
 | `Logger` | stdlib default | Custom `*log.Logger` for request/response logging |
 
 ### CRUD resources
