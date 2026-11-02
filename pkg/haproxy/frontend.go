@@ -21,17 +21,19 @@ var FrontendOpts = api.ReqOpts{
 // Data structs
 
 type Frontend struct {
-	UUID           string              `json:"uuid,omitempty"`
-	Enabled        string              `json:"enabled"`
-	Name           string              `json:"name"`
-	Description    string              `json:"description,omitempty"`
-	Bind           api.SelectedMapList `json:"bind"`
-	BindOptions    string              `json:"bindOptions,omitempty"`
-	Mode           api.SelectedMap     `json:"mode"`
-	DefaultBackend api.SelectedMap     `json:"defaultBackend,omitempty"`
-	SSLEnabled     string              `json:"ssl_enabled,omitempty"`
-	CustomOptions  string              `json:"customOptions,omitempty"`
-	LinkedActions  api.SelectedMapList `json:"linkedActions"`
+	UUID                  string              `json:"uuid,omitempty"`
+	Enabled               string              `json:"enabled"`
+	Name                  string              `json:"name"`
+	Description           string              `json:"description,omitempty"`
+	Bind                  api.SelectedMapList `json:"bind"`
+	BindOptions           string              `json:"bindOptions,omitempty"`
+	Mode                  api.SelectedMap     `json:"mode"`
+	DefaultBackend        api.SelectedMap     `json:"defaultBackend,omitempty"`
+	SSLEnabled            string              `json:"ssl_enabled,omitempty"`
+	SSLCertificates       api.SelectedMapList `json:"ssl_certificates,omitempty"`
+	SSLDefaultCertificate api.SelectedMap     `json:"ssl_default_certificate,omitempty"`
+	CustomOptions         string              `json:"customOptions,omitempty"`
+	LinkedActions         api.SelectedMapList `json:"linkedActions"`
 }
 
 // CRUD operations

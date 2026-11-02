@@ -21,22 +21,25 @@ var ServerOpts = api.ReqOpts{
 // Data structs
 
 type Server struct {
-	UUID              string          `json:"uuid,omitempty"`
-	Enabled           string          `json:"enabled"`
-	Name              string          `json:"name"`
-	Description       string          `json:"description,omitempty"`
-	HAPolicy          api.SelectedMap `json:"ha_policy,omitempty"`
-	Address           string          `json:"address"`
-	Port              string          `json:"port,omitempty"`
-	CheckPort         string          `json:"checkport,omitempty"`
-	Mode              api.SelectedMap `json:"mode"`
-	Type              api.SelectedMap `json:"type"`
-	SSL               string          `json:"ssl,omitempty"`
-	MaxConnections    string          `json:"maxConnections,omitempty"`
-	Weight            string          `json:"weight,omitempty"`
-	CheckInterval     string          `json:"checkInterval,omitempty"`
-	CheckDownInterval string          `json:"checkDownInterval,omitempty"`
-	Advanced          string          `json:"advanced,omitempty"`
+	UUID              string              `json:"uuid,omitempty"`
+	Enabled           string              `json:"enabled"`
+	Name              string              `json:"name"`
+	Description       string              `json:"description,omitempty"`
+	HAPolicy          api.SelectedMap     `json:"ha_policy,omitempty"`
+	Address           string              `json:"address"`
+	Port              string              `json:"port,omitempty"`
+	CheckPort         string              `json:"checkport,omitempty"`
+	Mode              api.SelectedMap     `json:"mode"`
+	Type              api.SelectedMap     `json:"type"`
+	SSL               string              `json:"ssl,omitempty"`
+	SSLSNI            string              `json:"sslSNI,omitempty"`
+	SSLVerify         string              `json:"sslVerify,omitempty"`
+	SSLCA             api.SelectedMapList `json:"sslCA,omitempty"`
+	MaxConnections    string              `json:"maxConnections,omitempty"`
+	Weight            string              `json:"weight,omitempty"`
+	CheckInterval     string              `json:"checkInterval,omitempty"`
+	CheckDownInterval string              `json:"checkDownInterval,omitempty"`
+	Advanced          string              `json:"advanced,omitempty"`
 }
 
 // CRUD operations
