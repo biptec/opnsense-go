@@ -79,6 +79,7 @@ resources:
       - {name: SSL, type: string, key: ssl, omitEmpty: true}
       - {name: SSLSNI, type: string, key: sslSNI, omitEmpty: true}
       - {name: SSLVerify, type: string, key: sslVerify, omitEmpty: true}
+      - {name: SSLVerifyHost, type: string, key: sslVerifyHost, omitEmpty: true}
       - {name: SSLCA, type: SelectedMapList, key: sslCA, omitEmpty: true}
       - {name: MaxConnections, type: string, key: maxConnections, omitEmpty: true}
       - {name: Weight, type: string, key: weight, omitEmpty: true}

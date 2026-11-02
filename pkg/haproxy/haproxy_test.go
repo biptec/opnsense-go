@@ -209,16 +209,17 @@ func TestHAProxyTLSFieldsJSONContracts(t *testing.T) {
 	}
 
 	serverBody, err := json.Marshal(&Server{
-		Enabled:   "1",
-		Name:      "deneb",
-		Address:   "10.0.16.62",
-		Port:      "443",
-		Mode:      api.SelectedMap("active"),
-		Type:      api.SelectedMap("static"),
-		SSL:       "1",
-		SSLSNI:    "deneb.svc.sandbox.biptec.net",
-		SSLVerify: "1",
-		SSLCA:     api.SelectedMapList{"ca-1"},
+		Enabled:       "1",
+		Name:          "deneb",
+		Address:       "10.0.16.62",
+		Port:          "443",
+		Mode:          api.SelectedMap("active"),
+		Type:          api.SelectedMap("static"),
+		SSL:           "1",
+		SSLSNI:        "deneb.svc.sandbox.biptec.net",
+		SSLVerify:     "1",
+		SSLVerifyHost: "deneb.svc.sandbox.biptec.net",
+		SSLCA:         api.SelectedMapList{"ca-1"},
 	})
 	if err != nil {
 		t.Fatalf("marshal server: %v", err)
@@ -232,6 +233,9 @@ func TestHAProxyTLSFieldsJSONContracts(t *testing.T) {
 	}
 	if got := serverJSON["sslVerify"]; got != "1" {
 		t.Fatalf("server sslVerify = %#v, want 1", got)
+	}
+	if got := serverJSON["sslVerifyHost"]; got != "deneb.svc.sandbox.biptec.net" {
+		t.Fatalf("server sslVerifyHost = %#v, want backend certificate identity", got)
 	}
 	if _, ok := serverJSON["sslCA"]; !ok {
 		t.Fatalf("server JSON missing sslCA: %s", serverBody)

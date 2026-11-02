@@ -34,6 +34,7 @@ type Server struct {
 	SSL               string              `json:"ssl,omitempty"`
 	SSLSNI            string              `json:"sslSNI,omitempty"`
 	SSLVerify         string              `json:"sslVerify,omitempty"`
+	SSLVerifyHost     string              `json:"sslVerifyHost,omitempty"`
 	SSLCA             api.SelectedMapList `json:"sslCA,omitempty"`
 	MaxConnections    string              `json:"maxConnections,omitempty"`
 	Weight            string              `json:"weight,omitempty"`
