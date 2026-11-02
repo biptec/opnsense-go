@@ -236,4 +236,36 @@ func TestHAProxyTLSFieldsJSONContracts(t *testing.T) {
 	if _, ok := serverJSON["sslCA"]; !ok {
 		t.Fatalf("server JSON missing sslCA: %s", serverBody)
 	}
+
+	healthBody, err := json.Marshal(&Healthcheck{
+		Name:                  "oidc_https",
+		Type:                  api.SelectedMap("http"),
+		Interval:              "2s",
+		SSL:                   api.SelectedMap("sslsni"),
+		SSLSNI:                "deneb.svc.sandbox.biptec.net",
+		HTTPMethod:            api.SelectedMap("get"),
+		HTTPURI:               "/realms/sso/.well-known/openid-configuration",
+		HTTPVersion:           api.SelectedMap("http11"),
+		HTTPHost:              "id.central.sandbox.biptec.net",
+		HTTPExpressionEnabled: "1",
+		HTTPExpression:        api.SelectedMap("string"),
+		HTTPNegate:            "0",
+		HTTPValue:             "https://id.central.sandbox.biptec.net/realms/sso",
+	})
+	if err != nil {
+		t.Fatalf("marshal healthcheck: %v", err)
+	}
+	var healthJSON map[string]any
+	if err := json.Unmarshal(healthBody, &healthJSON); err != nil {
+		t.Fatalf("decode healthcheck JSON: %v", err)
+	}
+	if got := healthJSON["http_version"]; got == nil {
+		t.Fatalf("healthcheck JSON missing http_version: %s", healthBody)
+	}
+	if got := healthJSON["http_expressionEnabled"]; got != "1" {
+		t.Fatalf("healthcheck http_expressionEnabled = %#v, want 1", got)
+	}
+	if got := healthJSON["http_value"]; got != "https://id.central.sandbox.biptec.net/realms/sso" {
+		t.Fatalf("healthcheck http_value = %#v", got)
+	}
 }

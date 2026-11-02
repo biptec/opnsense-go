@@ -109,7 +109,12 @@ resources:
       - {name: CheckPort, type: string, key: checkport, omitEmpty: true}
       - {name: HTTPMethod, type: SelectedMap, key: http_method, omitEmpty: true}
       - {name: HTTPURI, type: string, key: http_uri, omitEmpty: true}
+      - {name: HTTPVersion, type: SelectedMap, key: http_version, omitEmpty: true}
       - {name: HTTPHost, type: string, key: http_host, omitEmpty: true}
+      - {name: HTTPExpressionEnabled, type: string, key: http_expressionEnabled, omitEmpty: true}
+      - {name: HTTPExpression, type: SelectedMap, key: http_expression, omitEmpty: true}
+      - {name: HTTPNegate, type: string, key: http_negate, omitEmpty: true}
+      - {name: HTTPValue, type: string, key: http_value, omitEmpty: true}
       - {name: TCPSendValue, type: string, key: tcp_sendValue, omitEmpty: true}
       - {name: TCPMatchType, type: SelectedMap, key: tcp_matchType, omitEmpty: true}
       - {name: TCPMatchValue, type: string, key: tcp_matchValue, omitEmpty: true}
