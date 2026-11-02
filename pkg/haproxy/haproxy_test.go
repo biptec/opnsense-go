@@ -187,6 +187,7 @@ func TestHAProxyTLSFieldsJSONContracts(t *testing.T) {
 	frontendBody, err := json.Marshal(&Frontend{
 		Enabled:               "1",
 		Name:                  "oidc_ingress",
+		HAPolicy:              api.SelectedMap("endpoint"),
 		Bind:                  api.SelectedMapList{"10.0.16.81:443"},
 		Mode:                  api.SelectedMap("http"),
 		SSLEnabled:            "1",
@@ -200,6 +201,9 @@ func TestHAProxyTLSFieldsJSONContracts(t *testing.T) {
 	var frontendJSON map[string]any
 	if err := json.Unmarshal(frontendBody, &frontendJSON); err != nil {
 		t.Fatalf("decode frontend JSON: %v", err)
+	}
+	if got := frontendJSON["ha_policy"]; got == nil {
+		t.Fatalf("frontend JSON missing ha_policy: %s", frontendBody)
 	}
 	if _, ok := frontendJSON["ssl_certificates"]; !ok {
 		t.Fatalf("frontend JSON missing ssl_certificates: %s", frontendBody)

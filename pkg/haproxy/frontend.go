@@ -25,6 +25,7 @@ type Frontend struct {
 	Enabled               string              `json:"enabled"`
 	Name                  string              `json:"name"`
 	Description           string              `json:"description,omitempty"`
+	HAPolicy              api.SelectedMap     `json:"ha_policy,omitempty"`
 	Bind                  api.SelectedMapList `json:"bind"`
 	BindOptions           string              `json:"bindOptions,omitempty"`
 	Mode                  api.SelectedMap     `json:"mode"`

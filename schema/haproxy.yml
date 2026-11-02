@@ -16,6 +16,7 @@ resources:
       - {name: Enabled, type: string, key: enabled}
       - {name: Name, type: string, key: name}
       - {name: Description, type: string, key: description, omitEmpty: true}
+      - {name: HAPolicy, type: SelectedMap, key: ha_policy, omitEmpty: true}
       - {name: Bind, type: SelectedMapList, key: bind}
       - {name: BindOptions, type: string, key: bindOptions, omitEmpty: true}
       - {name: Mode, type: SelectedMap, key: mode}
