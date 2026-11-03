@@ -16,11 +16,14 @@ resources:
       - {name: Enabled, type: string, key: enabled}
       - {name: Name, type: string, key: name}
       - {name: Description, type: string, key: description, omitEmpty: true}
+      - {name: HAPolicy, type: SelectedMap, key: ha_policy, omitEmpty: true}
       - {name: Bind, type: SelectedMapList, key: bind}
       - {name: BindOptions, type: string, key: bindOptions, omitEmpty: true}
       - {name: Mode, type: SelectedMap, key: mode}
       - {name: DefaultBackend, type: SelectedMap, key: defaultBackend, omitEmpty: true}
       - {name: SSLEnabled, type: string, key: ssl_enabled, omitEmpty: true}
+      - {name: SSLCertificates, type: SelectedMapList, key: ssl_certificates, omitEmpty: true}
+      - {name: SSLDefaultCertificate, type: SelectedMap, key: ssl_default_certificate, omitEmpty: true}
       - {name: CustomOptions, type: string, key: customOptions, omitEmpty: true}
       - {name: LinkedActions, type: SelectedMapList, key: linkedActions}
 
@@ -75,6 +78,10 @@ resources:
       - {name: Mode, type: SelectedMap, key: mode}
       - {name: Type, type: SelectedMap, key: type}
       - {name: SSL, type: string, key: ssl, omitEmpty: true}
+      - {name: SSLSNI, type: string, key: sslSNI, omitEmpty: true}
+      - {name: SSLVerify, type: string, key: sslVerify, omitEmpty: true}
+      - {name: SSLVerifyHost, type: string, key: sslVerifyHost, omitEmpty: true}
+      - {name: SSLCA, type: SelectedMapList, key: sslCA, omitEmpty: true}
       - {name: MaxConnections, type: string, key: maxConnections, omitEmpty: true}
       - {name: Weight, type: string, key: weight, omitEmpty: true}
       - {name: CheckInterval, type: string, key: checkInterval, omitEmpty: true}
@@ -104,7 +111,12 @@ resources:
       - {name: CheckPort, type: string, key: checkport, omitEmpty: true}
       - {name: HTTPMethod, type: SelectedMap, key: http_method, omitEmpty: true}
       - {name: HTTPURI, type: string, key: http_uri, omitEmpty: true}
+      - {name: HTTPVersion, type: SelectedMap, key: http_version, omitEmpty: true}
       - {name: HTTPHost, type: string, key: http_host, omitEmpty: true}
+      - {name: HTTPExpressionEnabled, type: string, key: http_expressionEnabled, omitEmpty: true}
+      - {name: HTTPExpression, type: SelectedMap, key: http_expression, omitEmpty: true}
+      - {name: HTTPNegate, type: string, key: http_negate, omitEmpty: true}
+      - {name: HTTPValue, type: string, key: http_value, omitEmpty: true}
       - {name: TCPSendValue, type: string, key: tcp_sendValue, omitEmpty: true}
       - {name: TCPMatchType, type: SelectedMap, key: tcp_matchType, omitEmpty: true}
       - {name: TCPMatchValue, type: string, key: tcp_matchValue, omitEmpty: true}

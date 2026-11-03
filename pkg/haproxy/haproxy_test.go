@@ -180,3 +180,100 @@ func TestHAProxyL4SNIResourceContracts(t *testing.T) {
 		t.Fatalf("GetFrontend() = %+v, %v", frontend, err)
 	}
 }
+
+func TestHAProxyTLSFieldsJSONContracts(t *testing.T) {
+	t.Parallel()
+
+	frontendBody, err := json.Marshal(&Frontend{
+		Enabled:               "1",
+		Name:                  "oidc_ingress",
+		HAPolicy:              api.SelectedMap("endpoint"),
+		Bind:                  api.SelectedMapList{"10.0.16.81:443"},
+		Mode:                  api.SelectedMap("http"),
+		SSLEnabled:            "1",
+		SSLCertificates:       api.SelectedMapList{"cert-1", "cert-2"},
+		SSLDefaultCertificate: api.SelectedMap("cert-1"),
+		LinkedActions:         api.SelectedMapList{},
+	})
+	if err != nil {
+		t.Fatalf("marshal frontend: %v", err)
+	}
+	var frontendJSON map[string]any
+	if err := json.Unmarshal(frontendBody, &frontendJSON); err != nil {
+		t.Fatalf("decode frontend JSON: %v", err)
+	}
+	if got := frontendJSON["ha_policy"]; got == nil {
+		t.Fatalf("frontend JSON missing ha_policy: %s", frontendBody)
+	}
+	if _, ok := frontendJSON["ssl_certificates"]; !ok {
+		t.Fatalf("frontend JSON missing ssl_certificates: %s", frontendBody)
+	}
+	if _, ok := frontendJSON["ssl_default_certificate"]; !ok {
+		t.Fatalf("frontend JSON missing ssl_default_certificate: %s", frontendBody)
+	}
+
+	serverBody, err := json.Marshal(&Server{
+		Enabled:       "1",
+		Name:          "deneb",
+		Address:       "10.0.16.62",
+		Port:          "443",
+		Mode:          api.SelectedMap("active"),
+		Type:          api.SelectedMap("static"),
+		SSL:           "1",
+		SSLSNI:        "deneb.svc.sandbox.biptec.net",
+		SSLVerify:     "1",
+		SSLVerifyHost: "deneb.svc.sandbox.biptec.net",
+		SSLCA:         api.SelectedMapList{"ca-1"},
+	})
+	if err != nil {
+		t.Fatalf("marshal server: %v", err)
+	}
+	var serverJSON map[string]any
+	if err := json.Unmarshal(serverBody, &serverJSON); err != nil {
+		t.Fatalf("decode server JSON: %v", err)
+	}
+	if got := serverJSON["sslSNI"]; got != "deneb.svc.sandbox.biptec.net" {
+		t.Fatalf("server sslSNI = %#v, want backend TLS identity", got)
+	}
+	if got := serverJSON["sslVerify"]; got != "1" {
+		t.Fatalf("server sslVerify = %#v, want 1", got)
+	}
+	if got := serverJSON["sslVerifyHost"]; got != "deneb.svc.sandbox.biptec.net" {
+		t.Fatalf("server sslVerifyHost = %#v, want backend certificate identity", got)
+	}
+	if _, ok := serverJSON["sslCA"]; !ok {
+		t.Fatalf("server JSON missing sslCA: %s", serverBody)
+	}
+
+	healthBody, err := json.Marshal(&Healthcheck{
+		Name:                  "oidc_https",
+		Type:                  api.SelectedMap("http"),
+		Interval:              "2s",
+		SSL:                   api.SelectedMap("sslsni"),
+		SSLSNI:                "deneb.svc.sandbox.biptec.net",
+		HTTPMethod:            api.SelectedMap("get"),
+		HTTPURI:               "/realms/sso/.well-known/openid-configuration",
+		HTTPVersion:           api.SelectedMap("http11"),
+		HTTPHost:              "id.central.sandbox.biptec.net",
+		HTTPExpressionEnabled: "1",
+		HTTPExpression:        api.SelectedMap("string"),
+		HTTPNegate:            "0",
+		HTTPValue:             "https://id.central.sandbox.biptec.net/realms/sso",
+	})
+	if err != nil {
+		t.Fatalf("marshal healthcheck: %v", err)
+	}
+	var healthJSON map[string]any
+	if err := json.Unmarshal(healthBody, &healthJSON); err != nil {
+		t.Fatalf("decode healthcheck JSON: %v", err)
+	}
+	if got := healthJSON["http_version"]; got == nil {
+		t.Fatalf("healthcheck JSON missing http_version: %s", healthBody)
+	}
+	if got := healthJSON["http_expressionEnabled"]; got != "1" {
+		t.Fatalf("healthcheck http_expressionEnabled = %#v, want 1", got)
+	}
+	if got := healthJSON["http_value"]; got != "https://id.central.sandbox.biptec.net/realms/sso" {
+		t.Fatalf("healthcheck http_value = %#v", got)
+	}
+}

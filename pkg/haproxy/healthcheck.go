@@ -21,22 +21,27 @@ var HealthcheckOpts = api.ReqOpts{
 // Data structs
 
 type Healthcheck struct {
-	UUID          string          `json:"uuid,omitempty"`
-	Name          string          `json:"name"`
-	Description   string          `json:"description,omitempty"`
-	HAPolicy      api.SelectedMap `json:"ha_policy,omitempty"`
-	Type          api.SelectedMap `json:"type"`
-	Interval      string          `json:"interval,omitempty"`
-	SSL           api.SelectedMap `json:"ssl,omitempty"`
-	SSLSNI        string          `json:"sslSNI,omitempty"`
-	ForceSSL      string          `json:"force_ssl,omitempty"`
-	CheckPort     string          `json:"checkport,omitempty"`
-	HTTPMethod    api.SelectedMap `json:"http_method,omitempty"`
-	HTTPURI       string          `json:"http_uri,omitempty"`
-	HTTPHost      string          `json:"http_host,omitempty"`
-	TCPSendValue  string          `json:"tcp_sendValue,omitempty"`
-	TCPMatchType  api.SelectedMap `json:"tcp_matchType,omitempty"`
-	TCPMatchValue string          `json:"tcp_matchValue,omitempty"`
+	UUID                  string          `json:"uuid,omitempty"`
+	Name                  string          `json:"name"`
+	Description           string          `json:"description,omitempty"`
+	HAPolicy              api.SelectedMap `json:"ha_policy,omitempty"`
+	Type                  api.SelectedMap `json:"type"`
+	Interval              string          `json:"interval,omitempty"`
+	SSL                   api.SelectedMap `json:"ssl,omitempty"`
+	SSLSNI                string          `json:"sslSNI,omitempty"`
+	ForceSSL              string          `json:"force_ssl,omitempty"`
+	CheckPort             string          `json:"checkport,omitempty"`
+	HTTPMethod            api.SelectedMap `json:"http_method,omitempty"`
+	HTTPURI               string          `json:"http_uri,omitempty"`
+	HTTPVersion           api.SelectedMap `json:"http_version,omitempty"`
+	HTTPHost              string          `json:"http_host,omitempty"`
+	HTTPExpressionEnabled string          `json:"http_expressionEnabled,omitempty"`
+	HTTPExpression        api.SelectedMap `json:"http_expression,omitempty"`
+	HTTPNegate            string          `json:"http_negate,omitempty"`
+	HTTPValue             string          `json:"http_value,omitempty"`
+	TCPSendValue          string          `json:"tcp_sendValue,omitempty"`
+	TCPMatchType          api.SelectedMap `json:"tcp_matchType,omitempty"`
+	TCPMatchValue         string          `json:"tcp_matchValue,omitempty"`
 }
 
 // CRUD operations
