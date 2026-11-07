@@ -20,7 +20,7 @@ resources:
       - {name: Bind, type: SelectedMapList, key: bind}
       - {name: BindOptions, type: string, key: bindOptions, omitEmpty: true}
       - {name: Mode, type: SelectedMap, key: mode}
-      - {name: DefaultBackend, type: SelectedMap, key: defaultBackend, omitEmpty: true}
+      - {name: DefaultBackend, type: SelectedMap, key: defaultBackend}
       - {name: SSLEnabled, type: string, key: ssl_enabled, omitEmpty: true}
       - {name: SSLCertificates, type: SelectedMapList, key: ssl_certificates, omitEmpty: true}
       - {name: SSLDefaultCertificate, type: SelectedMap, key: ssl_default_certificate, omitEmpty: true}

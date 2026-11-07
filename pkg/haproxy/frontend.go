@@ -29,7 +29,7 @@ type Frontend struct {
 	Bind                  api.SelectedMapList `json:"bind"`
 	BindOptions           string              `json:"bindOptions,omitempty"`
 	Mode                  api.SelectedMap     `json:"mode"`
-	DefaultBackend        api.SelectedMap     `json:"defaultBackend,omitempty"`
+	DefaultBackend        api.SelectedMap     `json:"defaultBackend"`
 	SSLEnabled            string              `json:"ssl_enabled,omitempty"`
 	SSLCertificates       api.SelectedMapList `json:"ssl_certificates,omitempty"`
 	SSLDefaultCertificate api.SelectedMap     `json:"ssl_default_certificate,omitempty"`
