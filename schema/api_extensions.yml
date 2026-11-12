@@ -130,7 +130,64 @@ resources:
         type: SelectedMap
         key: policy_id
 
+  - name: HAProxyTLSIdentity
+    filename: haproxy_tls_identity
+    monad: identity
+    endpoints:
+      create:
+        path: "/api_extensions/haproxy_tls_identity/addIdentity"
+        method: POST
+      read:
+        path: "/api_extensions/haproxy_tls_identity/getIdentity"
+        method: GET
+      update:
+        path: "/api_extensions/haproxy_tls_identity/setIdentity"
+        method: POST
+      delete:
+        path: "/api_extensions/haproxy_tls_identity/delIdentity"
+        method: POST
+      search:
+        path: "/api_extensions/haproxy_tls_identity/searchIdentity"
+        method: GET
+      reconfigure:
+        path: "/api_extensions/haproxy_tls_identity/reconfigure"
+        method: POST
+    attrs:
+      - name: FrontendName
+        type: string
+        key: frontend_name
+      - name: DNSName
+        type: string
+        key: dns_name
+      - name: PolicyID
+        type: SelectedMap
+        key: policy_id
+
 rpc:
+  - name: "HAProxyTLSIdentityService"
+    filename: haproxy_tls_identity_service
+    customTypes:
+      HAProxyTLSIdentityReconfigureResult:
+        - name: Status
+          type: string
+          key: status
+        - name: Count
+          type: int
+          key: count
+        - name: Changed
+          type: bool
+          key: changed
+        - name: Message
+          type: string
+          key: message
+          omitEmpty: true
+    rpc_calls:
+      - name: "Reconfigure"
+        endpoint:
+          path: "/api_extensions/haproxy_tls_identity/reconfigure"
+          method: POST
+        result_type: "HAProxyTLSIdentityReconfigureResult"
+
   - name: "Webgui"
     filename: webgui
     customTypes:
