@@ -149,9 +149,6 @@ resources:
       search:
         path: "/api_extensions/haproxy_tls_identity/searchIdentity"
         method: GET
-      reconfigure:
-        path: "/api_extensions/haproxy_tls_identity/reconfigure"
-        method: POST
     attrs:
       - name: FrontendName
         type: string
