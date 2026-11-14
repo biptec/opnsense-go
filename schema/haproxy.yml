@@ -45,6 +45,7 @@ resources:
       - {name: HAPolicy, type: SelectedMap, key: ha_policy, omitEmpty: true}
       - {name: Mode, type: SelectedMap, key: mode}
       - {name: Algorithm, type: SelectedMap, key: algorithm}
+      - {name: StickinessPattern, type: SelectedMap, key: stickiness_pattern}
       - {name: ProxyProtocol, type: SelectedMap, key: proxyProtocol, omitEmpty: true}
       - {name: LinkedServers, type: SelectedMapList, key: linkedServers}
       - {name: HealthCheckEnabled, type: string, key: healthCheckEnabled, omitEmpty: true}
