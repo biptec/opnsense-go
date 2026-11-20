@@ -149,9 +149,6 @@ resources:
       search:
         path: "/api_extensions/haproxy_tls_identity/searchIdentity"
         method: GET
-      reconfigure:
-        path: "/api_extensions/haproxy_tls_identity/reconfigure"
-        method: POST
     attrs:
       - name: FrontendName
         type: string
@@ -181,7 +178,28 @@ rpc:
           type: string
           key: message
           omitEmpty: true
+      HAProxyTLSIdentityPreflightResult:
+        - name: Status
+          type: string
+          key: status
+        - name: Count
+          type: int
+          key: count
+        - name: Message
+          type: string
+          key: message
+          omitEmpty: true
     rpc_calls:
+      - name: "Preflight"
+        endpoint:
+          path: "/api_extensions/haproxy_tls_identity/preflight"
+          method: POST
+        params:
+          - name: "identity"
+            key: identity
+            customType: HAProxyTLSIdentity
+            bodyParameter: true
+        result_type: "HAProxyTLSIdentityPreflightResult"
       - name: "Reconfigure"
         endpoint:
           path: "/api_extensions/haproxy_tls_identity/reconfigure"

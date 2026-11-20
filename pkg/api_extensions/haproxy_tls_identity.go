@@ -9,13 +9,12 @@ import (
 )
 
 var HAProxyTLSIdentityOpts = api.ReqOpts{
-	Create:      api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/addIdentity", Method: "POST"},
-	Read:        api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/getIdentity", Method: "GET"},
-	Update:      api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/setIdentity", Method: "POST"},
-	Delete:      api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/delIdentity", Method: "POST"},
-	Search:      api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/searchIdentity", Method: "GET"},
-	Reconfigure: api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/reconfigure", Method: "POST"},
-	Monad:       "identity",
+	Create: api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/addIdentity", Method: "POST"},
+	Read:   api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/getIdentity", Method: "GET"},
+	Update: api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/setIdentity", Method: "POST"},
+	Delete: api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/delIdentity", Method: "POST"},
+	Search: api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/searchIdentity", Method: "GET"},
+	Monad:  "identity",
 }
 
 // Data structs

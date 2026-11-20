@@ -11,11 +11,41 @@ import (
 
 // Data structs
 
+type HAProxyTLSIdentityPreflightResult struct {
+	Status  string `json:"status"`
+	Count   int    `json:"count"`
+	Message string `json:"message,omitempty"`
+}
+
 type HAProxyTLSIdentityReconfigureResult struct {
 	Status  string `json:"status"`
 	Count   int    `json:"count"`
 	Changed bool   `json:"changed"`
 	Message string `json:"message,omitempty"`
+}
+
+// HAProxyTLSIdentityServicePreflight executes the Preflight RPC call of the HAProxyTLSIdentityService controller
+func (c *Controller) HAProxyTLSIdentityServicePreflight(ctx context.Context, identity *HAProxyTLSIdentity) (*HAProxyTLSIdentityPreflightResult, error) {
+
+	callParams := []string{}
+	queryParams := make(map[string]string)
+	bodyParams := make(map[string]interface{})
+
+	bodyParams["identity"] = identity
+
+	callOpts := api.RPCOpts{
+		Endpoint:        api.Endpoint{Path: "/api_extensions/haproxy_tls_identity/preflight", Method: "POST"},
+		PathParameters:  callParams,
+		QueryParameters: queryParams,
+		BodyParameters:  bodyParams,
+	}
+
+	resultData := &HAProxyTLSIdentityPreflightResult{}
+	result, err := api.Call(c.Client(), ctx, callOpts, resultData)
+	if err != nil {
+		return nil, fmt.Errorf("preflight call failed: %w", err)
+	}
+	return result, nil
 }
 
 // HAProxyTLSIdentityServiceReconfigure executes the Reconfigure RPC call of the HAProxyTLSIdentityService controller

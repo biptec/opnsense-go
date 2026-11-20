@@ -80,6 +80,7 @@ CI runs the integration suite as parallel shards — one runner + one OPNsense V
   - `getAll: true` — adds a `Get<Name>All` method;
   - omit `reconfigure` when the resource does not require a post-mutation apply.
 - `rpc` block → non-CRUD calls. Each entry in `rpc_calls` uses the same endpoint object and becomes a typed method on the controller.
+- HAProxy TLS identity provisioning exposes a read-only `Preflight` RPC before `Add`; keep its request typed as the existing `HAProxyTLSIdentity` resource and return a status/message result. The `Reconfigure` RPC remains a separate post-registration operation.
 
 ```yaml
 endpoints:
